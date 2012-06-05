@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Neu Anmelden</h2>
+  {% if error %}<p class=error><strong>Fehler:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('signin') }}" method=post>
+    <dl>
+      <dt>Username:
+      <dd><input type=text name=username>
+      <dt>Vorname:
+      <dd><input type=text name=vorname>
+      <dt>Nachname:
+      <dd><input type=text name=nachname>
+      <dt>Email-Adresse:
+      <dd><input type=text name=email>
+      <hr>
+      <dt>Passwort:
+      <dd><input type=password name=password1>
+      <dt>Passwort nochmals eingeben:
+      <dd><input type=password name=password2>
+      <dd><input type=submit value="Benutzer anlegen">
+    </dl>
+  </form>
+{% endblock %}

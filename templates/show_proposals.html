@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <h2> Neuer Vorschlag </h2>
+    <form action="{{ url_for('add_proposal') }}" method=post class=add-entry>
+      <dl>
+        <dt>Title:
+        <dd><input type=text size=40 name=title>
+        <dt>Text:
+        <dd><textarea name=body rows=7 cols=50></textarea>
+        <dd><input type=submit value=Speichern>
+      </dl>
+    </form>
+  {% endif %}
+  <h2> Bisher erstellte Vorschl&auml;ge </h2>
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h3>{{ entry.title }}</h3>{{ entry.body|safe }} <br>
+        <div class=propInfo>
+          <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
+          <a href="">editieren</a>
+          {% if entry.username %} Erstellt durch <a href="{{ url_for('show_person', person_id=entry.userid) }}"> {{ entry.username
+          }} </a> {% endif %}
+        </div>
+    <hr style="color:black; background-color:black; height:1px;
+          border:1px; ">
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

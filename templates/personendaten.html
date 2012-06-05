@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2> Personendaten für {{ person.username }} </h2>
+Vorname: {{ person.firstname }} <br>
+Nachname: {{ person.secondname }} <br>
+Email: {{ person.email }} <br>
+<hr>
+Zurück zu den <a href={{ url_for('show_proposals') }}> Vorschlägen </a>
+{% endblock %}
