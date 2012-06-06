@@ -1,3 +1,5 @@
+#eine anederung
+
 from flask import Flask, session, render_template, request, redirect, url_for, escape, flash
 from model import Person, Proposal, Graph
 from bulbs.utils import current_datetime
