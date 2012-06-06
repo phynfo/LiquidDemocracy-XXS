@@ -19,13 +19,37 @@ def issuer(propId):
   ''' Returns the User(s) which issued the Proposal with eid "propId" '''
   return [e.outV() for e in db.proposals.get(propId).inE('issued') ]
 
+def countVotes(propId):
+  ''' Calculates the votes count '''
+  return countVotesUp(propId) - countVotesDown(propId)
+
+def countVotesDown(propId):
+  ''' Calculates the votes "down" '''
+  proposal = db.proposals.get(propId)
+  return sum([ -1 for voteRel in proposal.inE('votes') if voteRel.pro==0])
+
+def countVotesUp(propId):
+  ''' Calculates the votes "up" '''
+  proposal = db.proposals.get(propId)
+  return sum([1 for voteRel in proposal.inE('votes') if voteRel.pro==1])
+
 @app.route('/')
 def show_proposals(): 
-  entries = [dict(title=p.title, body=p.body, eid=p.eid, votes=p.votes_up-p.votes_down) for p in db.proposals.get_all()]
+  entries = [dict(title=p.title, body=p.body, eid=p.eid) for p in db.proposals.get_all()]
   for p in entries: 
     users = issuer(p['eid'])
     p['username'] = users[0].username if users else None
     p['userid'] = users[0].eid if users else None
+    p['voteCountUp'] = countVotesUp(p['eid'])
+    p['voteCountDown'] = countVotesDown(p['eid'])
+    # has current user voted for this proposal?
+    if session.get('logged_in'):
+      loggedUser = db.people.get(session['userId'])
+      proposal = db.proposals.get(p['eid'])
+      votes = [v for v in loggedUser.outE('votes') if v.inV() == proposal]
+      if votes:
+        p['upvoted']   = (votes[0].pro == 1)
+        p['downvoted'] = (votes[0].pro == 0)
   return render_template('show_proposals.html', entries=entries)
 
 @app.route('/add',methods=['POST'])
@@ -43,9 +67,32 @@ def add_proposal():
 def vote_up(prop_id):
   if not session.get('logged_in'):
     abort(401)
-  prop = db.proposals.get(prop_id)
-  prop.votes_up += 1
-  prop.save()
+  loggedUser = db.people.get(session['userId'])
+  proposal = db.proposals.get(prop_id)
+  voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == proposal]
+  if voteRels and voteRels[0].pro==0: 
+    # Kante loeschen!
+    db.votes.delete(voteRels[0].eid)
+  if voteRels and voteRels[0].pro==1:
+    abort(401)
+  if not voteRels:
+    db.votes.create(loggedUser,proposal,pro=1)
+  return redirect(url_for('show_proposals'))
+
+@app.route('/votedown/<int:prop_id>')
+def vote_down(prop_id):
+  if not session.get('logged_in'):
+    abort(401)
+  loggedUser = db.people.get(session['userId'])
+  proposal = db.proposals.get(prop_id)
+  voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == proposal]
+  if voteRels and voteRels[0].pro==1:
+    #Kante loeschen
+    db.votes.delete(voteRels[0].eid)
+  if voteRels and voteRels[0].pro==0:
+    abort(401)
+  if not voteRels:
+    db.votes.create(loggedUser,proposal, pro=0)
   return redirect(url_for('show_proposals'))
 
 @app.route('/delete/<int:prop_id>')

@@ -15,10 +15,25 @@
   <h2> Bisher erstellte Vorschl&auml;ge </h2>
   {% for entry in entries %}
     <table class=entries>
-    <tr>  <td class=votes align=center width=50> 
-                <a href="{{ url_for('vote_up', prop_id=entry.eid) }}"><img src="{{
-                url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left></a> <br>
-                <div class=count>{{ entry.votes }}</div><img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
+    <tr><td class=votes align=center width=50> 
+        <table class=voteCounts>
+             <tr><td> {% if not entry.upvoted %}
+                       <a href="{{ url_for('vote_up', prop_id=entry.eid) }}" class=votePic><img 
+                          src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
+                    {% else %}
+                       <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
+                    {% endif %} 
+               </td> <td class=countUp>+{{ entry.voteCountUp }}</td> 
+             <tr><td>
+               {% if not entry.downvoted %} 
+                  <a href="{{ url_for('vote_down', prop_id=entry.eid) }}"><img 
+                     src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
+               {% else %}
+                    <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
+               {% endif %}
+                </td> <td class=countDown>{{ entry.voteCountDown }}</td>
+              </tr>
+           </table>
           </td> <td><h3>{{ entry.title }}</h3>{{ entry.body|safe }} </td>
     <tr>  <td> </td> <td><div class=propInfo>
             <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 

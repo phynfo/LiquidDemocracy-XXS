@@ -1,12 +1,10 @@
-A new extremely light implementation of Liquid Democracy. 
+# A new extremely light implementation of Liquid Democracy. 
 
-Technology:
-==========
+## Technology:
 * It uses a Neo4j-Graphdatabase via bulbs (http://bulbflow.com)
 * It uses the Python micro webframework Flask
 
-Install: 
-========
+## Install: 
 * Install neo4j-server und run the server via
   ```bash
   $ cd /path/to/neo4j

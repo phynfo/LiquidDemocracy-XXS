@@ -8,9 +8,14 @@ td.votes {
   align=center;
   width=50;}
 
-div.count {
-  margin-right: 25px;
-  margin-bottom: 4px;}
+td.countUp {
+  color: #22AA22; }
+
+td.countDown {
+  color: #AA2222;}
+
+a.votePic {
+  margin-right: -10px;}
 
 body {
     font-family: 'Georgia', serif;

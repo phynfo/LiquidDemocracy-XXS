@@ -17,6 +17,7 @@ class Issues(Relationship):
 
 class Votes(Relationship):
   label = 'votes'
+  pro = Integer(nullable=False) # 0: against ; 1: pro
   created = DateTime(default=current_datetime, nullable=False)
 
 class Proposal(Node):
