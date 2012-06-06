@@ -15,6 +15,10 @@ class Issues(Relationship):
   label = 'issued'
   created = DateTime(default=current_datetime, nullable=False)
 
+class Votes(Relationship):
+  label = 'votes'
+  created = DateTime(default=current_datetime, nullable=False)
+
 class Proposal(Node):
   element_type = 'proposal'
   title = String(nullable=False)
@@ -30,5 +34,6 @@ class Graph(Neo4jGraph):
     self.people = self.build_proxy(Person)
     self.proposals = self.build_proxy(Proposal)
     self.issues = self.build_proxy(Issues)
+    self.votes = self.build_proxy(Votes)
 
 

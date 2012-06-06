@@ -1,5 +1,17 @@
 @import url("basic.css");
 
+td.votes {
+  font-family: 'Courier New';
+  font-weight: bold;
+  color: #BBBBBB;
+  font-size: 22px;
+  align=center;
+  width=50;}
+
+div.count {
+  margin-right: 25px;
+  margin-bottom: 4px;}
+
 body {
     font-family: 'Georgia', serif;
     font-size: 17px;

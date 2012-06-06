@@ -13,19 +13,22 @@
     </form>
   {% endif %}
   <h2> Bisher erstellte Vorschl&auml;ge </h2>
-  <ul class=entries>
   {% for entry in entries %}
-    <li><h3>{{ entry.title }}</h3>{{ entry.body|safe }} <br>
-        <div class=propInfo>
-          <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
-          <a href="">editieren</a>
-          {% if entry.username %} Erstellt durch <a href="{{ url_for('show_person', person_id=entry.userid) }}"> {{ entry.username
-          }} </a> {% endif %}
-        </div>
-    <hr style="color:black; background-color:black; height:1px;
-          border:1px; ">
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
+    <table class=entries>
+    <tr>  <td class=votes align=center width=50> 
+                <a href="{{ url_for('vote_up', prop_id=entry.eid) }}"><img src="{{
+                url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left></a> <br>
+                <div class=count>{{ entry.votes }}</div><img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
+          </td> <td><h3>{{ entry.title }}</h3>{{ entry.body|safe }} </td>
+    <tr>  <td> </td> <td><div class=propInfo>
+            <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
+            <a href="">editieren</a>
+            {% if entry.username %} Erstellt durch <a href="{{ url_for('show_person', person_id=entry.userid) }}"> {{ entry.username
+            }} </a> {% endif %}
+          </div></td> </tr> </table>
+      <hr style="color:black; background-color:black; height:1px;
+            border:1px; ">
+    {% else %}
+      <tr><em>Unbelievable.  No entries here so far</em></tr>
   {% endfor %}
-  </ul>
 {% endblock %}
