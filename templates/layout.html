@@ -1,8 +1,8 @@
 <!doctype html>
-<title>Adhocracy Light</title>
+<title>Liquid Democracy Light</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page>
-  <table> <td> <h1>Adhocracy Light</h1> </td>
+  <table> <td> <h1>Liquid Democracy Light</h1> </td>
           <td>
            <div class=metanav>
            {% if not session.logged_in %}
@@ -12,15 +12,15 @@
              <a href="{{ url_for('logout') }}" style="margin-left:3em; margin-right:2em;">Log out</a>
              Eingeloggt als: <em>{{ session.username }}</em>
            {% endif %} 
+           </div>
   </td> </table>
+  <hr style="color:black; background-color:black; height:3px;
+          border:2px;">
   </div>
   {% for message in get_flashed_messages() %}
     <div class=flash>{{ message }}</div>
   {% endfor %}
-  <br><hr style="color:black; background-color:black; height:3px;
-          border:2px;">
   {% block body %}{% endblock %}
-</div>
 <hr style="color:black; background-color:black; height:3px;
           border:2px;">
 

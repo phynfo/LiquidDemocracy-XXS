@@ -1,6 +1,8 @@
 from flask import Flask, session, render_template, request, redirect, url_for, escape, flash
 from model import Person, Proposal, Graph
 from bulbs.utils import current_datetime
+from datetime import datetime
+from utils import date_diff
 
 # configuration
 DATABASE = 'graphdatabase'
@@ -15,42 +17,69 @@ app.config.from_object(__name__)
 
 db = Graph()
 
-def issuer(propId): 
+def issuer(eid): 
   ''' Returns the User(s) which issued the Proposal with eid "propId" '''
-  return [e.outV() for e in db.proposals.get(propId).inE('issued') ]
+  return [e.outV() for e in db.vertices.get(eid).inE('issued') ]
 
 def countVotes(propId):
   ''' Calculates the votes count '''
   return countVotesUp(propId) - countVotesDown(propId)
 
-def countVotesDown(propId):
+def countVotesDown(eid):
   ''' Calculates the votes "down" '''
-  proposal = db.proposals.get(propId)
-  return sum([ -1 for voteRel in proposal.inE('votes') if voteRel.pro==0])
+  v = db.vertices.get(eid)
+  return sum([ -1 for voteRel in v.inE('votes') if voteRel.pro==0])
 
-def countVotesUp(propId):
+def countVotesUp(eid):
   ''' Calculates the votes "up" '''
-  proposal = db.proposals.get(propId)
-  return sum([1 for voteRel in proposal.inE('votes') if voteRel.pro==1])
+  v = db.vertices.get(eid)
+  return sum([1 for voteRel in v.inE('votes') if voteRel.pro==1])
+
+def proposalsByVotes():
+  ''' Sorts proposals by vote-count '''
+  return sorted(db.proposals.get_all(), key=lambda p:len(list(p.inE('votes'))), reverse=True)
+
+def commentsByVotes(prop_id):
+  ''' Sorts proposals by vote-count '''
+  comments = db.comments.get(prop_id).outV('hasComment') 
+  return sorted(comments, key=lambda c:len(list(c.inE('votesComment'))), reverse=True)
+
+def v2Dict(eid, loggedUserEid=None):
+  ''' v = proposal OR comment ''' 
+  v = db.vertices.get(eid)
+  d = dict(title = v.title, body=v.body, eid=eid)
+  users = issuer(eid)
+  d['username'] = users[0].username if users else None
+  d['userid'] = users[0].eid if users else None
+  d['voteCountUp'] = countVotesUp(eid)
+  d['voteCountDown'] = countVotesDown(eid)
+  d['created'] = date_diff(v.datetime_created, datetime.today())
+  if loggedUserEid: 
+    loggedUser = db.people.get(loggedUserEid)
+    votes = [voteEdge for voteEdge in loggedUser.outE('votes') if voteEdge.inV() == v]
+    if votes:
+      d['upvoted']   = (votes[0].pro == 1)
+      d['downvoted'] = (votes[0].pro == 0)
+  return d
 
 @app.route('/')
 def show_proposals(): 
-  entries = [dict(title=p.title, body=p.body, eid=p.eid) for p in db.proposals.get_all()]
-  for p in entries: 
-    users = issuer(p['eid'])
-    p['username'] = users[0].username if users else None
-    p['userid'] = users[0].eid if users else None
-    p['voteCountUp'] = countVotesUp(p['eid'])
-    p['voteCountDown'] = countVotesDown(p['eid'])
-    # has current user voted for this proposal?
-    if session.get('logged_in'):
-      loggedUser = db.people.get(session['userId'])
-      proposal = db.proposals.get(p['eid'])
-      votes = [v for v in loggedUser.outE('votes') if v.inV() == proposal]
-      if votes:
-        p['upvoted']   = (votes[0].pro == 1)
-        p['downvoted'] = (votes[0].pro == 0)
+  entries = []
+  userEid = db.people.get(session['userId']).eid if session.get('logged_in') else None
+  for proposal in proposalsByVotes():
+    p = v2Dict(proposal.eid, loggedUserEid=userEid)
+    entries.append(p)
   return render_template('show_proposals.html', entries=entries)
+
+@app.route('/proposal/<int:prop_id>')
+def show_single_proposal(prop_id):
+   userEid = db.people.get(session['userId']).eid if session.get('logged_in') else None
+   proposal = v2Dict(prop_id, loggedUserEid=userEid)
+   comments = []
+   for comment in commentsByVotes(prop_id):
+     c = v2Dict(comment.eid, loggedUserEid=userEid)
+     comments.append(c)
+   return render_template('show_single_proposal.html', proposal=proposal, comments=comments)
 
 @app.route('/add',methods=['POST'])
 def add_proposal():
@@ -62,6 +91,19 @@ def add_proposal():
   db.issues.create(user,prop) 
   flash('Neuer Eintrag erfolgreich erstellt')
   return redirect(url_for('show_proposals'))
+
+@app.route('/addcomment/<int:prop_id>',methods=['POST'])
+def add_comment(prop_id):
+  if not session.get('logged_in'):
+    abort(401)
+  comment = db.comments.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
+                      datetime_modfied=current_datetime())
+  user = db.people.get(session['userId'])
+  db.issuesComment.create(user,comment) 
+  db.hasComment.create(db.proposals.get(prop_id), comment)
+  flash('Neuer Kommentar erfolgreich erstellt')
+  return redirect(url_for('show_single_proposal', prop_id=prop_id))
+
 
 @app.route('/voteup/<int:prop_id>')
 def vote_up(prop_id):

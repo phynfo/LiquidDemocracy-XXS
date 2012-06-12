@@ -34,13 +34,15 @@
                 </td> <td class=countDown>{{ entry.voteCountDown }}</td>
               </tr>
            </table>
-          </td> <td><h3>{{ entry.title }}</h3>{{ entry.body|safe }} </td>
+          </td> <td><h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
+                           class=propTitle>{{ entry.title }}</a></h3>
+                                                                                           {{ entry.body|safe }} </td>
     <tr>  <td> </td> <td><div class=propInfo>
             <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
             <a href="">editieren</a>
-            {% if entry.username %} Erstellt durch <a href="{{ url_for('show_person', person_id=entry.userid) }}"> {{ entry.username
-            }} </a> {% endif %}
-          </div></td> </tr> </table>
+            Erstellt vor {{ entry.created }}  {% if entry.username %} durch <a href="{{ url_for('show_person',
+            person_id=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
+         </div></td> </tr> </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
     {% else %}

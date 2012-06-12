@@ -26,8 +26,23 @@ class Proposal(Node):
   body = String(nullable=False)
   datetime_created = DateTime(default=current_datetime, nullable=False)
   datetime_modification = DateTime()
-  votes_up = Integer()
-  votes_down = Integer()
+  votes_up = Integer() #deprecated
+  votes_down = Integer() # deprecated
+
+class Comment(Node):
+  element_type = 'comment'
+  title = String(nullable=False)
+  body = String(nullable=False)
+  datetime_created = DateTime(default=current_datetime, nullable=False)
+  datetime_modification = DateTime()
+
+class HasComment(Relationship):
+  label = 'hasComment'
+  created = DateTime(default=current_datetime, nullable=False)
+
+class IssuesComment(Relationship):
+  label = 'issuesComment'
+  created = DateTime(default=current_datetime, nullable=False)
 
 class Graph(Neo4jGraph):
   def __init__(self, config=None):
@@ -36,5 +51,9 @@ class Graph(Neo4jGraph):
     self.proposals = self.build_proxy(Proposal)
     self.issues = self.build_proxy(Issues)
     self.votes = self.build_proxy(Votes)
+    self.comments = self.build_proxy(Comment)
+    self.issuesComment = self.build_proxy(IssuesComment)
+    self.hasComment = self.build_proxy(HasComment)
+
 
 
