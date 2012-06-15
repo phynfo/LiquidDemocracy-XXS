@@ -12,13 +12,17 @@
       </dl>
     </form>
   {% endif %}
-  <h2> Bisher erstellte Vorschl&auml;ge </h2>
+  <table> <tr align=bottom>
+            <td width=400> <h2> Bisher erstellte Vorschl&auml;ge </h2> </td>
+            <td> Sortierkriterien: 1. Stimmen NeusteZuerst 2. EigeneStimmen <br> 
+                 Filterkriterien: 1. MeineVorschläge 2. MeineStimmen 3. Aktivste</td> </tr>
+  </table>
   {% for entry in entries %}
     <table class=entries>
     <tr><td class=votes align=center width=50> 
         <table class=voteCounts>
              <tr><td> {% if not entry.upvoted %}
-                       <a href="{{ url_for('vote_up', prop_id=entry.eid) }}" class=votePic><img 
+                       <a href="{{ url_for('vote', pro=1, eid=entry.eid) }}" class=votePic><img 
                           src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
                     {% else %}
                        <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
@@ -26,7 +30,7 @@
                </td> <td class=countUp>+{{ entry.voteCountUp }}</td> 
              <tr><td>
                {% if not entry.downvoted %} 
-                  <a href="{{ url_for('vote_down', prop_id=entry.eid) }}"><img 
+                  <a href="{{ url_for('vote', pro=0, eid=entry.eid) }}"><img 
                      src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
                {% else %}
                     <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
@@ -36,7 +40,7 @@
            </table>
           </td> <td><h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
                            class=propTitle>{{ entry.title }}</a></h3>
-                                                                                           {{ entry.body|safe }} </td>
+                                                                                           {{ entry.body|safe|iconize }} </td>
     <tr>  <td> </td> <td><div class=propInfo>
             <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
             <a href="">editieren</a>

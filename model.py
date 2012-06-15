@@ -29,6 +29,12 @@ class Proposal(Node):
   votes_up = Integer() #deprecated
   votes_down = Integer() # deprecated
 
+class Instance(Node):
+  element_type = 'instance'
+  title = String(nullable=False)
+  body = String(nullable=False)
+  datetime_created = DateTime(default=current_datetime, nullable=False)
+
 class Comment(Node):
   element_type = 'comment'
   title = String(nullable=False)

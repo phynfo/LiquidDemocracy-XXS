@@ -3,6 +3,7 @@ from model import Person, Proposal, Graph
 from bulbs.utils import current_datetime
 from datetime import datetime
 from utils import date_diff
+import re
 
 # configuration
 DATABASE = 'graphdatabase'
@@ -16,6 +17,17 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 db = Graph()
+
+@app.template_filter('iconize')
+def compact(s): 
+  ''' return the first few words of the text s in order to produce 
+      a short description of an entry's or comment's text '''
+  if len(s)<=200:  return s
+  s=s[:200]
+  s2 = filter(lambda c: c!='\n', s)
+  m = re.match(r".*\s", s2) 
+  return s2 if not m else s2[:m.end()] + ' ... '
+
 
 def issuer(eid): 
   ''' Returns the User(s) which issued the Proposal with eid "propId" '''
@@ -104,37 +116,29 @@ def add_comment(prop_id):
   flash('Neuer Kommentar erfolgreich erstellt')
   return redirect(url_for('show_single_proposal', prop_id=prop_id))
 
-
-@app.route('/voteup/<int:prop_id>')
-def vote_up(prop_id):
+@app.route('/vote/<int:pro>/<int:eid>')
+def vote(pro,eid):
+  ''' Voting a proposoal or comment with Id eid. Upvote means pro==1, Downvote means pro==0'''
   if not session.get('logged_in'):
     abort(401)
   loggedUser = db.people.get(session['userId'])
-  proposal = db.proposals.get(prop_id)
-  voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == proposal]
-  if voteRels and voteRels[0].pro==0: 
-    # Kante loeschen!
+  c_p = db.vertices.get(eid) # could be a comment or a proposal
+  voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == c_p]
+  if voteRels and voteRels[0].pro!=pro:
+    # User undoes vote => Delete Edge
     db.votes.delete(voteRels[0].eid)
-  if voteRels and voteRels[0].pro==1:
+    flash('Stimme rueckgaengig gemacht')
+  if voteRels and voteRels[0].pro==pro: 
+    # Voting up/down a second time is not allowed.
     abort(401)
-  if not voteRels:
-    db.votes.create(loggedUser,proposal,pro=1)
-  return redirect(url_for('show_proposals'))
-
-@app.route('/votedown/<int:prop_id>')
-def vote_down(prop_id):
-  if not session.get('logged_in'):
-    abort(401)
-  loggedUser = db.people.get(session['userId'])
-  proposal = db.proposals.get(prop_id)
-  voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == proposal]
-  if voteRels and voteRels[0].pro==1:
-    #Kante loeschen
-    db.votes.delete(voteRels[0].eid)
-  if voteRels and voteRels[0].pro==0:
-    abort(401)
-  if not voteRels:
-    db.votes.create(loggedUser,proposal, pro=0)
+  if not voteRels: 
+    # No "Votes"-Edge exists => Create new "Votes"-Edge
+    db.votes.create(loggedUser,c_p, pro=pro)
+    if pro: flash('Erfolgreich dafuer gestimmt') 
+    else:   flash('Erfolgreich dagegen gestimmt')
+  if c_p.element_type == 'comment':
+    proposal = c_p.inV('hasComment').next()
+    return redirect(url_for('show_single_proposal', prop_id=proposal.eid))
   return redirect(url_for('show_proposals'))
 
 @app.route('/delete/<int:prop_id>')

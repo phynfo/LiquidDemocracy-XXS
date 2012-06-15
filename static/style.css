@@ -30,8 +30,6 @@ a.propTitle {
     color: #000000;
     text-decoration: none;}
 
-div.page {
-  background-color: #DDDDEE;}
 
 
 
@@ -194,3 +192,13 @@ div.propInfo a {
 div.comments td {
   border:thin;
   border-spacing: 2px;}
+
+div.pagehead {
+  background-color: #DDDDEE;}
+
+div.page {
+  width:800px; 
+  margin: 30px auto 0 auto;}
+
+div.proposalhead {
+  background-color: #DDDDEE;}
