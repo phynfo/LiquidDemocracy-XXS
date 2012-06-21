@@ -10,6 +10,7 @@ class Person(Node):
   username = String(nullable=False)
   password = String(nullable=False)
   email = String(nullable=False)
+  created = String(default=current_datetime, nullable=False)
 
 class Issues(Relationship):
   label = 'issued'
@@ -35,6 +36,13 @@ class Instance(Node):
   body = String(nullable=False)
   datetime_created = DateTime(default=current_datetime, nullable=False)
 
+class InstancePeople(Node):
+  element_type = 'instancePeople'
+
+class HasPeople(Relationship):
+  label = 'hasPeople'
+  datetime_created = DateTime(default=current_datetime, nullable=False)
+
 class Comment(Node):
   element_type = 'comment'
   title = String(nullable=False)
@@ -45,6 +53,9 @@ class Comment(Node):
 class HasComment(Relationship):
   label = 'hasComment'
   created = DateTime(default=current_datetime, nullable=False)
+
+class HasProposal(Relationship):
+  label = 'hasProposal'
 
 class IssuesComment(Relationship):
   label = 'issuesComment'
@@ -60,6 +71,10 @@ class Graph(Neo4jGraph):
     self.comments = self.build_proxy(Comment)
     self.issuesComment = self.build_proxy(IssuesComment)
     self.hasComment = self.build_proxy(HasComment)
+    self.instances = self.build_proxy(Instance)
+    self.instancePeople = self.build_proxy(InstancePeople)
+    self.hasPeople = self.build_proxy(HasPeople)
+    self.hasProposal = self.build_proxy(HasProposal)
 
 
 

@@ -2,7 +2,7 @@
 {% block body %}
   {% if session.logged_in %}
     <h2> Neuer Vorschlag </h2>
-    <form action="{{ url_for('add_proposal') }}" method=post class=add-entry>
+    <form action="{{ url_for('add_proposal', i_eid=instance.eid) }}" method=post class=add-entry>
       <dl>
         <dt>Title:
         <dd><input type=text size=40 name=title>
@@ -22,7 +22,7 @@
     <tr><td class=votes align=center width=50> 
         <table class=voteCounts>
              <tr><td> {% if not entry.upvoted %}
-                       <a href="{{ url_for('vote', pro=1, eid=entry.eid) }}" class=votePic><img 
+                       <a href="{{ url_for('vote', i_eid=instance.eid, pro=1, eid=entry.eid) }}" class=votePic><img 
                           src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
                     {% else %}
                        <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
@@ -30,7 +30,7 @@
                </td> <td class=countUp>+{{ entry.voteCountUp }}</td> 
              <tr><td>
                {% if not entry.downvoted %} 
-                  <a href="{{ url_for('vote', pro=0, eid=entry.eid) }}"><img 
+                  <a href="{{ url_for('vote', i_eid=instance.eid, pro=0, eid=entry.eid) }}"><img 
                      src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
                {% else %}
                     <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
@@ -38,18 +38,18 @@
                 </td> <td class=countDown>{{ entry.voteCountDown }}</td>
               </tr>
            </table>
-          </td> <td><h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
-                           class=propTitle>{{ entry.title }}</a></h3>
-                                                                                           {{ entry.body|safe|iconize }} </td>
+  </td> <td><h3><a href="{{ url_for('show_single_proposal', i_eid = instance.eid, prop_id=entry.eid) }}"
+                   class=propTitle>{{ entry.title }}</a></h3>
+                                                                                   {{ entry.body|safe|iconize }} </td>
     <tr>  <td> </td> <td><div class=propInfo>
-            <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
+            <a href="{{ url_for('delete_proposal', i_eid=instance.eid, prop_id=entry.eid) }} ">l&ouml;schen</a> 
             <a href="">editieren</a>
-            Erstellt vor {{ entry.created }}  {% if entry.username %} durch <a href="{{ url_for('show_person',
+            Erstellt vor {{ entry.created }}  {% if entry.username %} durch <a href="{{ url_for('show_person', i_eid=instance.eid,
             person_id=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
          </div></td> </tr> </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
     {% else %}
-      <tr><em>Unbelievable.  No entries here so far</em></tr>
+      <tr><em>Noch keine Vorschläge vorhanden.</em></tr>
   {% endfor %}
 {% endblock %}

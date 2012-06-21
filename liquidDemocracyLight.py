@@ -47,9 +47,11 @@ def countVotesUp(eid):
   v = db.vertices.get(eid)
   return sum([1 for voteRel in v.inE('votes') if voteRel.pro==1])
 
-def proposalsByVotes():
-  ''' Sorts proposals by vote-count '''
-  return sorted(db.proposals.get_all(), key=lambda p:len(list(p.inE('votes'))), reverse=True)
+def proposalsByVotes(i_eid):
+  ''' Sorts proposals of a specific instance by vote-count '''
+  instance = db.instances.get(i_eid)
+  proposals = instance.outV('hasProposal')
+  return sorted(proposals, key=lambda p:len(list(p.inE('votes'))), reverse=True)
 
 def commentsByVotes(prop_id):
   ''' Sorts proposals by vote-count '''
@@ -74,38 +76,76 @@ def v2Dict(eid, loggedUserEid=None):
       d['downvoted'] = (votes[0].pro == 0)
   return d
 
-@app.route('/')
-def show_proposals(): 
-  entries = []
-  userEid = db.people.get(session['userId']).eid if session.get('logged_in') else None
-  for proposal in proposalsByVotes():
-    p = v2Dict(proposal.eid, loggedUserEid=userEid)
-    entries.append(p)
-  return render_template('show_proposals.html', entries=entries)
+def i2Dict(i_eid, loggedUserEid=None): 
+  ''' i_eid = instance '''
+  instance = db.instances.get(i_eid)
+  d = dict(title=instance.title, body=instance.body, eid=i_eid)
+  return d
 
-@app.route('/proposal/<int:prop_id>')
-def show_single_proposal(prop_id):
+def person2Dict(person): 
+  p = person.data()
+  p['eid'] = person.eid
+  return p
+
+@app.route('/')
+def show_instances():
+  session.pop('i_eid', None)
+  session.pop('instancetitle',None)
+  user = db.people.get(session['userId']) if session.get('logged_in') else None
+  if user and user.username == app.config['USERNAME']: 
+    isAdmin=True
+  else: isAdmin=False
+  if user: 
+     instances = [i2Dict(i.eid, user) for i in db.instances.get_all() if user in i.outV('hasPeople')]
+  else: 
+     instances = [i2Dict(i.eid) for i in db.instances.get_all()]
+  return render_template('show_instances.html', instances=instances, isAdmin=isAdmin) 
+
+
+@app.route('/addinstance', methods=['POST'])
+def add_instance(): 
+  if not (session.get('logged_in') and db.people.get(session['userId']).username == app.config['USERNAME']): 
+    abort(401)  
+  instance = db.instances.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime())
+  flash('Neue Instanz haette angelegt werden muessen') 
+  return redirect(url_for('show_instances'))
+
+@app.route('/<int:i_eid>/proposals')
+def show_proposals(i_eid): 
+  proposals = []
+  userEid = db.people.get(session['userId']).eid if session.get('logged_in') else None
+  instance = db.instances.get(i_eid)
+  i = dict(title=instance.title, eid=i_eid)
+  for proposal in proposalsByVotes(i_eid):
+    p = v2Dict(proposal.eid, loggedUserEid=userEid)
+    proposals.append(p)
+  return render_template('show_proposals.html', instance = i, entries=proposals)
+
+@app.route('/<int:i_eid>/proposal/<int:prop_id>')
+def show_single_proposal(i_eid, prop_id):
    userEid = db.people.get(session['userId']).eid if session.get('logged_in') else None
    proposal = v2Dict(prop_id, loggedUserEid=userEid)
    comments = []
    for comment in commentsByVotes(prop_id):
      c = v2Dict(comment.eid, loggedUserEid=userEid)
      comments.append(c)
-   return render_template('show_single_proposal.html', proposal=proposal, comments=comments)
+   return render_template('show_single_proposal.html', i_eid=i_eid, proposal=proposal, comments=comments)
 
-@app.route('/add',methods=['POST'])
-def add_proposal():
+@app.route('/<int:i_eid>/addproposal',methods=['POST'])
+def add_proposal(i_eid):
   if not session.get('logged_in'):
     abort(401)
   prop = db.proposals.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
                       datetime_modfied=current_datetime(), votes_up=0, votes_down=0)
+  instance = db.instances.get(i_eid)
   user = db.people.get(session['userId'])
-  db.issues.create(user,prop) 
+  db.issues.create(user,prop)           # Edge1: User issues Proposal
+  db.hasProposal.create(instance, prop) # Edge2: Proposal belongs to current Instance
   flash('Neuer Eintrag erfolgreich erstellt')
-  return redirect(url_for('show_proposals'))
+  return redirect(url_for('show_proposals', i_eid=i_eid))
 
-@app.route('/addcomment/<int:prop_id>',methods=['POST'])
-def add_comment(prop_id):
+@app.route('/<int:i_eid>/addcomment/<int:prop_id>',methods=['POST'])
+def add_comment(i_eid,prop_id):
   if not session.get('logged_in'):
     abort(401)
   comment = db.comments.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
@@ -114,10 +154,10 @@ def add_comment(prop_id):
   db.issuesComment.create(user,comment) 
   db.hasComment.create(db.proposals.get(prop_id), comment)
   flash('Neuer Kommentar erfolgreich erstellt')
-  return redirect(url_for('show_single_proposal', prop_id=prop_id))
+  return redirect(url_for('show_single_proposal', i_eid=i_eid, prop_id=prop_id))
 
-@app.route('/vote/<int:pro>/<int:eid>')
-def vote(pro,eid):
+@app.route('/<int:i_eid>/vote/<int:pro>/<int:eid>')
+def vote(i_eid, pro, eid):
   ''' Voting a proposoal or comment with Id eid. Upvote means pro==1, Downvote means pro==0'''
   if not session.get('logged_in'):
     abort(401)
@@ -138,69 +178,132 @@ def vote(pro,eid):
     else:   flash('Erfolgreich dagegen gestimmt')
   if c_p.element_type == 'comment':
     proposal = c_p.inV('hasComment').next()
-    return redirect(url_for('show_single_proposal', prop_id=proposal.eid))
-  return redirect(url_for('show_proposals'))
+    return redirect(url_for('show_single_proposal', i_eid=i_eid, prop_id=proposal.eid))
+  return redirect(url_for('show_proposals', i_eid=i_eid))
 
-@app.route('/delete/<int:prop_id>')
-def delete_proposal(prop_id):
+@app.route('/<int:i_eid>/deleteproposal/<int:prop_id>')
+def delete_proposal(i_eid,prop_id):
   if not session.get('logged_in'):
     abort(401)
-  title = db.proposals.get(prop_id)
+  proposal = db.proposals.get(prop_id)
+  for e in proposal.inE('hasProposal'): 
+    db.hasProposal.delete(e.eid) 
   resp = db.proposals.delete(prop_id)
   flash('Eintrag geloescht')
-  return redirect(url_for('show_proposals'))
+  return redirect(url_for('show_proposals', i_eid=i_eid))
 
-@app.route('/login',methods=['POST','GET'])
-def login(): 
+@app.route('/<int:i_eid>/login',methods=['POST','GET'])
+def login_instance(i_eid): 
   error = None
   if request.method == 'POST':
     username = request.form['username'] ; password = request.form['password']
-    users = [p for p in db.people.index.lookup(username=username)]
+    instance = db.instances.get(i_eid)
+    users = [u for u in db.people.index.lookup(username=username) if u in instance.outV('hasPeople')]
     if users and users[0].password==password: 
       session['logged_in'] = True
-      session['userId'] = users[0].eid ; session['username'] = users[0].username
-      flash('Du hast Dich eingeloggt') 
-      return redirect(url_for('show_proposals'))
+      session['userId'] = users[0].eid ; session['username'] = users[0].username 
+      session['instancetitle']=instance.title ; session['i_eid']=i_eid
+      s = "Du hast Dich in Instanz %s eingeloggt" % instance.title
+      flash(s) 
+      return redirect(url_for('show_proposals', i_eid=i_eid))
     elif not users:
       error = 'Ungueltiger Benutzername'
     else:
       error = 'Ungueltiges Passwort'
-  return render_template('login.html', error=error)
+  return render_template('login.html', i_eid=i_eid, instances=None, error=error)
 
-@app.route('/logout')
-def logout():
+@app.route('/login', methods=['POST','GET'])
+def login(): 
+    error = None 
+    if request.method == 'POST':
+      username = request.form['username'] ; password = request.form['password'] ; instancetitle = request.form['instancetitle']
+      instance = db.instances.index.lookup(title=instancetitle).next()
+      users = [u for u in db.people.index.lookup(username=username) if u in instance.outV('hasPeople')] 
+      if users and users[0].password==password: 
+        session['logged_in'] = True
+        session['userId'] = users[0].eid ; session['username'] = users[0].username
+        session['i_eid'] = instance.eid ; session['instancetitle'] = instancetitle
+        s = "Du hast Dich in Instanz %s eingeloggt" % instancetitle
+        flash(s) 
+        return redirect(url_for('show_proposals', i_eid=instance.eid))
+      elif not users:
+        error = 'Ungueltiger Benutzername fuer Instanz %s' % instancetitle
+      else:
+        error = 'Ungueltiges Passwort'
+    return render_template('login.html', i_eid=None, instances = [dict(title=i.title) for i in db.instances.get_all()], error=error)
+  
+@app.route('/setinstance/<int:i_eid>')
+def set_instance(i_eid):
+  instance = db.instances.get(i_eid)
+  session['i_eid'] = i_eid
+  session['instancetitle'] = instance.title
+  return redirect(url_for('show_proposals', i_eid=i_eid))
+
+@app.route('/<int:i_eid>/logout')
+def logout(i_eid):
   session.pop('logged_in', None)
   session.pop('userId',None)
   session.pop('username',None)
+  session.pop('instancetitle',None)
+  session.pop('i_eid',None)
   flash('Du hast Dich ausgeloggt')
-  return redirect(url_for('show_proposals'))
+  return redirect(url_for('show_instances'))
 
-@app.route('/signin', methods=['POST', 'GET'])
-def signin():  
+@app.route('/<int:i_eid>/signin', methods=['POST', 'GET'])
+def signin(i_eid):  
   error = None
   if request.method == 'POST':
-    username = request.form['username'] ; pass1 = request.form['password1'] ; pass2 = request.form['password2']
-    email = request.form['email'] ; vorname = request.form['vorname'] ; nachname = request.form['nachname']
-    users = [p for p in db.people.index.lookup(username=username)] 
-    if users: #Benutzername schon vorhanden?
-      error = 'Benutzername existiert schon'
-    elif pass1!=pass2: 
-      error = 'Passwort nochmals eingeben!'
-    elif not (email and vorname and nachname and username): 
-      error = 'Eingabedaten unvollstaendig!'
-    else: 
-      db.people.create(firstname=vorname, secondname=nachname, username=username, password=pass1, email=email)
-      flash('Benutzer erfolgreich angelegt')
-      return redirect(url_for('show_proposals'))
-  return render_template('signin.html', error=error)
+    if 'username' in request.form:  
+      username = request.form['username'] ; pass1 = request.form['password1'] ; pass2 = request.form['password2']
+      email = request.form['email'] ; vorname = request.form['vorname'] ; nachname = request.form['nachname']
+      users = [p for p in db.people.index.lookup(username=username)] 
+      if users: #Benutzername schon vorhanden?
+        error = 'Benutzername existiert schon'
+      elif pass1!=pass2: 
+        error = 'Passwort nochmals eingeben!'
+      elif not (email and vorname and nachname and username): 
+        error = 'Eingabedaten unvollstaendig!'
+      else: 
+        instance = db.instances.get(i_eid)
+        user = db.people.create(firstname=vorname, secondname=nachname, username=username, password=pass1, email=email)
+        db.hasPeople.create(instance, user)
+        flash('Benutzer erfolgreich angelegt')
+        return redirect(url_for('login_instance', i_eid=i_eid))
+    if 'username1' in request.form: 
+      username = request.form['username1'] 
+      passw = request.form['password']
+      # does username alread exist?
+      users = list(db.people.index.lookup(username=username))  
+      if not users: 
+        flash('Der angegebene Benutzername existiert aber noch nicht')
+        return redirect(url_for('signin',i_eid=i_eid))
+      else: 
+        user = users[0]
+        if user.password != passw: 
+            flash('Password war falsch')
+            return redirect(url_for(signin, i_eid=i_eid))
+        else: 
+            instance = db.instances.get(i_eid)
+            db.hasPeople.create(instance, user)
+            flash('Benutzer erfolgreich zur Instanz hinzugefgt')
+            return redirect(url_for('login_instance', i_eid=i_eid))
+  return render_template('signin.html', i_eid=i_eid, error=error)
 
-@app.route('/person/<int:person_id>')
-def show_person(person_id):
+@app.route('/<int:i_eid>/person/<int:person_id>')
+def show_person(i_eid,person_id):
   if not session.get('logged_in'):
-    abort(401)
+        abort(401)
   person = db.people.get(person_id)
-  return render_template('personendaten.html', person=dict(firstname=person.firstname, secondname=person.secondname,\
+  return render_template('show_person.html', person=dict(firstname=person.firstname, secondname=person.secondname,\
                          username=person.username, email=person.email))
+
+@app.route('/<int:i_eid>/persons')
+def show_people(i_eid):
+  instance = db.instances.get(i_eid)
+  people = [person2Dict(p) for p in instance.outV('hasPeople')] 
+  return render_template('show_people.html', i_eid = i_eid, people = people, 
+                                             instance = dict(title=instance.title, eid=instance.eid))
+  
 
 def initdb():
   users = [p for p in db.people.index.lookup(username=app.config['USERNAME'])]

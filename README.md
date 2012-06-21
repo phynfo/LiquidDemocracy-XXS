@@ -3,14 +3,16 @@
 It is "light" with respect to:
 
 * **Technology:** It uses as light technology (the micro-framework Flask instead of a full-blown framework like Django or
-  Pyramide, the REST API of a graph-database instead of a RDBMS) and little technology (up to now no caching, little security, etc).
+  Pyramide, the REST API of a graph-database instead of a RDBMS) and little technology (up to now no caching, little security, and
+  hardly any javascript, etc).
 
 * **Software Engineering:** No fancy abstraction layers. No built-in version-management. Just as simple as ever possible.
 
 * **Requirements:** It implements just the core set of requirements, i.e.
+  - **Instances:** An instance comprises a set of proposals and users. -- *just implemented* --
   - **Users:** Basic user-management (login, sign-in, logout)
   - **Proposals:** Add, delete, view Proposals.
-  - **Voting:** One Up-Vote/Down-Vote per User.
+  - **Voting:** One Up-Vote/Down-Vote per User per Proposal.
   - **Comments:** Add, delete and vote for discussion-comments of a proposal. -- *not implemented yet* --
   - **Rationals:** Add, delete and vote for pro-/con-rationals of a proposal. -- *not implemented yet* --
   - **Parlaments:** Add, delete Parlaments (in which proposals can be raised. -- *not implemented yet* --
@@ -20,8 +22,8 @@ It is "light" with respect to:
 * It uses a Neo4j-Graphdatabase via bulbs (http://bulbflow.com)
 * It uses the Python micro webframework Flask
 
-## Install: 
-* Install neo4j-server und run the server via
+## Install for running the application on localhost:5000
+* Install neo4j and neo4j-server to a path of your choice (say: `/path/to/neo4j`) and start the server via
   ```bash
   $ cd /path/to/neo4j
   $ bin/neo4j start
@@ -37,16 +39,17 @@ It is "light" with respect to:
   $ source venv/bin/activate
   ```
 
-* Install Flask, Bulbs
+* Install Flask and Bulbs
   ```bash
   $ pip install flask
   $ pip install bulbs
   ```
 
-* clone the git-repo and start the main programm
+* clone/copy this git-repo and start the main programm 
   ```bash
   $ python liquidDemocracyLight.py
   ```
+  (be sure *not* to use the `/usr/bin/python`-Python but the `.../venv/bin/python`-Python of the local environment. 
 
 * open a webbrowser and call http://localhost:5000
 
