@@ -1,30 +1,31 @@
 <!doctype html>
 <title>Liquid Democracy Light</title> 
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
 <div class=pagehead>
   <table cellspacing="0px"><tr><td valign=top width="500"> 
-  {% if session.instancetitle %} Liquid Democracy Light <br><h1> {{ session.instancetitle }} </h1> 
+  {% if g.i_eid %} Liquid Democracy Light <br><h1> {{ g.i_eid|i_eid2title }} </h1> 
   {% else %} <h1>Liquid Democracy Light</h1> 
   {% endif %} </td> 
           <td>
            <div class=metanav>
-           {% if not session.logged_in and session.i_eid %}
-             <a href="{{ url_for('login_instance', i_eid=session.i_eid) }} " 
-                style="margin-left:3em; margin-right:2em;">Login  für Instanz {{ session.instancetitle }}</a> 
-             <a href="{{ url_for('signin',i_eid=session.i_eid) }}" 
-                style="margin-left:3em; margin-right:2em;">Neu Anmelden für Instanz {{ session.instancetitle}}</a>
-           {% elif not session.logged_in and not session.i_eid %}
+           {% if not session.logged_in and g.i_eid %}
+             <a href="{{ url_for('login_instance', i_eid=g.i_eid) }} " 
+                style="margin-left:3em; margin-right:2em;">Login  für Instanz {{ g.i_eid|i_eid2title }}</a> 
+             <a href="{{ url_for('signin',i_eid=g.i_eid) }}" 
+                style="margin-left:3em; margin-right:2em;">Neu Anmelden für Instanz {{ g.i_eid|i_eid2title }}</a>
+           {% elif not session.logged_in and not g.i_eid %}
              <a href="{{ url_for('login') }}" style="margin-left:3em; margin-right:2em;">Login</a>
-           {% elif session.logged_in and session.i_eid %}
-             <a href="{{ url_for('logout', i_eid=session.i_eid) }}" style="margin-left:3em; margin-right:6em;">Logout</a>
-             Eingeloggt als: <em>{{ session.username }}</em> in Instanz {{ session.instancetitle }}
+           {% elif session.logged_in and g.i_eid %}
+             <a href="{{ url_for('logout', i_eid=g.i_eid) }}" style="margin-left:3em; margin-right:6em;">Logout</a>
+             Eingeloggt als: <em>{{ session.username }}</em> in Instanz {{ g.i_eid|i_eid2title }}
            {% endif %}  
            </div> 
          <tr> <td> </td>       
               <td> <a href="{{ url_for('show_instances') }}" style="margin-left:3em; margin-right:2em;"><b>Instanzen</b></a> 
                    <a href="" style="margin-left:3em; margin-right:2em;"><b>Vorschläge</b></a> 
-                   {% if session.i_eid %}
-                     <a href="{{ url_for('show_people',i_eid=session.i_eid) }}" style="margin-left:3em; margin-right:2em;"><b>Benutzer</b></a>  
+                   {% if g.i_eid %}
+                     <a href="{{ url_for('show_people',i_eid=g.i_eid) }}" style="margin-left:3em; margin-right:2em;"><b>Benutzer</b></a>  
                    {% endif %}
               </td>
          </tr>  

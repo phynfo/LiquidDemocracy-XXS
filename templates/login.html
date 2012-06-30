@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Login {% if session.instancetitle %} für Instanz {{ session.instancetitle }} {% endif %}</h2>
+  <h2>Login {% if g.i_eid %} für Instanz {{ g.i_eid|i_eid2title }} {% endif %}</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %} 
-  {% if i_eid %}
-    <form action="{{ url_for('login_instance', i_eid=i_eid) }}" method=post>
+  {% if g.i_eid %}
+    <form action="{{ url_for('login_instance', i_eid=g.i_eid) }}" method=post>
   {% else %}
     <form action="{{ url_for('login') }}" method=post>
   {% endif %}
@@ -12,7 +12,7 @@
       <dd><input type=text name=username>
       <dt>Passwort:
       <dd><input type=password name=password>
-      {% if not i_eid %} 
+      {% if not g.i_eid %} 
       <dt>Instanz:
       <dd><select name=instancetitle> 
              {% for i in instances %} 
