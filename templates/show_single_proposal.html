@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class=proposalhead>
+<table>
+    <tr><td class=votes align=center width=50> 
+        <table class=voteCounts>
+             <tr><td> {% if not proposal.upvoted %}
+                       <a href="{{ url_for('vote', i_eid=g.i_eid, pro=1, eid=proposal.eid) }}" class=votePic><img 
+                          src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
+                    {% else %}
+                       <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
+                    {% endif %} 
+               </td> <td class=countUp>+{{ proposal.voteCountUp }}</td> 
+             <tr><td>
+               {% if not proposal.downvoted %} 
+                  <a href="{{ url_for('vote', i_eid=g.i_eid, pro=0, eid=proposal.eid) }}"><img 
+                     src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
+               {% else %}
+                    <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
+               {% endif %}
+                </td> <td class=countDown>{{ proposal.voteCountDown }}</td>
+              </tr>
+           </table>
+          </td> <td><h3><a href="{{ url_for('show_single_proposal', i_eid=g.i_eid, prop_id=proposal.eid) }}"
+                           class=propTitle>{{ proposal.title }}</a></h3>
+                                                                                           {{ proposal.body|safe }} </td>
+    <tr>  <td> </td> <td><div class=propInfo>
+            <a href="{{ url_for('delete_proposal', i_eid=g.i_eid, prop_id=proposal.eid) }} ">l&ouml;schen</a> 
+            <a href="">editieren</a>
+            Erstellt vor {{ proposal.created }}  {% if proposal.username %} durch <a href="{{ url_for('show_person', i_eid =
+                                      g.i_eid, person_id=proposal.userid) }}"> {{ proposal.username }}.</a>{% endif %}
+         </div></td> </tr> </table>
+      </div>
+      <hr style="color:black; background-color:black; height:1px;
+            border:1px; ">
+
+  {% if session.logged_in %}
+    <h3>Neuer Kommentar erstellen</h3>
+    <form action="{{ url_for('add_comment', i_eid=g.i_eid, prop_id=proposal.eid) }}" method=post class=add-entry>
+      <dl>
+        <dt>Kommentartitel:
+        <dd><input type=text size=40 name=title>
+        <dt>Kommentartext:
+        <dd><textarea name=body rows=7 cols=50></textarea>
+        <dd><input type=submit value=Speichern>
+      </dl>
+    </form>
+  {% endif %}
+  <h3> Bisherige Kommentare </h3>
+  <div class=comments>
+  {% for comment in comments %}
+    <table class=entries>
+    <tr><td class=votes align=center width=50> 
+        <table class=voteCounts>
+             <tr><td> {% if not comment.upvoted %}
+                       <a href="{{ url_for('vote', i_eid=g.i_eid, pro=1, eid=comment.eid) }}" class=votePic><img 
+                          src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=20 align=left></a> 
+                    {% else %}
+                       <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=20 align=left>
+                    {% endif %} 
+               </td> <td class=countUp>+{{ comment.voteCountUp }}</td> 
+             <tr><td>
+               {% if not comment.downvoted %} 
+                  <a href="{{ url_for('vote', i_eid=g.i_eid, pro=0, eid=comment.eid) }}"><img 
+                     src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=20 align=left></a>
+               {% else %}
+                    <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=20 align=left>
+               {% endif %}
+                </td> <td class=countDown>{{ comment.voteCountDown }}</td>
+              </tr>
+           </table>
+          </td> <td><b><a href="{{ url_for('show_single_proposal', i_eid=g.i_eid, prop_id=comment.eid) }}"
+                           class=propTitle>{{ comment.title }}</a></b>: {{ comment.body|safe }} </td>
+    <tr>  <td> </td> <td><div class=propInfo>
+            <a href="{{ url_for('delete_proposal', i_eid=g.i_eid, prop_id=comment.eid) }} ">l&ouml;schen</a> 
+            <a href="">editieren</a>
+            Erstellt vor {{ comment.created }}  {% if comment.username %} durch <a href="{{ url_for('show_person',
+            i_eid=g.i_eid, person_id=comment.userid) }}"> {{ comment.username }}.</a>{% endif %}
+         </div></td> </tr> </table>
+      <hr style="color:black; background-color:black; height:1px;
+            border:1px; ">
+    {% else %}
+      <tr><em>Noch keine Kommmentare</em></tr>
+  {% endfor %}
+  </div>
+
+  {% endblock %}

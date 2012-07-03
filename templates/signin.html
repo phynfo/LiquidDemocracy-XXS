@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Neu Anmelden {% if session.instancetitle %} für Instanz {{ session.instancetitle }} {% endif %}</h2>
+  <h2>Neu Anmelden {% if g.i_eid %} für Instanz {{ g.i_eid|i_eid2title }} {% endif %}</h2>
   {% if error %}<p class=error><strong>Fehler:</strong> {{ error }}{% endif %}
-  {% if not session.i_eid %} <p class=error><strong>Fehler:</strong> Bitte 
+  {% if not g.i_eid %} <p class=error><strong>Fehler:</strong> Bitte 
      <a href="{{ url_for('show_instances') }}">Instanz</a> wählen! </p> 
   {% else %}
   <table> <tr> <th> <h4>Neuen Benutzer erstellen</h4></th> <th></th><th> <h4> Vorhandenen Benutzer hinzufügen</h4> </th> </tr><tr valign="top"> 
   <td>
-  <form action="{{ url_for('signin', i_eid=session.i_eid) }}" method=post>
+  <form action="{{ url_for('signin', i_eid=g.i_eid) }}" method=post>
     <dl>
       <dt>Username:
       <dd><input type=text name=username>
@@ -26,7 +26,7 @@
     </dl>
   </form> </td>  <td width=100> </td>
   <td> 
-   <form action="{{ url_for('signin', i_eid=session.i_eid) }}" method=post>
+   <form action="{{ url_for('signin', i_eid=g.i_eid) }}" method=post>
     <dl align="left">
       <dt>Username:
       <dd><input type=text name=username1>

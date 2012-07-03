@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, redirect, url_for, escape, flash, g
+from flask import Flask, session, render_template, request, redirect, url_for, escape, flash, g, abort
 from model import Person, Proposal, Graph
 from bulbs.utils import current_datetime
 from datetime import datetime
@@ -33,13 +33,6 @@ def eid2title(i_eid):
   instance = db.instances.get(i_eid)
   return instance.title
 
-#@app.url_defaults
-#def add_i_eid(endpoint, values):
-#  if 'i_eid' in values or not g.i_eid:
-#    return
-#  if app.url_map.is_endpoint_expecting(endpoint, 'i_eid'):
-#    values['i_eid'] = g.i_eid
-
 @app.url_defaults
 def add_i_eid(endpoint, values):
   if 'i_eid' in values or not g.i_eid:
@@ -55,7 +48,7 @@ def pull_i_eid(endpoint, values):
     g.i_eid = None
 
 def issuer(eid): 
-  ''' Returns the User(s) which issued the Proposal with eid "propId" '''
+  ''' Returns the User(s) which issued the Proposal with eid "eId" '''
   return [e.outV() for e in db.vertices.get(eid).inE('issued') ]
 
 def countVotes(propId):
@@ -84,7 +77,11 @@ def commentsByVotes(prop_id):
   return sorted(comments, key=lambda c:len(list(c.inE('votesComment'))), reverse=True)
 
 def v2Dict(eid, loggedUserEid=None):
-  ''' v = proposal OR comment ''' 
+  ''' v = proposal OR comment 
+      The resulting dict-Object d collects 
+        - the person which issued the proposal/comment, 
+        - the vote-counts
+        - the creation date ''' 
   v = db.vertices.get(eid)
   d = dict(title = v.title, body=v.body, eid=eid)
   users = issuer(eid)
@@ -112,6 +109,20 @@ def person2Dict(person):
   p['eid'] = person.eid
   return p
 
+#-------------------- The view functions ----------------------------------------
+#   * Instances
+#     - show_instances, add_instance
+#   * Proposals 
+#     - show_proposal , show_single_proposal, add_proposal, delete_proposal
+#   * Comments
+#     - add_comment
+#   * Votes
+#     - vote
+#   * People
+#     - login, logout, signin, login_instnace
+#     - show_person, show_people
+# -------------------------------------------------------------------------------
+
 @app.route('/')
 def show_instances():
   user = db.people.get(session['userId']) if session.get('logged_in') else None
@@ -123,7 +134,6 @@ def show_instances():
   else: 
      instances = [i2Dict(i.eid) for i in db.instances.get_all()]
   return render_template('show_instances.html', instances=instances, isAdmin=isAdmin) 
-
 
 @app.route('/addinstance', methods=['POST'])
 def add_instance(): 
@@ -159,12 +169,23 @@ def add_proposal():
   if not session.get('logged_in'):
     abort(401)
   prop = db.proposals.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
-                      datetime_modfied=current_datetime(), votes_up=0, votes_down=0)
+                      datetime_modfied=current_datetime())
   instance = db.instances.get(g.i_eid)
   user = db.people.get(session['userId'])
   db.issues.create(user,prop)           # Edge1: User issues Proposal
   db.hasProposal.create(instance, prop) # Edge2: Proposal belongs to current Instance
   flash('Neuer Eintrag erfolgreich erstellt')
+  return redirect(url_for('show_proposals'))
+
+@app.route('/<int:i_eid>/deleteproposal/<int:prop_id>')
+def delete_proposal(prop_id):
+  if not session.get('logged_in'):
+    abort(401)
+  proposal = db.proposals.get(prop_id)
+  for e in proposal.inE('hasProposal'): 
+    db.hasProposal.delete(e.eid) 
+  resp = db.proposals.delete(prop_id)
+  flash('Eintrag geloescht')
   return redirect(url_for('show_proposals'))
 
 @app.route('/<int:i_eid>/addcomment/<int:prop_id>',methods=['POST'])
@@ -202,17 +223,6 @@ def vote(pro, eid):
   if c_p.element_type == 'comment':
     proposal = c_p.inV('hasComment').next()
     return redirect(url_for('show_single_proposal', prop_id=proposal.eid))
-  return redirect(url_for('show_proposals'))
-
-@app.route('/<int:i_eid>/deleteproposal/<int:prop_id>')
-def delete_proposal(prop_id):
-  if not session.get('logged_in'):
-    abort(401)
-  proposal = db.proposals.get(prop_id)
-  for e in proposal.inE('hasProposal'): 
-    db.hasProposal.delete(e.eid) 
-  resp = db.proposals.delete(prop_id)
-  flash('Eintrag geloescht')
   return redirect(url_for('show_proposals'))
 
 @app.route('/<int:i_eid>/login',methods=['POST','GET'])
@@ -253,13 +263,9 @@ def login():
         error = 'Ungueltiges Passwort'
     return render_template('login.html', i_eid=None, instances = [dict(title=i.title) for i in db.instances.get_all()], error=error)
   
-@app.route('/setinstance/<int:i_eid>')
-def set_instance():
-  instance = db.instances.get(g.i_eid)
-  return redirect(url_for('show_proposals', i_eid=g.i_eid))
-
 @app.route('/<int:i_eid>/logout')
 def logout():
+  ''' Deletes the cookies and redirects to show_instances'''
   session.pop('logged_in', None)
   session.pop('userId',None)
   session.pop('username',None)
@@ -268,6 +274,9 @@ def logout():
 
 @app.route('/<int:i_eid>/signin', methods=['POST', 'GET'])
 def signin():  
+  ''' There are two cases: 
+      1. A new user is created in the current instance
+      2. An existing user is associated with the current instance '''
   error = None
   if request.method == 'POST':
     if 'username' in request.form:  

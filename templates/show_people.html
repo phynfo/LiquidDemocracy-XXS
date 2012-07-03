@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Angemeldete Personen für Instanz {{ instance.title }} </h2>
+    {% for person in people %}
+           <h3><a href="{{ url_for('show_person', i_eid = instance.eid, person_id=person.eid) }}"
+                   class=propTitle>{{ person.username }}</a></h3> 
+              <div class=propInfo>
+            {% if person.created %} Mitglied seit {{ person.created }}, {% endif %} 
+            Vorname: {{ person.firstname }}, Nachname: {{ person.secondname }}.  </div>
+      <hr style="color:black; background-color:black; height:1px;
+            border:1px; ">
+    {% else %}
+      <tr><em>Noch keine Mitglieder vorhanden.</em></tr>
+    {% endfor %}
+{% endblock %}

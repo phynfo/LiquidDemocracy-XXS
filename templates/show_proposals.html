@@ -38,7 +38,7 @@
                 </td> <td class=countDown>{{ entry.voteCountDown }}</td>
               </tr>
            </table>
-  </td> <td><h3><a href="{{ url_for('show_single_proposal', i_eid = instance.eid, prop_id=entry.eid) }}"
+  </td> <td style="background-color: #DDDDEE;"> <h3><a href="{{ url_for('show_single_proposal', i_eid = instance.eid, prop_id=entry.eid) }}"
                    class=propTitle>{{ entry.title }}</a></h3>
                                                                                    {{ entry.body|safe|iconize }} </td>
     <tr>  <td> </td> <td><div class=propInfo>

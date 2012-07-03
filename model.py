@@ -10,7 +10,7 @@ class Person(Node):
   username = String(nullable=False)
   password = String(nullable=False)
   email = String(nullable=False)
-  created = String(default=current_datetime, nullable=False)
+  created = DateTime(default=current_datetime, nullable=False)
 
 class Issues(Relationship):
   label = 'issued'
@@ -27,17 +27,12 @@ class Proposal(Node):
   body = String(nullable=False)
   datetime_created = DateTime(default=current_datetime, nullable=False)
   datetime_modification = DateTime()
-  votes_up = Integer() #deprecated
-  votes_down = Integer() # deprecated
 
 class Instance(Node):
   element_type = 'instance'
   title = String(nullable=False)
   body = String(nullable=False)
   datetime_created = DateTime(default=current_datetime, nullable=False)
-
-class InstancePeople(Node):
-  element_type = 'instancePeople'
 
 class HasPeople(Relationship):
   label = 'hasPeople'
@@ -61,20 +56,33 @@ class IssuesComment(Relationship):
   label = 'issuesComment'
   created = DateTime(default=current_datetime, nullable=False)
 
+class Parlament(Node): 
+  element_type = 'parlament'
+  title = String(nullable=False)
+  body = String(nullable=False)
+  datetime_created=DateTime(default=current_datetime, nullable=False)
+
+class ParlamentHasProposal(Relationship):
+  label = 'parlamentHasproposal'
+
 class Graph(Neo4jGraph):
   def __init__(self, config=None):
     super(Graph, self).__init__(config)
+    # --------------- Nodes-Proxies
     self.people = self.build_proxy(Person)
     self.proposals = self.build_proxy(Proposal)
-    self.issues = self.build_proxy(Issues)
-    self.votes = self.build_proxy(Votes)
+    self.parlaments = self.build_proxy(Parlament)
     self.comments = self.build_proxy(Comment)
-    self.issuesComment = self.build_proxy(IssuesComment)
-    self.hasComment = self.build_proxy(HasComment)
-    self.instances = self.build_proxy(Instance)
-    self.instancePeople = self.build_proxy(InstancePeople)
-    self.hasPeople = self.build_proxy(HasPeople)
-    self.hasProposal = self.build_proxy(HasProposal)
+    self.instances = self.build_proxy(Instance) 
+    # --------------- Edge-Proxies
+    self.issues = self.build_proxy(Issues)               # Edge: (Person -> Proposal)
+    self.votes = self.build_proxy(Votes)                 # Edge: (Person -> Vote)
+    self.issuesComment = self.build_proxy(IssuesComment) # Edge: (Person -> Comment)
+    self.hasComment = self.build_proxy(HasComment)       # Edge: (Proposal -> Comment)
+    self.hasPeople = self.build_proxy(HasPeople)         # Edge: (Instance -> Person)
+    self.hasProposal = self.build_proxy(HasProposal)     # Edge: (Instance -> Proposal)
+    self.parlamentHasProposal = self.build_proxy(ParlamentHasProposal) # Edge: (Parlament -> Proposal)
+
 
 
 
