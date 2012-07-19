@@ -2,14 +2,32 @@
 {% block body %}
   {% if session.logged_in %}
     <h2> Neuer Vorschlag </h2>
-    <form action="{{ url_for('add_proposal', i_eid=instance.eid) }}" method=post class=add-entry>
+    <form action="{{ url_for('add_proposal') }}" method=post class=add-entry>
+    <table>
+    <tr> 
+      <td>
       <dl>
         <dt>Title:
-        <dd><input type=text size=40 name=title>
+        <dd><input type=text size=47 name=title>
+      </dl>
+      </td>
+      <td>
+      <dl>
+        <dt>Parlament(e):
+        <dd><select name=parlament size=2 multiple>
+              {% for parlament in g.i_eid|getParlaments %}
+              <option> {{ parlament.title }}</option>
+              {% endfor %}
+            </select>
+      </dl>
+      </td> 
+    </tr>
+    </table>
+      <dl>
         <dt>Text:
         <dd><textarea name=body rows=7 cols=50></textarea>
         <dd><input type=submit value=Speichern>
-      </dl>
+      </dl> 
     </form>
   {% endif %}
   <table> <tr align=bottom>
@@ -18,19 +36,28 @@
                  Filterkriterien: 1. MeineVorschläge 2. MeineStimmen 3. Aktivste</td> </tr>
   </table>
   {% for entry in entries %}
-    <table class=entries>
+    {% if entry.username == session.username %} 
+         <table  style="background-color: #DDDDEE;"> 
+    {% else %} 
+         <table> 
+    {% endif %}
     <tr><td class=votes align=center width=50> 
         <table class=voteCounts>
-             <tr><td> {% if not entry.upvoted %}
-                       <a href="{{ url_for('vote', i_eid=instance.eid, pro=1, eid=entry.eid) }}" class=votePic><img 
+             <tr><td> 
+                    {% if entry.username == session.username %}
+                       <img src="{{ url_for('static',filename='arrow_up_own.svg') }}" alt="dafuer" width=24 align=left>
+                    {% elif not entry.upvoted %}
+                       <a href="{{ url_for('vote', pro=1, eid=entry.eid) }}" class=votePic><img 
                           src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
                     {% else %}
                        <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
                     {% endif %} 
                </td> <td class=countUp>+{{ entry.voteCountUp }}</td> 
              <tr><td>
-               {% if not entry.downvoted %} 
-                  <a href="{{ url_for('vote', i_eid=instance.eid, pro=0, eid=entry.eid) }}"><img 
+               {% if entry.username == session.username %}
+                 <img src="{{ url_for('static',filename='arrow_down_own.svg') }}" alt="dagegen" width=24 align=left>
+               {% elif not entry.downvoted %} 
+                  <a href="{{ url_for('vote', pro=0, eid=entry.eid) }}"><img 
                      src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
                {% else %}
                     <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
@@ -38,14 +65,17 @@
                 </td> <td class=countDown>{{ entry.voteCountDown }}</td>
               </tr>
            </table>
-  </td> <td style="background-color: #DDDDEE;"> <h3><a href="{{ url_for('show_single_proposal', i_eid = instance.eid, prop_id=entry.eid) }}"
+           {% for parlament in entry.eid|getParlaments %} <a href="" class=parlTitle>{{ parlament.title }}</a>{% endfor %}
+  </td> <td> <h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
                    class=propTitle>{{ entry.title }}</a></h3>
                                                                                    {{ entry.body|safe|iconize }} </td>
     <tr>  <td> </td> <td><div class=propInfo>
-            <a href="{{ url_for('delete_proposal', i_eid=instance.eid, prop_id=entry.eid) }} ">l&ouml;schen</a> 
-            <a href="">editieren</a>
-            Erstellt vor {{ entry.created }}  {% if entry.username %} durch <a href="{{ url_for('show_person', i_eid=instance.eid,
-            person_id=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
+            {% if entry.username == session.username %} 
+              <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
+              <a href="">editieren</a> 
+            {% endif %}
+            Erstellt vor {{ entry.created }}  {% if entry.username %} durch 
+            <a href="{{ url_for('show_person', person_id=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
          </div></td> </tr> </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">

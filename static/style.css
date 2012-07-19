@@ -30,7 +30,14 @@ a.propTitle {
     color: #000000;
     text-decoration: none;}
 
-
+a.parlTitle {
+    color: #FFFFFF;
+    background-color: #2222AA;
+    font-variant:small-caps;
+    font-stretch:wider;
+    font-size:80%;
+    text-decoration: none; 
+    }
 
 
 /* -- body styles ----------------------------------------------------------- */

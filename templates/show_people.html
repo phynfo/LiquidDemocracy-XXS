@@ -2,7 +2,7 @@
 {% block body %}
   <h2>Angemeldete Personen für Instanz {{ instance.title }} </h2>
     {% for person in people %}
-           <h3><a href="{{ url_for('show_person', i_eid = instance.eid, person_id=person.eid) }}"
+           <h3><a href="{{ url_for('logoutLogin', p_eid=person.eid) }}"
                    class=propTitle>{{ person.username }}</a></h3> 
               <div class=propInfo>
             {% if person.created %} Mitglied seit {{ person.created }}, {% endif %} 

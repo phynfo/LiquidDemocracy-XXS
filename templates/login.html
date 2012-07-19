@@ -9,7 +9,7 @@
   {% endif %}
     <dl>
       <dt>Username:
-      <dd><input type=text name=username>
+      <dd><input type=text name=username value="{{ session.username }}">
       <dt>Passwort:
       <dd><input type=password name=password>
       {% if not g.i_eid %} 

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if session.isAdmin %}
+    <h2> Neues Parlament anlegen? </h2>
+    <form action="{{ url_for('add_parlament') }}" method=post class=add-entry>
+      <dl>
+        <dt>Title:
+        <dd><input type=text size=40 name=title>
+        <dt>Text:
+        <dd><textarea name=body rows=7 cols=50></textarea>
+        <dd><input type=submit value=Speichern>
+      </dl>
+    </form>
+  {% endif %}
+
+  <h2>Parlamente für Instanz {{ g.i_eid|i_eid2title }} </h2>
+  <table>
+  {% for parlament in parlaments %}
+     <tr> <h3><a href="{{ url_for('show_parlaments') }}"
+                 class=parlTitle>{{ parlament.title }}</a></h3> {{ parlament.body|safe|iconize }}  
+     </tr>
+     <tr> <div class=propInfo>Enthaltene Vorschläge: {{ parlament.numberProposals }}</div> 
+     </tr>
+     <hr style="color:black; background-color:black; height:1px;
+            border:1px; ">
+  {% else %}
+      <tr><em>Noch keine Parlamente vorhanden</em></tr>
+  {% endfor %}
+  </table>
+ 
+{% endblock %}

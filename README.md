@@ -31,7 +31,10 @@ It is "light" with respect to:
 * It uses a Neo4j-Graphdatabase via bulbs (http://bulbflow.com)
 * It uses the Python micro webframework Flask
 
-## Install for running the application on localhost:5000
+## Installation for running the application on localhost:5000
+
+### On Linux
+
 * Install neo4j and neo4j-server to a path of your choice (say: `/path/to/neo4j`) and start the server via
   ```bash
   $ cd /path/to/neo4j
@@ -40,7 +43,7 @@ It is "light" with respect to:
 
 * create a new local python environment
   ```bash
-  $ virtual-env venv
+  $ virtualenv venv
   ```
 
 * activate the environment
@@ -61,6 +64,35 @@ It is "light" with respect to:
   (be sure *not* to use the `/usr/bin/python`-Python but the `.../venv/bin/python`-Python of the local environment. 
 
 * open a webbrowser and call http://localhost:5000
+
+### On Windows: 
+#### Install python, setuptools and pip
+* install setuptools from http://pypi.python.org/pypi/setuptools
+* Add C.\\Python2x\ and C:\\Python2x\scripts to the windows path variable
+* Open a new DOS shell and run 
+  ```bash
+  > easy_install pip
+  ```
+
+* activate the environment
+  ```bash
+  > \path\to\env\Scripts\activate
+  ```
+
+* install flask, bulbs and dateutil
+  ```bash
+  > pip install flask
+  > pip install bulbs
+  > pip install python-dateutil
+  ```
+  Note: To get it all working, you must have a compiler installed (Visual Studio 2008 or mingw)
+
+* Download the latest **stable** release of the neo4j--Graphdatabase (http://neo4j.org)
+* Start the neo4j-Graphdatabase-Server (you need a Java Runtime Environment for that): 
+  ```bash
+  > bin\Neo4j.bat
+  ```
+  (you access the REST-API via a browser opening http:\\localhost:7474)
 
 
 

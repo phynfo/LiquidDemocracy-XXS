@@ -3,33 +3,57 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
 <div class=pagehead>
-  <table cellspacing="0px"><tr><td valign=top width="500"> 
-  {% if g.i_eid %} Liquid Democracy Light <br><h1> {{ g.i_eid|i_eid2title }} </h1> 
-  {% else %} <h1>Liquid Democracy Light</h1> 
-  {% endif %} </td> 
-          <td>
-           <div class=metanav>
-           {% if not session.logged_in and g.i_eid %}
-             <a href="{{ url_for('login_instance', i_eid=g.i_eid) }} " 
-                style="margin-left:3em; margin-right:2em;">Login  für Instanz {{ g.i_eid|i_eid2title }}</a> 
-             <a href="{{ url_for('signin',i_eid=g.i_eid) }}" 
-                style="margin-left:3em; margin-right:2em;">Neu Anmelden für Instanz {{ g.i_eid|i_eid2title }}</a>
-           {% elif not session.logged_in and not g.i_eid %}
-             <a href="{{ url_for('login') }}" style="margin-left:3em; margin-right:2em;">Login</a>
-           {% elif session.logged_in and g.i_eid %}
-             <a href="{{ url_for('logout', i_eid=g.i_eid) }}" style="margin-left:3em; margin-right:6em;">Logout</a>
-             Eingeloggt als: <em>{{ session.username }}</em> in Instanz {{ g.i_eid|i_eid2title }}
-           {% endif %}  
-           </div> 
-         <tr> <td> </td>       
-              <td> <a href="{{ url_for('show_instances') }}" style="margin-left:3em; margin-right:2em;"><b>Instanzen</b></a> 
-                   <a href="" style="margin-left:3em; margin-right:2em;"><b>Vorschläge</b></a> 
-                   {% if g.i_eid %}
-                     <a href="{{ url_for('show_people',i_eid=g.i_eid) }}" style="margin-left:3em; margin-right:2em;"><b>Benutzer</b></a>  
-                   {% endif %}
-              </td>
-         </tr>  
-    </table>
+  <table cellspacing="0px">
+    <tr>
+      <td valign=top width="450"> 
+         {% if g.i_eid %} Liquid Democracy Light <br><h1> {{g.i_eid|i_eid2title }} </h1> 
+         {% else %} <h1>Liquid Democracy Light</h1> 
+         {% endif %} 
+      </td> 
+      <td>
+        <table valign=top ><div class=metanav>
+           <tr width="200">
+             <td>  
+                {% if not session.logged_in %}
+                  {% if g.i_eid %}
+                    <a href="{{ url_for('login_instance') }}" 
+                       style="margin-left:3em; margin-right:2em;">Login für Instanz {{ g.i_eid|i_eid2title }}</a> 
+                  {% else %}
+                    <a href="{{ url_for('login') }}" style="margin-left:3em; margin-right:2em;">Login</a>
+                  {% endif %}
+                {% elif g.i_eid %}
+                   <a href="{{ url_for('logout',i_eid=g.i_eid) }}" style="margin-left:3em; margin-right:6em;">Logout</a>
+                {% endif %}
+             </td>
+             <td >
+                {% if not session.logged_in and g.i_eid %}
+                    <a href="{{ url_for('signin') }}" 
+                       style="margin-left:3em; margin-right:2em;">Neu Anmelden {% if g.i_eid %} für Instanz {{ g.i_eid|i_eid2title }} {% endif %}</a>
+                {% endif %}
+                {% if session.logged_in %}
+                   Eingeloggt als: <em>{{ session.username }}</em> 
+                   {% if g.i_eid %} in Instanz {{ g.i_eid|i_eid2title }}  {% endif %}
+                {% endif %}
+             </td>
+           </tr> </div> 
+           <tr> 
+             <td colspan="2"> 
+               <a href="{{ url_for('show_instances') }}" 
+                  style="margin-left:3em; margin-right:2em;"><b>Instanzen</b></a> 
+               {% if g.i_eid %}
+                   <a href="{{ url_for('show_proposals') }}" 
+                      style="margin-left:3em; margin-right:2em;"><b>Vorschläge</b></a> 
+                   <a href="{{ url_for('show_people') }}" 
+                      style="margin-left:3em; margin-right:2em;"><b>Benutzer</b></a>  
+                   <a href="{{ url_for('show_parlaments') }}"
+                      style="margin-left:3em; margin-right:2em;"><b>Parlamente</b></a>
+               {% endif %}
+             </td>
+           </tr>  
+        </table>
+      </td>
+    </tr>
+  </table>
   <hr style="color:black; background-color:black; height:3px;
           border:2px;">
   </div>

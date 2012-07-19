@@ -62,8 +62,11 @@ class Parlament(Node):
   body = String(nullable=False)
   datetime_created=DateTime(default=current_datetime, nullable=False)
 
-class ParlamentHasProposal(Relationship):
-  label = 'parlamentHasproposal'
+class ProposalHasParlament(Relationship):
+  label = 'proposalHasParlament'
+
+class InstanceHasParlament(Relationship):
+  label = 'instanceHasParlament'
 
 class Graph(Neo4jGraph):
   def __init__(self, config=None):
@@ -71,18 +74,18 @@ class Graph(Neo4jGraph):
     # --------------- Nodes-Proxies
     self.people = self.build_proxy(Person)
     self.proposals = self.build_proxy(Proposal)
-    self.parlaments = self.build_proxy(Parlament)
     self.comments = self.build_proxy(Comment)
+    self.parlaments = self.build_proxy(Parlament)
     self.instances = self.build_proxy(Instance) 
     # --------------- Edge-Proxies
     self.issues = self.build_proxy(Issues)               # Edge: (Person -> Proposal)
-    self.votes = self.build_proxy(Votes)                 # Edge: (Person -> Vote)
+    self.votes = self.build_proxy(Votes)                 # Edge: (Person -> Proposal)
     self.issuesComment = self.build_proxy(IssuesComment) # Edge: (Person -> Comment)
     self.hasComment = self.build_proxy(HasComment)       # Edge: (Proposal -> Comment)
     self.hasPeople = self.build_proxy(HasPeople)         # Edge: (Instance -> Person)
     self.hasProposal = self.build_proxy(HasProposal)     # Edge: (Instance -> Proposal)
-    self.parlamentHasProposal = self.build_proxy(ParlamentHasProposal) # Edge: (Parlament -> Proposal)
-
+    self.proposalHasParlament = self.build_proxy(ProposalHasParlament) # Edge: (Proposal -> Parlament)
+    self.instanceHasParlament = self.build_proxy(InstanceHasParlament) # Edge: (Instance -> Parlament)
 
 
 

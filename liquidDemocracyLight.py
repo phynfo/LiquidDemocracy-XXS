@@ -18,6 +18,15 @@ app.config.from_object(__name__)
 
 db = Graph()
 
+@app.template_filter('getParlaments')
+def getParlaments(eid): 
+  v = db.vertices.get(eid)
+  if v.element_type == 'instance':
+    ps = [data(p) for p in v.outV('instanceHasParlament')]
+  elif v.element_type == 'proposal':
+    ps = [data(p) for p in v.outV('proposalHasParlament')]
+  return ps
+
 @app.template_filter('iconize')
 def compact(s): 
   ''' return the first few words of the text s in order to produce 
@@ -33,6 +42,8 @@ def eid2title(i_eid):
   instance = db.instances.get(i_eid)
   return instance.title
 
+
+
 @app.url_defaults
 def add_i_eid(endpoint, values):
   if 'i_eid' in values or not g.i_eid:
@@ -47,9 +58,17 @@ def pull_i_eid(endpoint, values):
   else:
     g.i_eid = None
 
+def data(p): 
+   d = p.data()
+   d['eid'] = p.eid
+   return d
+
 def issuer(eid): 
   ''' Returns the User(s) which issued the Proposal with eid "eId" '''
-  return [e.outV() for e in db.vertices.get(eid).inE('issued') ]
+  if db.vertices.get(eid).element_type=='proposal': 
+    return [e.outV() for e in db.vertices.get(eid).inE('issued') ]
+  elif db.vertices.get(eid).element_type=='comment':
+    return [e.outV() for e in db.vertices.get(eid).inE('issuesComment')]
 
 def countVotes(propId):
   ''' Calculates the votes count '''
@@ -99,9 +118,22 @@ def v2Dict(eid, loggedUserEid=None):
   return d
 
 def i2Dict(i_eid, loggedUserEid=None): 
-  ''' i_eid = instance '''
+  ''' i_eid = instance 
+      Collects information about an instance: 
+        title, body, created, numberUsers, numberVotes, numberProposals, numberComments'''
   instance = db.instances.get(i_eid)
   d = dict(title=instance.title, body=instance.body, eid=i_eid)
+  d['created']     = date_diff(instance.datetime_created, datetime.today())
+  d['numberUsers'] = len(list(instance.outV('hasPeople')))
+  proposals = list(instance.outV('hasProposal'))
+  d['numberProposals'] = len(proposals)
+  d['numberVotes'] = sum([len(list(p.inE('votes'))) for p in proposals])
+  d['numberComments'] = sum([len(list(p.outE('hasComment'))) for p in proposals])
+  # Alternatively, the following Cypher-Query could be used: 
+  # q = '''START i=node({i_eid}) 
+  #   MATCH i-[:hasProposal]->p-[:hasComment]->c
+  #   RETURN count(c)'''
+  # d['numberComments'] = db.cypher.table(q,dict(i_eid=i_eid))[1][0][0] 
   return d
 
 def person2Dict(person): 
@@ -126,18 +158,15 @@ def person2Dict(person):
 @app.route('/')
 def show_instances():
   user = db.people.get(session['userId']) if session.get('logged_in') else None
-  if user and user.username == app.config['USERNAME']: 
-    isAdmin=True
-  else: isAdmin=False
-  if user: 
+  if user and not session['isAdmin']: 
      instances = [i2Dict(i.eid, user) for i in db.instances.get_all() if user in i.outV('hasPeople')]
   else: 
      instances = [i2Dict(i.eid) for i in db.instances.get_all()]
-  return render_template('show_instances.html', instances=instances, isAdmin=isAdmin) 
+  return render_template('show_instances.html', instances=instances)
 
 @app.route('/addinstance', methods=['POST'])
 def add_instance(): 
-  if not (session.get('logged_in') and db.people.get(session['userId']).username == app.config['USERNAME']): 
+  if not (session.get('logged_in') and session['isAdmin']): 
     abort(401)  
   instance = db.instances.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime())
   flash('Neue Instanz haette angelegt werden muessen') 
@@ -148,11 +177,11 @@ def show_proposals():
   proposals = []
   userEid = db.people.get(session['userId']).eid if session.get('logged_in') else None
   instance = db.instances.get(g.i_eid)
-  i = dict(title=instance.title, eid=g.i_eid)
+  # i = dict(title=instance.title, eid=g.i_eid)
   for proposal in proposalsByVotes(g.i_eid):
     p = v2Dict(proposal.eid, loggedUserEid=userEid)
     proposals.append(p)
-  return render_template('show_proposals.html', instance = i, entries=proposals)
+  return render_template('show_proposals.html', entries=proposals)
 
 @app.route('/<int:i_eid>/proposal/<int:prop_id>')
 def show_single_proposal(prop_id):
@@ -170,6 +199,10 @@ def add_proposal():
     abort(401)
   prop = db.proposals.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
                       datetime_modfied=current_datetime())
+  if 'parlament' in request.form: 
+    p = list(db.parlaments.index.lookup(title=request.form['parlament']))
+    if p: 
+      db.proposalHasParlament.create(prop,p[0])
   instance = db.instances.get(g.i_eid)
   user = db.people.get(session['userId'])
   db.issues.create(user,prop)           # Edge1: User issues Proposal
@@ -235,6 +268,7 @@ def login_instance():
     if users and users[0].password==password: 
       session['logged_in'] = True
       session['userId'] = users[0].eid ; session['username'] = users[0].username 
+      session['isAdmin'] = users[0].username==app.config['USERNAME']
       s = "Du hast Dich in Instanz %s eingeloggt" % instance.title
       flash(s) 
       return redirect(url_for('show_proposals'))
@@ -254,6 +288,7 @@ def login():
       if users and users[0].password==password: 
         session['logged_in'] = True
         session['userId'] = users[0].eid ; session['username'] = users[0].username
+        session['isAdmin'] = users[0].username==app.config['USERNAME']
         s = "Du hast Dich in Instanz %s eingeloggt" % instancetitle
         flash(s) 
         return redirect(url_for('show_proposals', i_eid=instance.eid))
@@ -269,6 +304,7 @@ def logout():
   session.pop('logged_in', None)
   session.pop('userId',None)
   session.pop('username',None)
+  session.pop('isAdmin',None)
   flash('Du hast Dich ausgeloggt')
   return redirect(url_for('show_instances'))
 
@@ -315,6 +351,20 @@ def signin():
             return redirect(url_for('login_instance'))
   return render_template('signin.html', error=error)
 
+@app.route('/<int:i_eid>/logoutLogin/<int:p_eid>')
+def logoutLogin(p_eid):
+  ''' Wird ein User geklickt, so wird automatisch versucht, den aktuellen Benutzer auszuloggen und 
+      mit dem neuen Benutzer einzuloggen '''
+  if session.get('logged_in'): 
+    flash('Du hast Dich ausgeloggt') 
+    session.pop('logged_in', None)
+    session.pop('userId',None)
+    session.pop('username',None)
+    session.pop('isAdmin',None)
+  session['userId']=p_eid
+  session['username']=db.people.get(p_eid).username
+  return redirect(url_for('login_instance'))
+
 @app.route('/<int:i_eid>/person/<int:person_id>')
 def show_person(person_id):
   if not session.get('logged_in'):
@@ -329,7 +379,39 @@ def show_people():
   people = [person2Dict(p) for p in instance.outV('hasPeople')] 
   return render_template('show_people.html', people = people, 
                                              instance = dict(title=instance.title, eid=instance.eid))
-  
+
+@app.route('/<int:i_eid>/parlaments')
+def show_parlaments(): 
+  q_pa = '''START i=node({i_eid})
+            MATCH i-[:instanceHasParlament]->pa
+            RETURN pa'''
+  pa = db.cypher.query(q_pa, dict(i_eid=g.i_eid))
+  parlaments = [data(p) for p in pa]
+  q_numProp = '''START pa=node({pa_eid})
+                 MATCH pa<-[:proposalHasParlament]-pr
+                 RETURN COUNT(pr)'''
+  for p in parlaments: 
+    erg = db.cypher.table(q_numProp, dict(pa_eid=p['eid']))[1]
+    p['numberProposals'] = 0 if not erg else erg[0][0]
+  return render_template('show_parlaments.html', parlaments=parlaments)
+
+@app.route('/<int:i_eid>/addparlament', methods=['POST'])
+def add_parlament(): 
+  if not (session.get('logged_in') and session['isAdmin']): 
+    abort(401)
+  q = '''START i=node({i_eid}) 
+         MATCH i-[:instanceHasParlament]->pa
+         WHERE pa.title = {title}
+         RETURN pa'''
+  pa = list(db.cypher.query(q, dict(i_eid=g.i_eid, title=request.form['title'])))
+  if pa: 
+    flash('Parlament wurde nicht angelegt! Es existiert schon in dieser Instanz')
+  else:  
+    instance = db.instances.get(g.i_eid)
+    parlament = db.parlaments.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime())
+    db.instanceHasParlament.create(instance, parlament) 
+    flash('Neues Parlament wurde angelegt') 
+  return redirect(url_for('show_parlaments'))
 
 def initdb():
   users = [p for p in db.people.index.lookup(username=app.config['USERNAME'])]
