@@ -37,7 +37,7 @@
             <a href="{{ url_for('delete_proposal', i_eid=g.i_eid, prop_id=proposal.eid) }} ">l&ouml;schen</a> 
             <a href="">editieren</a>
             Erstellt vor {{ proposal.created }}  {% if proposal.username %} durch <a href="{{ url_for('show_person', i_eid =
-                                      g.i_eid, person_id=proposal.userid) }}"> {{ proposal.username }}.</a>{% endif %}
+                                      g.i_eid, p_eid=proposal.userid) }}"> {{ proposal.username }}.</a>{% endif %}
          </div></td> </tr> </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
@@ -93,7 +93,7 @@
             <a href="{{ url_for('delete_proposal', prop_id=comment.eid) }} ">l&ouml;schen</a> 
             <a href="">editieren</a>
             Erstellt vor {{ comment.created }}  {% if comment.username %} durch 
-            <a href="{{ url_for('show_person', person_id=comment.userid) }}"> {{ comment.username }}.</a>{% endif %}
+            <a href="{{ url_for('show_person', p_eid=comment.userid) }}"> {{ comment.username }}.</a>{% endif %}
          </div></td> </tr> </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">

@@ -2,6 +2,12 @@
 <title>Liquid Democracy Light</title> 
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
+<script type=text/javascript src="{{
+  url_for('static', filename='jquery-1.7.2.js') }}"></script>
+<script type=text/javascript>
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
 <div class=pagehead>
   <table cellspacing="0px">
     <tr>

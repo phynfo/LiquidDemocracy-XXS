@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, request, redirect, url_for, escape, flash, g, abort
+from flask import Flask, session, render_template, request, redirect, url_for, escape, flash, g, abort, jsonify
 from model import Person, Proposal, Graph
 from bulbs.utils import current_datetime
 from datetime import datetime
@@ -27,6 +27,40 @@ def getParlaments(eid):
     ps = [data(p) for p in v.outV('proposalHasParlament')]
   return ps
 
+@app.template_filter('person2proposals')
+def person2proposals(p_eid):
+  ''' alle Vorschlaege einer Person in zeitlich absteigend sortierter Reihenfolge
+  ''' 
+  q = '''START p=node({peid}), inst=node({ieid})
+         MATCH p-[i:issued]->pr<-[:hasProposal]-inst
+         WHERE pr.element_type="proposal"
+         RETURN ID(pr), pr.title, pr.datetime_created ORDER BY pr.datetime_created DESC
+      '''
+  props = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1]
+  propsDict = [dict(created=date_diff(datetime.utcfromtimestamp(p[2]), datetime.today()), 
+                    title = p[1], 
+                    eid = p[0])
+                          for p in props]
+  return propsDict
+
+
+@app.template_filter('person2votesProposals')
+def person2votesProposals(p_eid):
+  ''' alle Abstimmungen einer Person mit eid p_eid in zeitlich absteigend sortierter Reihenfolge
+      D.h. prs[0] ist die neuste Abstimmung, 
+           prs[-1] ist die aelteste Abstimmung
+  '''
+  q = '''START p=node({peid}), inst=node({ieid})
+         MATCH p-[r:votes]->pr<-[:hasProposal]-inst
+         WHERE pr.element_type="proposal"
+         RETURN r.created, r.pro, pr.title ORDER BY r.created DESC '''
+  propVotes     = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1] #...[0] sind die Spaltenueberschriften
+  propVotesDict = [dict(created=date_diff(datetime.utcfromtimestamp(p[0]), datetime.today()), 
+                        pro=p[1], 
+                        title=p[2]) 
+                          for p in propVotes]
+  return propVotesDict
+
 @app.template_filter('iconize')
 def compact(s): 
   ''' return the first few words of the text s in order to produce 
@@ -41,8 +75,6 @@ def compact(s):
 def eid2title(i_eid):
   instance = db.instances.get(i_eid)
   return instance.title
-
-
 
 @app.url_defaults
 def add_i_eid(endpoint, values):
@@ -365,12 +397,12 @@ def logoutLogin(p_eid):
   session['username']=db.people.get(p_eid).username
   return redirect(url_for('login_instance'))
 
-@app.route('/<int:i_eid>/person/<int:person_id>')
-def show_person(person_id):
+@app.route('/<int:i_eid>/person/<int:p_eid>')
+def show_person(p_eid):
   if not session.get('logged_in'):
         abort(401)
-  person = db.people.get(person_id)
-  return render_template('show_person.html', person=dict(firstname=person.firstname, secondname=person.secondname,\
+  person = db.people.get(p_eid)
+  return render_template('show_person.html', person=dict(p_eid=p_eid, firstname=person.firstname, secondname=person.secondname,\
                          username=person.username, email=person.email))
 
 @app.route('/<int:i_eid>/persons')
@@ -412,6 +444,12 @@ def add_parlament():
     db.instanceHasParlament.create(instance, parlament) 
     flash('Neues Parlament wurde angelegt') 
   return redirect(url_for('show_parlaments'))
+
+@app.route('/_add_numbers')
+def add_numbers():
+  a = request.args.get('a',0,type=int)
+  b = request.args.get('b',0,type=int)
+  return jsonify(result=a+b)
 
 def initdb():
   users = [p for p in db.people.index.lookup(username=app.config['USERNAME'])]

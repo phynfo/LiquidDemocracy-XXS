@@ -31,12 +31,18 @@ a.propTitle {
     text-decoration: none;}
 
 a.parlTitle {
-    color: #FFFFFF;
-    background-color: #2222AA;
+    color: #EEEEEE;
+    background-color: #444444;
     font-variant:small-caps;
     font-stretch:wider;
     font-size:80%;
     text-decoration: none; 
+    border-right-style: solid;
+    border-right-color: #444444;
+    border-right-width: thick;
+    border-left-style: solid;
+    border-left-color: #444444;
+    border-left-width: thick;
     }
 
 

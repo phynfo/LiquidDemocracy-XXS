@@ -1,6 +1,36 @@
 {% extends "layout.html" %}
 {% block body %}
+Letzte Aktionen von {{ person.firstname }} {{ person.secondname }} (Username: {{ person.username }})<br>
 
-TODO
+<table>
+<tr valign=top>
+<td style="padding:20px;">
+  <h3>Neuste Vorschläge</h3> 
+  <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} erstellte ...</p>
+   <table rules="rows" cellpadding=3>
+   {% for proposal in person.p_eid|person2proposals %}
+     <tr valign=top>
+       <td>Vor {{ proposal.created }}</td>
+       <td> Vorschlag "<i>{{ proposal.title }}</i>" </td>
+   {% endfor %}
+   </table>
+</td>
+<td style="padding:20px;">
+  <h3>Neuste Abstimmungen: </h3>
+  <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} stimmte ...</p>
+   <table rules="rows" cellpadding=3>
+   {% for vote in person.p_eid|person2votesProposals %}
+     <tr valign=top>
+       <td>Vor {{ vote.created }}</td>
+       <td>{% if vote.pro==1 %} <span style="color:green;">für</span> 
+           {% else %} <span style="color:red;">gegen</span> {% endif %} 
+       </td>
+       <td> Vorschlag "<i>{{ vote.title }}</i>" </td>
+     </tr>
+   {% endfor %}
+   </table>
+</td>
+<table>
+
 
 {% endblock %}

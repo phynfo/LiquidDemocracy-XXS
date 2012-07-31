@@ -41,41 +41,61 @@
     {% else %} 
          <table> 
     {% endif %}
-    <tr><td class=votes align=center width=50> 
+    <tr>
+      <td class=votes align=center width=50> 
+      <script type=text/javascript>
+      $(function() {
+        $('a#voteup{{ entry.eid }}').bind('click', function() {
+          $.getJSON($SCRIPT_ROOT + '/_vote2', {
+            ieid: {{ g.i_eid }}, 
+            eid: {{ entry.eid }}, 
+            pro: 1
+          }, function(data) {
+            $("#voteup{{ entry.eid }}").attr("src", data.imgvoteup);
+            $("#votedown{{ entry.eid }}").attr("src", data.imgvotedown});
+         return false; })
+         });
+      </script>
         <table class=voteCounts>
-             <tr><td> 
-                    {% if entry.username == session.username %}
-                       <img src="{{ url_for('static',filename='arrow_up_own.svg') }}" alt="dafuer" width=24 align=left>
+             <tr>
+               <td>
+                    {% if entry.username == session.username or not session.username %}
+                       <img id=voteup{{ entry.eid }} src="{{ url_for('static',filename='arrow_up_own.svg') }}" alt="dafuer" width=24 align=left>
                     {% elif not entry.upvoted %}
                        <a href="{{ url_for('vote', pro=1, eid=entry.eid) }}" class=votePic><img 
-                          src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
+                           id=voteup{{ entry.eid }} src="{{ url_for('static',filename='arrows_up_inactive.png') }}" alt="dafuer" width=24 align=left></a> 
                     {% else %}
-                       <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
+                       <img id=voteup{{ entry.eid }} src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
                     {% endif %} 
-               </td> <td class=countUp>+{{ entry.voteCountUp }}</td> 
-             <tr><td>
-               {% if entry.username == session.username %}
-                 <img src="{{ url_for('static',filename='arrow_down_own.svg') }}" alt="dagegen" width=24 align=left>
+               </td> 
+               <td class=countUp>+{{ entry.voteCountUp }}
+               </td> 
+             <tr>
+               <td>
+               {% if entry.username == session.username or not session.username %}
+                 <img id=votedown{{ entry.eid }} src="{{ url_for('static',filename='arrow_down_own.svg') }}" alt="dagegen" width=24 align=left>
                {% elif not entry.downvoted %} 
                   <a href="{{ url_for('vote', pro=0, eid=entry.eid) }}"><img 
-                     src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
+                       id=votedown{{ entry.eid }} src="{{ url_for('static',filename='arrows_down_inactive.png') }}" alt="dagegen" width=24 align=left></a>
                {% else %}
-                    <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
+                    <img  id=votedown{{ entry.eid }} src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
                {% endif %}
-                </td> <td class=countDown>{{ entry.voteCountDown }}</td>
-              </tr>
-           </table>
-           {% for parlament in entry.eid|getParlaments %} <a href="" class=parlTitle>{{ parlament.title }}</a>{% endfor %}
-  </td> <td> <h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
+               </td> <td class=countDown>{{ entry.voteCountDown }}</td>
+             </tr>
+        </table>
+        {% for parlament in entry.eid|getParlaments %} <a href="" class=parlTitle>{{ parlament.title }}</a>{% endfor %}
+      </td> 
+      <td> <h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
                    class=propTitle>{{ entry.title }}</a></h3>
-                                                                                   {{ entry.body|safe|iconize }} </td>
+               {{ entry.body|safe|iconize }} 
+      </td>
     <tr>  <td> </td> <td><div class=propInfo>
             {% if entry.username == session.username %} 
               <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
               <a href="">editieren</a> 
             {% endif %}
             Erstellt vor {{ entry.created }}  {% if entry.username %} durch 
-            <a href="{{ url_for('show_person', person_id=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
+            <a href="{{ url_for('show_person', p_eid=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
          </div></td> </tr> </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">

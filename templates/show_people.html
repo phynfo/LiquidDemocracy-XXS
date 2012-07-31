@@ -2,11 +2,13 @@
 {% block body %}
   <h2>Angemeldete Personen für Instanz {{ instance.title }} </h2>
     {% for person in people %}
-           <h3><a href="{{ url_for('logoutLogin', p_eid=person.eid) }}"
+           <h3><a href="{{ url_for('show_person', p_eid=person.eid) }}"
                    class=propTitle>{{ person.username }}</a></h3> 
-              <div class=propInfo>
-            {% if person.created %} Mitglied seit {{ person.created }}, {% endif %} 
-            Vorname: {{ person.firstname }}, Nachname: {{ person.secondname }}.  </div>
+            <div class=propInfo>
+              {% if person.created %} Mitglied seit {{ person.created }}, {% endif %} 
+              Vorname: {{ person.firstname }}, Nachname: {{ person.secondname }}, 
+              Vorschläge: {{ person.eid|person2proposals|length }}, Votes: {{ person.eid|person2votesProposals|length }} <br> 
+              <a href="{{ url_for('logoutLogin', p_eid=person.eid) }}">Anmelden</a></div> 
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
     {% else %}
