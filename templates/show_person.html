@@ -1,32 +1,88 @@
 {% extends "layout.html" %}
 {% block body %}
-Letzte Aktionen von {{ person.firstname }} {{ person.secondname }} (Username: {{ person.username }})<br>
 
+<h2>Letzte Aktionen von {{ person.firstname }} {{ person.secondname }} (Username: {{ person.username }})</h2>
+
+<h2> Vorschläge: </h2>
 <table>
 <tr valign=top>
-<td style="padding:20px;">
+<td style="margin-left:100px;">
   <h3>Neuste Vorschläge</h3> 
   <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} erstellte ...</p>
    <table rules="rows" cellpadding=3>
    {% for proposal in person.p_eid|person2proposals %}
      <tr valign=top>
        <td>Vor {{ proposal.created }}</td>
-       <td> Vorschlag "<i>{{ proposal.title }}</i>" </td>
+       <td> Vorschlag "<i><a href="{{ url_for('show_single_proposal', prop_id=proposal.p_eid) }}" class=propTitle
+                          >{{ proposal.title }}</a></i>" </td>
+   {% else %}
+     ... bisher noch keinen Vorschlag.
    {% endfor %}
    </table>
 </td>
-<td style="padding:20px;">
+<td style="width:10px;"></td>
+<td style="padding:10px;">
   <h3>Neuste Abstimmungen: </h3>
   <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} stimmte ...</p>
    <table rules="rows" cellpadding=3>
    {% for vote in person.p_eid|person2votesProposals %}
-     <tr valign=top>
+     {% if vote.pro==1 %}  
+     <tr valign=top style="background-color:#CCFFCC;">
+     {% else %}
+     <tr valign=top style="background-color:#FFCCCC;">
+     {% endif %}
        <td>Vor {{ vote.created }}</td>
        <td>{% if vote.pro==1 %} <span style="color:green;">für</span> 
            {% else %} <span style="color:red;">gegen</span> {% endif %} 
        </td>
-       <td> Vorschlag "<i>{{ vote.title }}</i>" </td>
+       <td> Vorschlag "<i><a href="{{ url_for('show_single_proposal', prop_id=vote.p_eid) }}" class=propTitle
+                          >{{ vote.title }}</a></i>" </td>
      </tr>
+   {% else %} 
+     ... bisher noch nicht ab.
+   {% endfor %}
+   </table>
+</td>
+<table>
+
+<h2> Kommentare: </h2>
+
+<table>
+<tr valign=top>
+<td style="margin-left:100px;">
+  <h3>Neuste Vorschläge</h3> 
+  <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} erstellte ...</p>
+   <table rules="rows" cellpadding=3>
+   {% for comment in person.p_eid|person2comments %}
+     <tr valign=top>
+       <td>Vor {{ comment.created }}</td>
+       <td> Vorschlag "<i><a href="{{ url_for('show_single_proposal', prop_id=comment.p_eid) }}" class=propTitle
+                          >{{ comment.title }}</a></i>" </td>
+   {% else %}
+     ... bisher noch keinen Kommentar.
+   {% endfor %}
+   </table>
+</td>
+<td style="width:10px;"></td>
+<td style="padding:10px;">
+  <h3>Neuste Abstimmungen: </h3>
+  <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} stimmte ...</p>
+   <table rules="rows" cellpadding=3>
+   {% for vote in person.p_eid|person2votesComments %}
+     {% if vote.pro==1 %}  
+     <tr valign=top style="background-color:#CCFFCC;">
+     {% else %}
+     <tr valign=top style="background-color:#FFCCCC;">
+     {% endif %}
+       <td>Vor {{ vote.created }}</td>
+       <td>{% if vote.pro==1 %} <span style="color:green;">für</span> 
+           {% else %} <span style="color:red;">gegen</span> {% endif %} 
+       </td>
+       <td> Kommentar "<i><a href="{{ url_for('show_single_proposal', prop_id=vote.p_eid) }}" class=propTitle
+                          >{{ vote.title }}</a></i>" </td>
+     </tr>
+   {% else %} 
+     ... bisher noch nicht ab.
    {% endfor %}
    </table>
 </td>

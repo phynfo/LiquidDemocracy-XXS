@@ -68,7 +68,7 @@
                        <img id=voteup{{ entry.eid }} src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=24 align=left>
                     {% endif %} 
                </td> 
-               <td class=countUp>+{{ entry.voteCountUp }}
+               <td class=countUp>+{{ entry.ups}}
                </td> 
              <tr>
                <td>
@@ -80,10 +80,9 @@
                {% else %}
                     <img  id=votedown{{ entry.eid }} src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=24 align=left>
                {% endif %}
-               </td> <td class=countDown>{{ entry.voteCountDown }}</td>
+               </td> <td class=countDown>-{{ entry.downs }}</td>
              </tr>
         </table>
-        {% for parlament in entry.eid|getParlaments %} <a href="" class=parlTitle>{{ parlament.title }}</a>{% endfor %}
       </td> 
       <td> <h3><a href="{{ url_for('show_single_proposal', prop_id=entry.eid) }}"
                    class=propTitle>{{ entry.title }}</a></h3>
@@ -94,9 +93,17 @@
               <a href="{{ url_for('delete_proposal', prop_id=entry.eid) }} ">l&ouml;schen</a> 
               <a href="">editieren</a> 
             {% endif %}
-            Erstellt vor {{ entry.created }}  {% if entry.username %} durch 
+            Erstellt vor {{ entry.created }} {% if entry.username %} durch 
             <a href="{{ url_for('show_person', p_eid=entry.userid) }}"> {{ entry.username }}.</a>{% endif %}
-         </div></td> </tr> </table>
+         </div></td> </tr> 
+         <tr><td> </td> 
+           <td> 
+             {% for parlament in entry.eid|getParlaments %} 
+                <a href="{{ url_for('show_parlaments') }}" class=parlTitle>{{ parlament.title }}</a>
+             {% endfor %}
+           </td>
+         </tr>
+         </table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
     {% else %}

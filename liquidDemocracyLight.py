@@ -27,39 +27,102 @@ def getParlaments(eid):
     ps = [data(p) for p in v.outV('proposalHasParlament')]
   return ps
 
+@app.template_filter('getPeople')
+def getPeople(eid):
+  ''' returns all people of the Instance eid '''
+  q =  '''START i=node({i_eid}) 
+          MATCH i-[:hasPeople]->p 
+          RETURN ID(p), p.username
+       '''
+  people = db.cypher.table(q,dict(i_eid=eid))[1] # Fetch the people from neo4j ...
+  peopleDict = [dict(p_eid = p[0], 
+                     username = p[1])
+                          for p in people]
+  return peopleDict 
+
+@app.template_filter('getProposals')
+def getProposals(eid): 
+  ''' returns all proposals of the Instance eid'''
+  q = '''START i=node({i_eid})
+         MATCH i-[:hasProposal]->pr
+         RETURN ID(pr), pr.title
+      '''
+  proposals = db.cypher.table(q,dict(i_eid=eid))[1] # Fetch the propsals from neo4j ...
+  proposalDict = [dict(p_eid = p[0],
+                       title = p[1])
+                          for p in proposals]
+  return proposalDict
+
 @app.template_filter('person2proposals')
 def person2proposals(p_eid):
-  ''' alle Vorschlaege einer Person in zeitlich absteigend sortierter Reihenfolge
-  ''' 
+  ''' all proposals of a given person p_eid in a given instance g.i_eid in descending 
+      order, i.e. props[1] contains the newest proposal, props[-1] contains the oldest proposal.
+  '''
   q = '''START p=node({peid}), inst=node({ieid})
          MATCH p-[i:issued]->pr<-[:hasProposal]-inst
          WHERE pr.element_type="proposal"
          RETURN ID(pr), pr.title, pr.datetime_created ORDER BY pr.datetime_created DESC
       '''
-  props = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1]
-  propsDict = [dict(created=date_diff(datetime.utcfromtimestamp(p[2]), datetime.today()), 
-                    title = p[1], 
-                    eid = p[0])
-                          for p in props]
-  return propsDict
+  props = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1] # Fetch the proposals from neo4j ...
+  propsDict = [dict(created = date_diff(datetime.utcfromtimestamp(p[2]), datetime.today()), 
+                    title   = p[1], 
+                    p_eid   = p[0])
+                          for p in props]                      # ... and create a dict-object ...
+  return propsDict                                             # ... and return it.
 
+@app.template_filter('person2comments')
+def person2comments(p_eid):
+  ''' all comments of a given person p_eid in a given instance g.i_eid in descending 
+      order, i.e. comments[1] contains the newest comment, comments[-1] contains the oldest comment.
+  '''
+  q = '''START p=node({peid}), inst=node({ieid})
+         MATCH p-[i:issuesComment]->co<-[:hasComment]-pr<-[:hasProposal]-inst
+         WHERE co.element_type="comment"
+         RETURN ID(co), co.title, co.datetime_created, ID(pr) ORDER BY co.datetime_created DESC
+      '''
+  comments = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1] # Fetch the comments from neo4j ...
+  commentsDict = [dict(created = date_diff(datetime.utcfromtimestamp(c[2]), datetime.today()), 
+                       title   = c[1], 
+                       c_eid   = c[0],
+                       p_eid   = c[3])
+                          for c in comments]                      # ... and create a dict-object ...
+  return commentsDict                                             # ... and return it.
+ 
 
 @app.template_filter('person2votesProposals')
 def person2votesProposals(p_eid):
-  ''' alle Abstimmungen einer Person mit eid p_eid in zeitlich absteigend sortierter Reihenfolge
-      D.h. prs[0] ist die neuste Abstimmung, 
-           prs[-1] ist die aelteste Abstimmung
+  ''' all proposals votings of a given person p_eid in a given instance g.i_eid in temporal descending 
+      order, i.e. propVotes[0] contains the latest vote, propVotes[-1] contains the oldest vote.
   '''
   q = '''START p=node({peid}), inst=node({ieid})
-         MATCH p-[r:votes]->pr<-[:hasProposal]-inst
+         MATCH p-[v:votes]->pr<-[:hasProposal]-inst
          WHERE pr.element_type="proposal"
-         RETURN r.created, r.pro, pr.title ORDER BY r.created DESC '''
-  propVotes     = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1] #...[0] sind die Spaltenueberschriften
-  propVotesDict = [dict(created=date_diff(datetime.utcfromtimestamp(p[0]), datetime.today()), 
-                        pro=p[1], 
-                        title=p[2]) 
-                          for p in propVotes]
-  return propVotesDict
+         RETURN v.created, v.pro, pr.title, ID(pr) ORDER BY v.created DESC '''
+  propVotes     = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1] # Fetch the votes from neo4j ...
+  propVotesDict = [dict(created = date_diff(datetime.utcfromtimestamp(p[0]), datetime.today()), 
+                        pro     = p[1], 
+                        title   = p[2], 
+                        p_eid   = p[3]) 
+                             for p in propVotes]                       # ... and create a dict-object ...
+  return propVotesDict                                                 # ... and return it.
+
+@app.template_filter('person2votesComments')
+def person2votesComments(p_eid):
+  ''' all comments votings of a given person p_eid in a given instance g.i_eid in temporal descending 
+      order, i.e. coVotes[0] contains the latest vote, copVotes[-1] contains the oldest vote.
+  '''
+  q = '''START p=node({peid}), inst=node({ieid})
+         MATCH p-[v:votes]->co<-[:hasComment]-pr<-[:hasProposal]-inst
+         WHERE co.element_type="comment"
+         RETURN v.created, v.pro, co.title, ID(co), ID(pr) ORDER BY v.created DESC '''
+  coVotes     = db.cypher.table(q,dict(peid=p_eid, ieid=g.i_eid))[1] # Fetch the votes from neo4j ...
+  coVotesDict = [dict(created = date_diff(datetime.utcfromtimestamp(c[0]), datetime.today()), 
+                        pro     = c[1], 
+                        title   = c[2], 
+                        c_eid   = c[3],
+                        p_eid   = c[4])
+                             for c in coVotes]                       # ... and create a dict-object ...
+  return coVotesDict                                                 # ... and return it.
 
 @app.template_filter('iconize')
 def compact(s): 
@@ -134,7 +197,7 @@ def v2Dict(eid, loggedUserEid=None):
         - the vote-counts
         - the creation date ''' 
   v = db.vertices.get(eid)
-  d = dict(title = v.title, body=v.body, eid=eid)
+  d = dict(title = v.title, body=v.body, eid=eid, ups=v.ups, downs=v.downs)
   users = issuer(eid)
   d['username'] = users[0].username if users else None
   d['userid'] = users[0].eid if users else None
@@ -237,7 +300,7 @@ def add_proposal():
       db.proposalHasParlament.create(prop,p[0])
   instance = db.instances.get(g.i_eid)
   user = db.people.get(session['userId'])
-  db.issues.create(user,prop)           # Edge1: User issues Proposal
+  db.issued.create(user,prop)           # Edge1: User issues Proposal
   db.hasProposal.create(instance, prop) # Edge2: Proposal belongs to current Instance
   flash('Neuer Eintrag erfolgreich erstellt')
   return redirect(url_for('show_proposals'))
@@ -271,20 +334,25 @@ def vote(pro, eid):
   if not session.get('logged_in'):
     abort(401)
   loggedUser = db.people.get(session['userId'])
-  c_p = db.vertices.get(eid) # could be a comment or a proposal
+  c_p = db.vertices.get(eid)             # c_p is a comment or a proposal
   voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == c_p]
-  if voteRels and voteRels[0].pro!=pro:
-    # User undoes vote => Delete Edge
+  if voteRels and voteRels[0].pro!=pro:  # i.e.: user undoes vote => delete Edge
+    if pro==1:  
+      c_p.downs-= 1 ; c_p.save() 
+    else: 
+      c_p.ups-= 1 ; c_p.save() 
     db.votes.delete(voteRels[0].eid)
     flash('Stimme rueckgaengig gemacht')
-  if voteRels and voteRels[0].pro==pro: 
-    # Voting up/down a second time is not allowed.
+  if voteRels and voteRels[0].pro==pro:  # i.e.: Voting up/down a second time is not allowed.
     abort(401)
-  if not voteRels: 
-    # No "Votes"-Edge exists => Create new "Votes"-Edge
+  if not voteRels:                       # i.e.: No "votes"-edge exists => create new "votes"-Edge
     db.votes.create(loggedUser,c_p, pro=pro)
-    if pro: flash('Erfolgreich dafuer gestimmt') 
-    else:   flash('Erfolgreich dagegen gestimmt')
+    if pro: 
+      flash('Erfolgreich dafuer gestimmt') 
+      c_p.ups += 1 ; c_p.save() 
+    else:   
+      flash('Erfolgreich dagegen gestimmt')
+      c_p.downs += 1 ; c_p.save() 
   if c_p.element_type == 'comment':
     proposal = c_p.inV('hasComment').next()
     return redirect(url_for('show_single_proposal', prop_id=proposal.eid))
@@ -402,15 +470,17 @@ def show_person(p_eid):
   if not session.get('logged_in'):
         abort(401)
   person = db.people.get(p_eid)
-  return render_template('show_person.html', person=dict(p_eid=p_eid, firstname=person.firstname, secondname=person.secondname,\
-                         username=person.username, email=person.email))
+  return render_template('show_person.html', person=dict(p_eid=p_eid, firstname=person.firstname,\
+                                                         secondname=person.secondname,\
+                                                         username=person.username, email=person.email))
 
 @app.route('/<int:i_eid>/persons')
 def show_people():
   instance = db.instances.get(g.i_eid)
   people = [person2Dict(p) for p in instance.outV('hasPeople')] 
   return render_template('show_people.html', people = people, 
-                                             instance = dict(title=instance.title, eid=instance.eid))
+                                             instance = dict(title=instance.title,\
+                                                             eid=instance.eid))
 
 @app.route('/<int:i_eid>/parlaments')
 def show_parlaments(): 
@@ -444,6 +514,27 @@ def add_parlament():
     db.instanceHasParlament.create(instance, parlament) 
     flash('Neues Parlament wurde angelegt') 
   return redirect(url_for('show_parlaments'))
+
+
+@app.route('/<int:i_eid>/delegate_parlement/<int:parl_eid>')
+def delegateParlament(parl_eid): 
+  parlament = db.parlaments.get(parl_eid)
+  return render_template('delegate.html', parlament=dict(eid=parl_eid, title=parlament.title)) 
+
+@app.route('/<int:i_eid>/delegate_proposal/<int:pr_eid>')
+def delegateProposal(pr_eid): 
+  return render_template('delegate.html', proposal=pr_eid) 
+
+@app.route('/<int:i_eid>/delegate_person/<int:p_eid>')
+def delegatePerson(p_eid): 
+  return render_template('delegate.html', person=p_eid) 
+
+@app.route('/<int:i_eid>/delegate',methods=['POST'])
+def delegate(): 
+  ''' Create a delegation: 
+      
+  '''
+  return redirect(url_for('show_proposals')) 
 
 @app.route('/_add_numbers')
 def add_numbers():

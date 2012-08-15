@@ -18,13 +18,16 @@ It is "light" with respect to:
    - It uses no "Design Patterns".
 
 * **Requirements:** It implements just the core set of requirements, i.e.
-  - **Instances:** An instance comprises a set of proposals and users. -- *just implemented* --
+  - **Instances:** An instance comprises a set of proposals and users.
   - **Users:** Basic user-management (login, sign-in, logout)
   - **Proposals:** Add, delete, view Proposals.
-  - **Voting:** One Up-Vote/Down-Vote per User per Proposal.
+  - **Voting:** One Up-Vote/Down-Vote per User per Proposal / Comment.
   - **Comments:** Add, delete and vote for discussion-comments of a proposal. 
   - **Rationals:** Add, delete and vote for pro-/con-rationals of a proposal. -- *not implemented yet* --
-  - **Parlaments:** Add, delete Parlaments (in which proposals can be raised); Maybe that should be nothing but a mechanism to tag . -- *not implemented yet* --
+                   (Should the delegation also be projected to past actions?) 
+  - **Delegations:** Delegate own vote to other user(s) relative to parlament, proposal or whole instance.
+  - **Parlaments:** Add, delete Parlaments (in which proposals can be raised); Maybe that should be nothing but a mechanism to tag
+    . -- *just implemented* --
 
 
 ## Technology:

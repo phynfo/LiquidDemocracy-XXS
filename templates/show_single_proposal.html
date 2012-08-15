@@ -38,7 +38,14 @@
             <a href="">editieren</a>
             Erstellt vor {{ proposal.created }}  {% if proposal.username %} durch <a href="{{ url_for('show_person', i_eid =
                                       g.i_eid, p_eid=proposal.userid) }}"> {{ proposal.username }}.</a>{% endif %}
-         </div></td> </tr> </table>
+         </div></td> </tr> 
+         <tr><td> </td> 
+           <td> 
+             {% for parlament in proposal.eid|getParlaments %} 
+                <a href="{{ url_for('show_parlaments') }}" class=parlTitle>{{ parlament.title }}</a>
+             {% endfor %}
+           </td>
+         </tr></table>
       <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
 

@@ -26,23 +26,34 @@ body {
     padding: 0;
 }
 
+select {
+  background-color: #000000;
+  color: ivory; 
+  }
+
 a.propTitle {
     color: #000000;
     text-decoration: none;}
 
 a.parlTitle {
-    color: #EEEEEE;
+    color: #FFFFFF;
     background-color: #444444;
     font-variant:small-caps;
     font-stretch:wider;
     font-size:80%;
     text-decoration: none; 
+    border-top-style: solid;
+    border-top-color: #444444;
+    border-top-width: medium;
     border-right-style: solid;
     border-right-color: #444444;
     border-right-width: thick;
     border-left-style: solid;
     border-left-color: #444444;
     border-left-width: thick;
+    border-bottom-style: solid;
+    border-bottom-color: #444444;
+    border-bottom-width: medium;
     }
 
 

@@ -12,7 +12,7 @@ class Person(Node):
   email = String(nullable=False)
   created = DateTime(default=current_datetime, nullable=False)
 
-class Issues(Relationship):
+class Issued(Relationship):
   label = 'issued'
   created = DateTime(default=current_datetime, nullable=False)
 
@@ -25,6 +25,8 @@ class Proposal(Node):
   element_type = 'proposal'
   title = String(nullable=False)
   body = String(nullable=False)
+  ups = Integer()
+  downs = Integer()
   datetime_created = DateTime(default=current_datetime, nullable=False)
   datetime_modification = DateTime()
 
@@ -42,6 +44,8 @@ class Comment(Node):
   element_type = 'comment'
   title = String(nullable=False)
   body = String(nullable=False)
+  ups = Integer()
+  downs = Integer()
   datetime_created = DateTime(default=current_datetime, nullable=False)
   datetime_modification = DateTime()
 
@@ -68,24 +72,57 @@ class ProposalHasParlament(Relationship):
 class InstanceHasParlament(Relationship):
   label = 'instanceHasParlament'
 
+# ----------------------------------------------------------------------------
+# -- Modeling the 3 basic cases of delegation: 
+# -- 1. Delegation of a Person for everything        (DelegationPerson)
+# -- 2. Delegation of a Person for a Parlament       (DelegationParlament with Delegation Hyperedge)
+# -- 3. Delegation of a Person for a single Proposal (DelegationProposal with Delegation Hyperedge)
+class Delegation(Node):
+  element_type = "delegation"
+  datetime_created=DateTime(default=current_datetime, nullable=False)
+
+class PersonDelegation(Relationship):  
+  label = "personDelegation"
+
+class DelegationParlament(Relationship):# (Delegation -> Parlament)
+  label = "delegationParlament"
+
+class DelegationProposal(Relationship):# (Delegation -> Proposal)
+  label = "delegationProposal"
+
+class DelegationPerson(Relationship):  # (Delegation -> Person)
+  label = "delegationPerson"
+
+#-------------------------------------------------------------------------------------------------
+
 class Graph(Neo4jGraph):
   def __init__(self, config=None):
     super(Graph, self).__init__(config)
-    # --------------- Nodes-Proxies
+
+    # --------------- Nodes-Proxies --------------------------------------------------------------
     self.people = self.build_proxy(Person)
     self.proposals = self.build_proxy(Proposal)
     self.comments = self.build_proxy(Comment)
     self.parlaments = self.build_proxy(Parlament)
     self.instances = self.build_proxy(Instance) 
-    # --------------- Edge-Proxies
-    self.issues = self.build_proxy(Issues)               # Edge: (Person -> Proposal)
-    self.votes = self.build_proxy(Votes)                 # Edge: (Person -> Proposal)
-    self.issuesComment = self.build_proxy(IssuesComment) # Edge: (Person -> Comment)
-    self.hasComment = self.build_proxy(HasComment)       # Edge: (Proposal -> Comment)
-    self.hasPeople = self.build_proxy(HasPeople)         # Edge: (Instance -> Person)
-    self.hasProposal = self.build_proxy(HasProposal)     # Edge: (Instance -> Proposal)
+    self.delegation = self.build_proxy(Delegation) # Hyperedge: Delegation
+                                                   #   needed for delegations relativ to a parlament 
+                                                   #   or a proposal
+
+    # --------------- Edge-Proxies  --------------------------------------------------------------
+    self.issued = self.build_proxy(Issued)                     # Edge: (Person -> Proposal)
+    self.votes = self.build_proxy(Votes)                       # Edge: (Person -> Proposal/Comment)
+    self.issuesComment = self.build_proxy(IssuesComment)       # Edge: (Person -> Comment)
+    self.hasComment = self.build_proxy(HasComment)             # Edge: (Proposal -> Comment)
+    self.hasPeople = self.build_proxy(HasPeople)               # Edge: (Instance -> Person)
+    self.hasProposal = self.build_proxy(HasProposal)           # Edge: (Instance -> Proposal)
     self.proposalHasParlament = self.build_proxy(ProposalHasParlament) # Edge: (Proposal -> Parlament)
     self.instanceHasParlament = self.build_proxy(InstanceHasParlament) # Edge: (Instance -> Parlament)
+    self.personDelegation = self.build_proxy(PersonDelegation) # Edge: (Person -> Delegation)
+                                                               #       (Person -> Person)
+    self.delegationParlament = self.build_proxy(DelegationParlament)   # Edge: (Delegation -> Parlament)
+    self.delegationProposal = self.build_proxy(DelegationProposal)     # Edge: (Delegation -> Proposal)
+    self.delegationPerson = self.build_proxy(DelegationPerson) # Edge: (Delegation -> Person)
 
 
 

@@ -20,7 +20,11 @@
      <tr> <h3><a href="{{ url_for('show_parlaments') }}"
                  class=parlTitle>{{ parlament.title }}</a></h3> {{ parlament.body|safe|iconize }}  
      </tr>
-     <tr> <div class=propInfo>Enthaltene Vorschläge: {{ parlament.numberProposals }}</div> 
+     <tr> <div class=propInfo>
+       {% if session.userId %}
+       <a href="{{ url_for('delegateParlament', parl_eid=parlament.eid) }}">Delegieren</a>
+       {% endif %}
+       Enthaltene Vorschläge: {{ parlament.numberProposals }}</div> 
      </tr>
      <hr style="color:black; background-color:black; height:1px;
             border:1px; ">
