@@ -4,7 +4,7 @@ from bulbs.utils import current_datetime
 from datetime import datetime
 from utils import date_diff
 import re
-
+  
 # configuration
 DATABASE = 'graphdatabase'
 DEBUG = True
