@@ -293,7 +293,7 @@ def add_proposal():
   if not session.get('logged_in'):
     abort(401)
   prop = db.proposals.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
-                      datetime_modfied=current_datetime())
+                      datetime_modification=current_datetime())
   if 'parlament' in request.form: 
     p = list(db.parlaments.index.lookup(title=request.form['parlament']))
     if p: 
@@ -321,7 +321,7 @@ def add_comment(prop_id):
   if not session.get('logged_in'):
     abort(401)
   comment = db.comments.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
-                      datetime_modfied=current_datetime())
+                      datetime_modification=current_datetime())
   user = db.people.get(session['userId'])
   db.issuesComment.create(user,comment) 
   db.hasComment.create(db.proposals.get(prop_id), comment)
@@ -359,7 +359,7 @@ def vote(pro, eid):
   return redirect(url_for('show_proposals'))
 
 @app.route('/<int:i_eid>/login',methods=['POST','GET'])
-def login_instance(): 
+def login_instance():
   error = None
   if request.method == 'POST':
     username = request.form['username'] ; password = request.form['password']
@@ -382,7 +382,7 @@ def login_instance():
 def login(): 
     error = None 
     if request.method == 'POST':
-      username = request.form['username'] ; password = request.form['password'] ; instancetitle = request.form['instancetitle']
+      username = request.form['username'] ; password = request.form['password'] ; instancetitle = request.form['instancetitle']    
       instance = db.instances.index.lookup(title=instancetitle).next()
       users = [u for u in db.people.index.lookup(username=username) if u in instance.outV('hasPeople')] 
       if users and users[0].password==password: 
@@ -544,7 +544,7 @@ def add_numbers():
 
 def initdb():
   users = [p for p in db.people.index.lookup(username=app.config['USERNAME'])]
-  if not users: 
+  if not users:
     db.people.create(username=app.config['USERNAME'], \
                      firstname=app.config['USERNAME'], \
                      secondname=app.config['USERNAME'], \
