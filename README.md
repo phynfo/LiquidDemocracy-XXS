@@ -24,8 +24,8 @@ It is "light" with respect to:
   - **Voting:** One Up-Vote/Down-Vote per User per Proposal / Comment.
   - **Comments:** Add, delete and vote for discussion-comments of a proposal. 
   - **Rationals:** Add, delete and vote for pro-/con-rationals of a proposal. -- *not implemented yet* --
-                   (Should the delegation also be projected to past actions?) 
   - **Delegations:** Delegate own vote to other user(s) relative to parlament, proposal or whole instance.
+                   (Should the delegation also be projected to past actions?) 
   - **Parlaments:** Add, delete Parlaments (in which proposals can be raised); Maybe that should be nothing but a mechanism to tag
     . -- *just implemented* --
 

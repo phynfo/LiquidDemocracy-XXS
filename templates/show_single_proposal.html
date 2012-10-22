@@ -81,7 +81,7 @@
                        <img src="{{ url_for('static',filename='arrows_up_active.png') }}" alt="dafuer" width=20 align=left>
                     {% endif %} 
                </td> 
-               <td class=countUp>+{{ comment.voteCountUp }}</td> 
+               <td class=countUp>+{{ comment.ups }}</td> 
                <tr><td>
                     {% if comment.username == session.username %}
                        <img src="{{ url_for('static',filename='arrow_down_own.svg') }}" alt="dafuer" width=20 align=left>
@@ -91,7 +91,7 @@
                     {% else %}
                          <img src="{{ url_for('static',filename='arrows_down_active.png') }}" alt="dagegen" width=20 align=left>
                     {% endif %}
-                </td> <td class=countDown>{{ comment.voteCountDown }}</td>
+                </td> <td class=countDown>-{{ comment.downs }}</td>
               </tr>
            </table>
           </td> <td><b><a href="{{ url_for('show_single_proposal', prop_id=comment.eid) }}"

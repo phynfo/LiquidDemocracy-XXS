@@ -25,8 +25,8 @@ class Proposal(Node):
   element_type = 'proposal'
   title = String(nullable=False)
   body = String(nullable=False)
-  ups = Integer()
-  downs = Integer()
+  ups = Integer()                # Redunant storage of upvotes
+  downs = Integer()              # Redundante storage of downvotes
   datetime_created = DateTime(default=current_datetime, nullable=False)
   datetime_modification = DateTime()
 
@@ -44,8 +44,8 @@ class Comment(Node):
   element_type = 'comment'
   title = String(nullable=False)
   body = String(nullable=False)
-  ups = Integer()
-  downs = Integer()
+  ups = Integer()                 # Redunant storage of upvotes
+  downs = Integer()               # Redundante storage of downvotes
   datetime_created = DateTime(default=current_datetime, nullable=False)
   datetime_modification = DateTime()
 

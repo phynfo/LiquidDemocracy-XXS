@@ -531,9 +531,18 @@ def delegatePerson(p_eid):
 
 @app.route('/<int:i_eid>/delegate',methods=['POST'])
 def delegate(): 
-  ''' Create a delegation: 
-      
+  ''' Create a delegation edges and vertices
+      There are three cases:
+      1. Delegation of a person for all proposals
+      2. Delegation of a person for all proposals of a specific parlament
+      3. Delegation of a person for a single proposal
   '''
+  person = request.form['person'] if 'person' in request.form else None
+  proposal = request.form['proposal'] if 'proposal' in request.form else None
+  parlament = request.form['parlament'] if 'parlament' in request.form else None
+  span = request.form['span'] 
+  time = request.form['time'] 
+  print person, proposal, parlament, span, time
   return redirect(url_for('show_proposals')) 
 
 @app.route('/_add_numbers')
