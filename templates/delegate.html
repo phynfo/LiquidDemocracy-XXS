@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1> Delegation </h1>
+    <form action="{{ url_for('delegate') }}" method=post class=add-entry>
+    <table>
+    <tr valign=top> 
+      <td width=150px>
+      <dl>
+        <dt> <h4>An welche Person delegieren?</h4>
+        <br>
+        <dd><select name=person size=3>
+          {% for p in g.i_eid|getPeople %}
+            {% if person and person.username==p.username %}
+            <option selected>{{ p.username }}</option>
+            {% else %}
+            <option>{{ p.username }}</option>
+            {% endif %}
+          {% endfor %}
+           </select>
+      </dl>
+      </td>
+      <td width=90px> </td>
+      <td>
+      <table>
+      <h4> Auf welche Vorschläge delegieren? </h4>
+        <tr valign=top> 
+          <td width=70px><p style="text-indent:-23px;">
+            <input type="radio" name="span" value="all">Alle</p>
+          </td>
+          <td width=200px> <p style="text-indent:-23px;">
+            {% if parlament %}
+              <input type="radio" name="span" value="parlament" checked> Alle Vorschläge eines Parlaments
+            {% else %} 
+              <input type="radio" name="span" value="parlament"> Alle Vorschläge eines Parlaments: 
+            {% endif %}</p> 
+              <select name=parlament size=3>
+                {% for p in g.i_eid|getParlaments %}
+                  {% if parlament and parlament.title==p.title %}
+                  <option selected>{{ p.title }}</option>
+                  {% else %}
+                  <option> {{ p.title }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </td>
+            <td width=200px><p style="width:100px; text-indent:-23px;">
+            {% if proposal %}
+              <input type="radio" name="span" value="proposal" checked>Ein einzelner Vorschlag 
+            {% else %}
+              <input type="radio" name="span" value="proposal">Ein einzelner Vorschlag 
+            {% endif %} </p>
+              <select name=proposal size=3>
+                {% for p in g.i_eid|getProposals %}
+                  {{ p.title }}
+                  {% if proposal and proposal.title==p.title %}
+                  <option selected>{{ p.title }}</option>
+                  {% else %}
+                  <option>{{ p.title }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+          </td>
+        </tr>
+      </table>
+      </td> 
+    </tr>
+    </table>
+    <hr>
+    <h4> Ab wann delegieren?</h4> 
+      <input type="radio" name="time" value="now" checked> Ab jetzt</input> <br>
+      <input type="radio" name="time" value="past"> Vergangenheit mit einbeziehen</input> 
+    <hr>
+    <input type=submit value="Delegation erstellen">
+    </form>
+
+{% endblock %}
+
