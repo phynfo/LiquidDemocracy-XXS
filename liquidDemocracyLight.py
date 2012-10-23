@@ -246,7 +246,7 @@ def person2Dict(person):
 #   * Votes
 #     - vote
 #   * People
-#     - login, logout, signin, login_instnace
+#     - login, logout, signin, login_instance
 #     - show_person, show_people
 # -------------------------------------------------------------------------------
 
