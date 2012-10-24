@@ -8,14 +8,15 @@ It is "light" with respect to:
    - It uses the Python micro webframework Flask
      (instead of a full-blown framework like Django or Pyramide)
    - No caching
+   - No i18n
    - Little security
    - Hardly any javascript
    - ...
 
 * **Software Engineering:** 
-   - It uses no fancy abstraction layers
-   - It uses no built-in version-management of items. 
-   - It uses no "Design Patterns".
+   - No fancy abstraction layers
+   - No built-in version-management of items. 
+   - No "Design Patterns".
 
 * **Requirements:** It implements just the core set of requirements, i.e.
   - **Instances:** An instance comprises a set of proposals and users.
@@ -51,21 +52,22 @@ It is "light" with respect to:
 
 * Install Flask and Bulbs
   ```bash
-  $ pip install flask
-  $ pip install bulbs
+  (venv)$ pip install flask
+  (venv)$ pip install bulbs
   ```
 
 * clone/copy this git-repo and start the main programm 
   ```bash
-  $ python liquidDemocracyLight.py
+  (venv)$ git clone https://github.com/phynfo/LiquidDemocracy-XXS.git liquidDemocracyXXS
+  (venv)$ python liquidDemocracyLight.py
   ```
-  (be sure *not* to use the `/usr/bin/python`-Python but the `.../venv/bin/python`-Python of the local environment. 
+  Be sure *not* to use the global  `/usr/bin/python`-Python but the local `.../venv/bin/python`-Python of the local environment. 
 
 * open a webbrowser and call http://localhost:5000
 
 ## Use the Test Data
 
-* You are free to use my test data, which can be found in the `data`-folder of this repository. 
+* You are free to use the test data, provided in the `data`-folder of this repository. 
 
 * It contains proposals (written in german), Users (which all use the password `bla`), Comments (written in german), Parlaments,
   Votings, two Instances. 
@@ -78,7 +80,7 @@ It is "light" with respect to:
 
 ## Install on Windows 
 
-I find it much easier to set up the development environment on Linux. Perhaps you want to install Linux e.g. on 
+I found it much easier to set up the development environment on Linux. Perhaps you want to install Linux e.g. on 
 VirutalBox inside Windows and go on with the above instructions? If not, try to do the following:
 
 ### Install python, setuptools and pip
