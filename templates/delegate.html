@@ -37,9 +37,9 @@
               <select name=parlament size=3>
                 {% for p in g.i_eid|getParlaments %}
                   {% if parlament and parlament.title==p.title %}
-                  <option selected>{{ p.title }}</option>
+                  <option value="" selected>{{ p.title }}</option>
                   {% else %}
-                  <option> {{ p.title }}</option>
+                  <option value=""> {{ p.title }}</option>
                   {% endif %}
                 {% endfor %}
               </select>
@@ -54,9 +54,9 @@
                 {% for p in g.i_eid|getProposals %}
                   {{ p.title }}
                   {% if proposal and proposal.title==p.title %}
-                  <option selected>{{ p.title }}</option>
+                  <option value="{{ p.p_eid }}" selected>{{ p.title }}</option>
                   {% else %}
-                  <option>{{ p.title }}</option>
+                  <option value="{{ p.p_eid }}">{{ p.title }}</option>
                   {% endif %}
                 {% endfor %}
               </select>

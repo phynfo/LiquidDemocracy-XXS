@@ -69,19 +69,17 @@ It is "light" with respect to:
 
 * You are free to use the test data, provided in the `data`-folder of this repository. 
 
-* It contains proposals (written in german), Users (which all use the password `bla`), Comments (written in german), Parlaments,
-  Votings, two Instances. 
+* It contains proposals (written in german), Users (which all use the password `bla`; the admin-user is `tobias`), Comments (written in german), Parlaments,
+  Votings, two Instances.  
 
 * Install the test data by copying the `data`-Folder to `/path/to/neo4j`
-  (hopfully just copying will work, I am not fully sure about it). 
-
-* The admin is `tobias` (username) and `bla` as password.
+  (probably just copying will work, however I am not fully sure about it). 
 
 
 ## Install on Windows 
 
-I found it much easier to set up the development environment on Linux. Perhaps you want to install Linux e.g. on 
-VirutalBox inside Windows and go on with the above instructions? If not, try to do the following:
+I found it much easier to set up the development environment on a Linux-System. Perhaps you want to install Linux 
+e.g. on VirutalBox inside Windows and go on with the above instructions? If not, try to do the following:
 
 ### Install python, setuptools and pip
 
@@ -103,15 +101,14 @@ VirutalBox inside Windows and go on with the above instructions? If not, try to 
   > pip install bulbs
   > pip install python-dateutil
   ```
-  Note: To get it all working, you must have a compiler installed (Visual Studio 2008 or mingw)
+  Note: To get it all working, you must have a compiler installed (e.g. Visual Studio 2008 or mingw)
 
-* Download the latest **stable** release of the neo4j--Graphdatabase (http://neo4j.org)
-* Start the neo4j-Graphdatabase-Server (you need a Java Runtime Environment for that): 
+* Download the latest **stable** release of the Neo4j-Graphdatabase (http://neo4j.org)
+* Start the Neo4j-Server (you need a Java Runtime Environment for that): 
   ```
   > bin\Neo4j.bat
   ```
-  (you access the REST-API via a browser opening http:\\localhost:7474)
-
+* Run the script liquidDemocracy.py with python; a Test-Webserver is included.
 
 
 

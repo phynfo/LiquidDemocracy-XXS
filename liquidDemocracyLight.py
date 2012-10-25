@@ -25,6 +25,7 @@ def getParlaments(eid):
     ps = [data(p) for p in v.outV('instanceHasParlament')]
   elif v.element_type == 'proposal':
     ps = [data(p) for p in v.outV('proposalHasParlament')]
+  #TODO eid in die dicts mit einfuegen! 
   return ps
 
 @app.template_filter('getPeople')
@@ -542,7 +543,9 @@ def delegate():
   parlament = request.form['parlament'] if 'parlament' in request.form else None
   span = request.form['span'] 
   time = request.form['time'] 
-  print person, proposal, parlament, span, time
+  print person, proposal, parlament, span,     time
+      # babsi None                 Umweltpolitik parlament now
+      # babsi Freihheit fuer Bubis2 Privates      proposal  now
   return redirect(url_for('show_proposals')) 
 
 @app.route('/_add_numbers')
