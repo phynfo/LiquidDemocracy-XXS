@@ -3,3 +3,4 @@ Downloads
 gremlin
 venv
 *.pyc
+/*.py~
