@@ -1,6 +1,5 @@
 from flask import Flask, session, render_template, request, redirect, url_for, escape, flash, g, abort, jsonify
 from model import Person, Proposal, Graph
-from bulbs.utils import current_datetime
 from datetime import datetime
 from utils import date_diff
 import re
@@ -26,6 +25,7 @@ def getParlaments(eid):
   elif v.element_type == 'proposal':
     ps = [data(p) for p in v.outV('proposalHasParlament')]
   #TODO eid in die dicts mit einfuegen! 
+  # for p in ps: p['eid'] = 
   return ps
 
 @app.template_filter('getPeople')
@@ -264,7 +264,7 @@ def show_instances():
 def add_instance(): 
   if not (session.get('logged_in') and session['isAdmin']): 
     abort(401)  
-  instance = db.instances.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime())
+  instance = db.instances.create(title=request.form['title'], body=request.form['body'])
   flash('Neue Instanz haette angelegt werden muessen') 
   return redirect(url_for('show_instances'))
 
@@ -293,8 +293,7 @@ def show_single_proposal(prop_id):
 def add_proposal():
   if not session.get('logged_in'):
     abort(401)
-  prop = db.proposals.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
-                      datetime_modfied=current_datetime())
+  prop = db.proposals.create(title=request.form['title'], body=request.form['body'], ups=0, downs=0)
   if 'parlament' in request.form: 
     p = list(db.parlaments.index.lookup(title=request.form['parlament']))
     if p: 
@@ -321,8 +320,7 @@ def delete_proposal(prop_id):
 def add_comment(prop_id):
   if not session.get('logged_in'):
     abort(401)
-  comment = db.comments.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime(), \
-                      datetime_modfied=current_datetime())
+  comment = db.comments.create(title=request.form['title'], body=request.form['body']) 
   user = db.people.get(session['userId'])
   db.issuesComment.create(user,comment) 
   db.hasComment.create(db.proposals.get(prop_id), comment)
@@ -511,7 +509,7 @@ def add_parlament():
     flash('Parlament wurde nicht angelegt! Es existiert schon in dieser Instanz')
   else:  
     instance = db.instances.get(g.i_eid)
-    parlament = db.parlaments.create(title=request.form['title'], body=request.form['body'], datetime_created=current_datetime())
+    parlament = db.parlaments.create(title=request.form['title'], body=request.form['body'])
     db.instanceHasParlament.create(instance, parlament) 
     flash('Neues Parlament wurde angelegt') 
   return redirect(url_for('show_parlaments'))
@@ -543,7 +541,7 @@ def delegate():
   parlament = request.form['parlament'] if 'parlament' in request.form else None
   span = request.form['span'] 
   time = request.form['time'] 
-  print person, proposal, parlament, span,     time
+  print '######################################\n', person, proposal, parlament, span, time, '\n######################################\n'
       # babsi None                 Umweltpolitik parlament now
       # babsi Freihheit fuer Bubis2 Privates      proposal  now
   return redirect(url_for('show_proposals')) 

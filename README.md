@@ -11,7 +11,6 @@ It is "light" with respect to:
    - No i18n
    - Little security
    - Hardly any javascript
-   - ...
 
 * **Software Engineering:** 
    - No fancy abstraction layers
@@ -19,18 +18,18 @@ It is "light" with respect to:
    - No "Design Patterns".
 
 * **Requirements:** It implements just the core set of requirements, i.e.
-  - **Instances:** An instance comprises a set of proposals and users.
-  - **Users:** Basic user-management (login, sign-in, logout)
-  - **Proposals:** Add, delete, view Proposals.
-  - **Voting:** One Up-Vote/Down-Vote per User per Proposal / Comment.
-  - **Comments:** Add, delete and vote for discussion-comments of a proposal. 
-  - **Rationals:** Add, delete and vote for pro-/con-rationals of a proposal. -- *not implemented yet* --
+  - **Instances:** An instance comprises a set of proposals and users. -- *implemented* --
+  - **Users:** Basic user-management (login, sign-in, logout) -- *implemented* --
+  - **Proposals:** Add, delete, view Proposals. -- *implemented* --
+  - **Voting:** One Up-Vote/Down-Vote per User per Proposal / Comment. -- *implemented* --
+  - **Comments:** Add, delete and vote for discussion-comments of a proposal. -- *implemented* --
+  - **Rationals:** Add, delete and vote for pro-/con-rationals of a proposal. -- *not yet implemented* --
   - **Delegations:** Delegate own vote to other user(s) relative to parlament, proposal or whole instance. 
     -- *right in the process of being implemented* -- 
     (I dont yet know: Should the delegation also be projected to past actions?) 
-  - **Parlaments:** Add, delete Parlaments (in which proposals can be raised); Maybe that should be nothing but a mechanism to tag
+  - **Parlaments:** Add, delete Parlaments (in which proposals can be raised); actually, that's nothing but a
+    mechanism to tag proposals. 
     -- *just implemented* --
-
 
 ## Install on a Linux-System 
 
@@ -59,6 +58,7 @@ It is "light" with respect to:
 * clone/copy this git-repo and start the main programm 
   ```bash
   (venv)$ git clone https://github.com/phynfo/LiquidDemocracy-XXS.git liquidDemocracyXXS
+  (venv)$ cd LiquidDemocracy-XXS
   (venv)$ python liquidDemocracyLight.py
   ```
   Be sure *not* to use the global  `/usr/bin/python`-Python but the local `.../venv/bin/python`-Python of the local environment. 
@@ -67,10 +67,10 @@ It is "light" with respect to:
 
 ## Use the Test Data
 
-* You are free to use the test data, provided in the `data`-folder of this repository. 
+* You are free to use the Neo4j-test data, provided in the `data`-folder of this repository. 
 
-* It contains proposals (written in german), Users (which all use the password `bla`; the admin-user is `tobias`), Comments (written in german), Parlaments,
-  Votings, two Instances.  
+* It contains proposals (written in german), Users (which all use the password `bla`; the admin-user is
+* `tobias`), Comments (written in german), Parlaments, Votings, two Instances.  
 
 * Install the test data by copying the `data`-Folder to `/path/to/neo4j`
   (probably just copying will work, however I am not fully sure about it). 

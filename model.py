@@ -28,7 +28,7 @@ class Proposal(Node):
   ups = Integer()                # Redundant storage of upvotes
   downs = Integer()              # Redundant storage of downvotes
   datetime_created = DateTime(default=current_datetime, nullable=False)
-  datetime_modification = DateTime()
+  datetime_modification = DateTime(default=current_datetime)
 
 class Instance(Node):
   element_type = 'instance'
