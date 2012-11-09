@@ -1,5 +1,5 @@
 from flask import Flask, session, render_template, request, redirect, url_for, escape, flash, g, abort, jsonify
-from model import Person, Proposal, Graph
+from model import Graph
 from datetime import datetime
 from utils import date_diff
 import re
@@ -17,16 +17,24 @@ app.config.from_object(__name__)
 
 db = Graph()
 
+@app.template_filter('parlamentTitle')
+def parlamentTitle(eid): 
+  return db.parlaments.get(eid).title
+
 @app.template_filter('getParlaments')
 def getParlaments(eid): 
   v = db.vertices.get(eid)
   if v.element_type == 'instance':
-    ps = [data(p) for p in v.outV('instanceHasParlament')]
+    ps = [p for p in v.outV('instanceHasParlament')]
   elif v.element_type == 'proposal':
-    ps = [data(p) for p in v.outV('proposalHasParlament')]
+    ps = [p for p in v.outV('proposalHasParlament')]
   #TODO eid in die dicts mit einfuegen! 
-  # for p in ps: p['eid'] = 
-  return ps
+  ds = []
+  for p in ps: 
+    d = p.data() 
+    d['eid'] = p.eid
+    ds.append(d)
+  return ds
 
 @app.template_filter('getPeople')
 def getPeople(eid):
@@ -106,6 +114,7 @@ def person2votesProposals(p_eid):
                         p_eid   = p[3]) 
                              for p in propVotes]                       # ... and create a dict-object ...
   return propVotesDict                                                 # ... and return it.
+
 
 @app.template_filter('person2votesComments')
 def person2votesComments(p_eid):
@@ -515,22 +524,22 @@ def add_parlament():
   return redirect(url_for('show_parlaments'))
 
 
-@app.route('/<int:i_eid>/delegate_parlement/<int:parl_eid>')
+@app.route('/<int:i_eid>/delegate_parlament/<int:parl_eid>')
 def delegateParlament(parl_eid): 
   parlament = db.parlaments.get(parl_eid)
-  return render_template('delegate.html', parlament=dict(eid=parl_eid, title=parlament.title)) 
+  return render_template('delegate.html', parlament=parl_eid)
 
 @app.route('/<int:i_eid>/delegate_proposal/<int:pr_eid>')
 def delegateProposal(pr_eid): 
-  return render_template('delegate.html', proposal=pr_eid) 
+  return render_template('delegate.html', proposal=pr_eid)
 
 @app.route('/<int:i_eid>/delegate_person/<int:p_eid>')
 def delegatePerson(p_eid): 
-  return render_template('delegate.html', person=p_eid) 
+  return render_template('delegate.html', person=p_eid)
 
 @app.route('/<int:i_eid>/delegate',methods=['POST'])
 def delegate(): 
-  ''' Create a delegation edges and vertices
+  ''' Create delegation edges and vertices
       There are three cases:
       1. Delegation of a person for all proposals
       2. Delegation of a person for all proposals of a specific parlament
@@ -539,11 +548,34 @@ def delegate():
   person = request.form['person'] if 'person' in request.form else None
   proposal = request.form['proposal'] if 'proposal' in request.form else None
   parlament = request.form['parlament'] if 'parlament' in request.form else None
-  span = request.form['span'] 
-  time = request.form['time'] 
-  print '######################################\n', person, proposal, parlament, span, time, '\n######################################\n'
-      # babsi None                 Umweltpolitik parlament now
-      # babsi Freihheit fuer Bubis2 Privates      proposal  now
+  span = request.form['span'] # span is one of 'parlament' / 'proposal' / 'all'
+  time = 0 if request.form['time']=='past' else 1 # time is one of 'past' / 'now'
+ 
+  if not person: 
+    flash('Error: You have to specify a person (i.e. the delegate)')
+    if parlament and span=='parlament': return render_template('delegate.html', parlament = parlament )
+    elif proposal: return render_template('delegate.html', proposal = proposal)
+    else: return render_teplate('delegate.html')
+
+  # Create edges: 
+  delegation = db.delegations.create(time=time)
+  personDelegationEdge = db.personDelegation.create(db.people.get(session['userId']), delegation)
+  delegationPersonEdge = db.delegationPerson.create(delegation, db.people.get(person))
+  if span=='parlament': # make edge from delegation object to parlament
+    delegationParlamentEdge = db.delegationParlament.create(delegation, db.parlaments.get(parlament))
+  elif span=='proposal': # make edge from delegaton object to proposal
+    delegationProposalEdge = db.delegationProposal.create(delegation, db.proposals.get(proposal))
+  # else:   # here span=='all' should hold
+  #    pass # no additonal edges!
+ 
+
+  # Generate feedback
+  personStr = db.people.get(person).username if person else ''
+  proposalStr = db.proposals.get(proposal).title if proposal and span=='proposal' else ''
+  parlamentStr = db.parlaments.get(parlament).title if parlament and span=='parlament' else ''
+  flashstr = 'Delegation erfolgreich cerstellt: Delegiere "' + personStr + '" fuer ' + span + ' "' +\
+               proposalStr+parlamentStr + '" fuer ' + request.form['time']
+  flash(flashstr)
   return redirect(url_for('show_proposals')) 
 
 @app.route('/_add_numbers')

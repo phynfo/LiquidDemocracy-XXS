@@ -74,7 +74,7 @@ It is "light" with respect to:
 
 * Install the test data by copying the `data`-Folder to `/path/to/neo4j`
   (probably just copying will work, however I am not fully sure about it). 
-
+ :
 
 ## Install on Windows 
 

@@ -19,6 +19,7 @@ class Issued(Relationship):
 class Votes(Relationship):
   label = 'votes'
   pro = Integer(nullable=False) # 0: against ; 1: pro
+  delegates = Integer(default=1, nullable=False)
   created = DateTime(default=current_datetime, nullable=False)
 
 class Proposal(Node):
@@ -90,8 +91,20 @@ class InstanceHasParlament(Relationship):
 #                                      |    DelegationParlament  |---------|
 #                                      |------------------------>|Parlament|
 #                                                                |---------|
+#
+#
+#      |------| PersonDelegation  |----------|  DelegationPerson |------|
+# 3.   |Person|------------------>|Delegation|------------------>|Person|
+#      |------|                   |----------|                   |------|
+#                                      |
+#                                      |    DelegationProposal   |---------|
+#                                      |------------------------>|Parlament|
+#                                                                |---------|
+
 class Delegation(Node):
   element_type = "delegation"
+  time = Integer() # 0: including past; 
+                   # 1: excluding past; up from now on.
   datetime_created=DateTime(default=current_datetime, nullable=False)
 
 class PersonDelegation(Relationship):  
@@ -113,14 +126,14 @@ class Graph(Neo4jGraph):
     super(Graph, self).__init__(config)
 
     # --------------- Nodes-Proxies --------------------------------------------------------------
-    self.people = self.build_proxy(Person)
-    self.proposals = self.build_proxy(Proposal)
-    self.comments = self.build_proxy(Comment)
-    self.parlaments = self.build_proxy(Parlament)
-    self.instances = self.build_proxy(Instance) 
-    self.delegation = self.build_proxy(Delegation) # Hyperedge: Delegation
-                                                   #   needed for delegations relativ to a parlament 
-                                                   #   or a proposal
+    self.people      = self.build_proxy(Person)
+    self.proposals   = self.build_proxy(Proposal)
+    self.comments    = self.build_proxy(Comment)
+    self.parlaments  = self.build_proxy(Parlament)
+    self.instances   = self.build_proxy(Instance) 
+    self.delegations = self.build_proxy(Delegation) # Hyperedge: Delegation
+                                                    #   needed for delegations relativ to a parlament 
+                                                    #   or a proposal
 
     # --------------- Edge-Proxies  --------------------------------------------------------------
     self.issued = self.build_proxy(Issued)                     # Edge: (Person -> Proposal)

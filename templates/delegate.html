@@ -12,9 +12,9 @@
         <dd><select name=person size=3>
           {% for p in g.i_eid|getPeople %}
             {% if person and person.username==p.username %}
-            <option selected>{{ p.username }}</option>
+            <option value="{{ p.p_eid }}" selected>{{ p.username }}</option>
             {% else %}
-            <option>{{ p.username }}</option>
+            <option value="{{ p.p_eid }}">{{ p.username }}</option>
             {% endif %}
           {% endfor %}
            </select>
@@ -36,7 +36,7 @@
             {% endif %}</p> 
               <select name=parlament size=3>
                 {% for p in g.i_eid|getParlaments %}
-                  {% if parlament and parlament.title==p.title %}
+                  {% if parlament and parlament|parlamentTitle==p.title %}
                   <option value="{{ p.eid }}" selected>{{ p.title }}</option>
                   {% else %}
                   <option value="{{ p.eid }}"> {{ p.title }}</option>

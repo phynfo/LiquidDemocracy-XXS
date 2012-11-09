@@ -50,13 +50,13 @@
 <table>
 <tr valign=top>
 <td style="margin-left:100px;">
-  <h3>Neuste Vorschläge</h3> 
+  <h3>Neuste Kommentare</h3> 
   <p style="margin-bottom:5px;">{{ person.firstname }} {{ person.secondname }} erstellte ...</p>
    <table rules="rows" cellpadding=3>
    {% for comment in person.p_eid|person2comments %}
      <tr valign=top>
        <td>Vor {{ comment.created }}</td>
-       <td> Vorschlag "<i><a href="{{ url_for('show_single_proposal', prop_id=comment.p_eid) }}" class=propTitle
+       <td> Kommentar "<i><a href="{{ url_for('show_single_proposal', prop_id=comment.p_eid) }}" class=propTitle
                           >{{ comment.title }}</a></i>" </td>
    {% else %}
      ... bisher noch keinen Kommentar.
@@ -88,5 +88,8 @@
 </td>
 <table>
 
+<h2> Delegationen: </h2>
+
+...
 
 {% endblock %}
