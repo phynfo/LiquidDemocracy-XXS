@@ -6832,3 +6832,2761 @@
 2012-10-22 09:40:00.356+0000: Server started on: http://localhost:7474/
 2012-10-22 09:40:00.357+0000: --- SERVER STARTUP END ---
 2012-10-22 10:04:54.715+0000: GC Monitor: Application threads blocked for an additional 245615ms [total block time: 245.615s]
+2012-10-22 14:03:31.673+0000: GC Monitor: Application threads blocked for an additional 12108363ms [total block time: 12353.978s]
+2012-10-22 14:53:18.455+0000: GC Monitor: Application threads blocked for an additional 916750ms [total block time: 13270.728s]
+2012-10-22 15:50:50.445+0000: GC Monitor: Application threads blocked for an additional 777548ms [total block time: 14048.276s]
+2012-10-22 16:27:50.451+0000: GC Monitor: Application threads blocked for an additional 702359ms [total block time: 14750.635s]
+2012-10-22 20:25:41.483+0000: GC Monitor: Application threads blocked for an additional 13116664ms [total block time: 27867.3s]
+2012-10-22 20:47:04.454+0000: GC Monitor: Application threads blocked for an additional 1225701ms [total block time: 29093.0s]
+2012-10-23 04:11:27.503+0000: GC Monitor: Application threads blocked for an additional 25745004ms [total block time: 54838.004s]
+2012-10-23 05:52:31.443+0000: GC Monitor: Application threads blocked for an additional 1655628ms [total block time: 56493.633s]
+2012-10-23 06:34:42.435+0000: GC Monitor: Application threads blocked for an additional 1370197ms [total block time: 57863.83s]
+2012-10-23 07:33:30.480+0000: GC Monitor: Application threads blocked for an additional 98421ms [total block time: 57962.246s]
+2012-10-23 07:44:54.480+0000: GC Monitor: Application threads blocked for an additional 105727ms [total block time: 58067.977s]
+2012-10-23 08:01:05.046+0000: Stopping - database is now unavailable
+2012-10-23 08:01:05.053+0000: GC Monitor stopped. 
+2012-10-23 08:01:05.132+0000: TM shutting down
+2012-10-23 08:01:05.305+0000: Closed log /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/index/lucene.log
+2012-10-23 08:01:05.396+0000: Closed log /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log
+2012-10-23 08:01:06.046+0000: NeoStore closed
+2012-10-23 08:01:06.046+0000: --- SHUTDOWN diagnostics START ---
+2012-10-23 08:01:06.047+0000: --- SHUTDOWN diagnostics END ---
+2012-10-23 16:49:02.964+0000: Opened [/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log.1] clean empty log, version=8, lastTxId=351
+2012-10-23 16:49:03.160+0000: TM opening log: /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/tm_tx_log.1
+2012-10-23 16:49:03.272+0000: Opened [/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/index/lucene.log.1] clean empty log, version=8, lastTxId=336
+2012-10-23 16:49:03.330+0000: --- STARTUP diagnostics START ---
+2012-10-23 16:49:03.332+0000: Neo4j Kernel properties:
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log
+    node_auto_indexing=false
+    intercept_committing_transactions=false
+    remote_shell_name=shell
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=true
+    rebuild_idgenerators_fast=true
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.arrays.mapped_memory=305M
+    neostore.propertystore.db.strings.mapped_memory=269M
+    gcr_cache_min_log_interval=60s
+    relationship_grab_size=100
+    relationship_auto_indexing=false
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    node_cache_array_fraction=1.0
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    relationship_cache_array_fraction=1.0
+    store_dir=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db
+    remote_logging_host=127.0.0.1
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    array_block_size=120
+    load_kernel_extensions=true
+    neostore.relationshipstore.db.mapped_memory=388M
+    keep_logical_logs=true
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    neostore.nodestore.db.mapped_memory=88M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=true
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    ephemeral=false
+    neo_store=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=317M
+    string_block_size=120
+    grab_file_lock=true
+    remote_logging_enabled=false
+    neo4j.ext.udc.enabled=true
+    neo4j.ext.udc.source=server
+2012-10-23 16:49:03.338+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+    LINUX_SCHEDULERS
+2012-10-23 16:49:03.339+0000: System memory information:
+    Total Physical memory: 3,83 GB
+    Free Physical memory: 757,12 MB
+    Committed virtual memory: 1,18 GB
+    Total swap space: 3,89 GB
+    Free swap space: 3,89 GB
+2012-10-23 16:49:03.361+0000: JVM memory information:
+    Free  memory: 51,26 MB
+    Total memory: 58,75 MB
+    Max   memory: 871,13 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2,25 MB, used=460,69 kB, max=48,00 MB, threshold=0,00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=15,38 MB, used=5,84 MB, max=321,63 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2,50 MB, used=1,65 MB, max=2,50 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=40,88 MB, used=0,00 B, max=653,38 MB, threshold=0,00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=16,00 MB, used=8,68 MB, max=128,00 MB, threshold=0,00 B
+2012-10-23 16:49:03.388+0000: Operating system information:
+    Operating System: Linux; version: 3.2.0-31-generic-pae; arch: i386; cpus: 4
+    Max number of file descriptors: 4096
+    Number of open file descriptors: 101
+    Process id: 11011@tobias-ThinkPad-X220
+    Byte order: LITTLE_ENDIAN
+2012-10-23 16:49:03.406+0000: JVM information:
+    VM Name: OpenJDK Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 20.0-b12
+    JIT compiler: HotSpot Tiered Compilers
+    VM Arguments: [-XX:+DisableExplicitGC, -Dorg.neo4j.server.properties=conf/neo4j-server.properties, -Djava.util.logging.config.file=conf/logging.properties, -Dfile.encoding=UTF-8, -Dlog4j.configuration=file:conf/log4j.properties, -Dorg.neo4j.server.properties=/home/tobias/Downloads/neo4j-community-1.7/conf/neo4j-server.properties, -Djava.util.logging.config.file=/home/tobias/Downloads/neo4j-community-1.7/conf/logging.properties, -Dneo4j.home=/home/tobias/Downloads/neo4j-community-1.7, -Dneo4j.instance=/home/tobias/Downloads/neo4j-community-1.7]
+2012-10-23 16:49:03.406+0000: Java classpath:
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jsr311-api-1.1.1.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/localedata.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/servlet-api-2.5-20081211.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/modules/jdk.boot.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/sunjce_provider.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-cypher-plugin-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/plugin.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/pipes-1.0.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/classes
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-server-1.9.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/sunrsasign.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jettison-1.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-analysis-3.2.jar
+     [loader.1] file:/usr/share/java/java-atk-wrapper.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jansi-1.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/slf4j-api-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/log4j-over-slf4j-1.6.1.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-common/jre/lib/resources.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-io-1.4.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/blueprints-core-1.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/groovy-1.8.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-jmx-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-util-3.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jetty-util-6.1.25.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-lucene-index-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/stax-api-1.0.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/blueprints-neo4j-graph-1.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/antlr-2.7.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/gremlin-java-1.5.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/jce.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-core-asl-1.8.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-graph-algo-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/gremlin-groovy-1.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jcl-over-slf4j-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/rrd4j-2.0.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-shell-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/netx.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-server-1.7-static-web.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jetty-6.1.25.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-beanutils-core-1.8.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-beanutils-1.8.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-lang-2.4.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-mapper-asl-1.8.3.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/sunpkcs11.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/scala-library-2.9.0-1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/server-api-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/jsse.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-3.1.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/rt.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-commons-3.2.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/charsets.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-core-1.9.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-jaxrs-1.8.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-collections-3.2.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-udc-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/lucene-core-3.5.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-server-1.7.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/pulse-java.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/slf4j-jdk14-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/bcprov-jdk16-140.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-gremlin-plugin-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-multipart-1.9.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-tree-3.2.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/rhino.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-graph-matching-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-configuration-1.6.jar
+     [loader.1] file:/usr/lib/i386-linux-gnu/jni/libatk-wrapper.so.0.0.18
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-kernel-1.7.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/dnsns.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-digester-1.8.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-cypher-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-logging-1.1.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/mimepull-1.6.jar
+2012-10-23 16:49:03.411+0000: Library path:
+    /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/server
+    /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386
+    /usr/lib/jvm/java-6-openjdk-i386/lib/i386
+    /usr/java/packages/lib/i386
+    /usr/lib/i386-linux-gnu/jni
+    /lib/i386-linux-gnu
+    /usr/lib/i386-linux-gnu
+    /usr/lib/jni
+    /lib
+    /usr/lib
+2012-10-23 16:49:03.411+0000: System.properties:
+    sun.boot.library.path = /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386
+    org.neo4j.server.properties = /home/tobias/Downloads/neo4j-community-1.7/conf/neo4j-server.properties
+    path.separator = :
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = DE
+    sun.os.patch.level = unknown
+    user.dir = /home/tobias/Downloads/neo4j-community-1.7
+    log4j.configuration = file:conf/log4j.properties
+    sun.jnu.encoding = UTF-8
+    sun.management.compiler = HotSpot Tiered Compilers
+    user.home = /home/tobias
+    user.timezone = Europe/Berlin
+    file.encoding = UTF-8
+    user.name = tobias
+    sun.java.command = org.neo4j.server.Bootstrapper
+    sun.arch.data.model = 32
+    user.language = de
+    file.separator = /
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    neo4j.instance = /home/tobias/Downloads/neo4j-community-1.7
+    sun.desktop = gnome
+    neo4j.home = /home/tobias/Downloads/neo4j-community-1.7
+    sun.cpu.isalist = 
+2012-10-23 16:49:03.411+0000: Linux scheduler information:
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    noop deadline [cfq] 
+2012-10-23 16:49:03.414+0000: --- STARTUP diagnostics END ---
+2012-10-23 16:49:03.547+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-10-23 16:49:03.782+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-10-23 16:49:03.798+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-10-23 16:49:03.801+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-10-23 16:49:03.801+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1340016239115, id:-1475725026871967729, store version: 13561656364791302]
+2012-10-23 16:49:03.801+0000: Kernel version: Neo4j - Graph Database Kernel 1.7
+2012-10-23 16:49:03.801+0000: Neo4j component versions:
+2012-10-23 16:49:03.802+0000:   Neo4j - Graph Database Kernel 1.7
+2012-10-23 16:49:03.802+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-10-23 16:49:03.803+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-10-23 16:49:03.804+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-10-23 16:49:03.804+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-10-23 16:49:03.804+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-10-23 16:49:03.804+0000: Id usage:
+    Id usage:
+      NodeStore: used=49 high=48
+      RelationshipStore: used=151 high=150
+      RelationshipTypeStore: used=9 high=8
+      PropertyStore: used=251 high=250
+      PropertyIndexStore: used=15 high=14
+      StringPropertyStore: used=93 high=92
+      ArrayPropertyStore: used=1 high=0
+2012-10-23 16:49:03.805+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-10-23 16:49:03.806+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-10-23 16:49:03.806+0000: Storage files:
+    nioneo_logical.log.v3: 4,24 kB
+    neostore.propertystore.db.arrays.id: 9,00 B
+    neostore.propertystore.db.index.id: 9,00 B
+    neostore.id: 9,00 B
+    neostore: 54,00 B
+    nioneo_logical.log.v7: 16,00 B
+    nioneo_logical.log.v1: 14,54 kB
+    nioneo_logical.log.v6: 246,00 B
+    active_tx_log: 11,00 B
+    neostore.nodestore.db: 441,00 B
+    tm_tx_log.1: 0,00 B
+    index.db: 2,21 kB
+    nioneo_logical.log.v2: 45,26 kB
+    nioneo_logical.log.1: 16,00 B
+    messages.log: 373,13 kB
+    neostore.propertystore.db.arrays: 128,00 B
+    neostore.relationshiptypestore.db.names: 380,00 B
+    neostore.relationshipstore.db.id: 9,00 B
+    neostore.propertystore.db.index.keys.id: 9,00 B
+    neostore.propertystore.db: 10,05 kB
+    neostore.relationshiptypestore.db.names.id: 9,00 B
+    index:
+      lucene.log.v1: 13,54 kB
+      lucene.log.v0: 12,71 kB
+      lucene.log.v6: 16,00 B
+      lucene.log.active: 4,00 B
+      lucene:
+        relationship:
+          hasComment:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            segments_5: 942,00 B
+            _a.fdx: 84,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 79,00 B
+            _a.fdt: 421,00 B
+            _b.fdx: 12,00 B
+            _c.tis: 79,00 B
+            _a.frq: 50,00 B
+            _d.fdt: 47,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 47,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 371,00 B
+            _b.tii: 35,00 B
+            _d.tis: 79,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 46,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _d.prx: 5,00 B
+          - Total: 2,78 kB
+          proposalHasParlament:
+            _a.fdx: 84,00 B
+            _a.fnm: 51,00 B
+            segments.gen: 20,00 B
+            _a.fdt: 402,00 B
+            segments_4: 291,00 B
+            _a.frq: 40,00 B
+            _a.prx: 40,00 B
+            _a.tis: 206,00 B
+            _a.tii: 35,00 B
+            _a.nrm: 44,00 B
+          - Total: 1,18 kB
+          issues:
+            _0.nrm: 9,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            segments_1: 253,00 B
+            _0.tis: 75,00 B
+            _0.frq: 5,00 B
+            _0.prx: 5,00 B
+            _0.fnm: 60,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+          - Total: 517,00 B
+          hasPeople:
+            _d.fnm: 69,00 B
+            _c.fnm: 69,00 B
+            _e.fdt: 45,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _a.fnm: 69,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            _f.tis: 79,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 69,00 B
+            _b.tis: 78,00 B
+            _e.tis: 78,00 B
+            _a.fdt: 397,00 B
+            _b.fdx: 12,00 B
+            segments_4: 1,35 kB
+            _e.tii: 35,00 B
+            _c.tis: 77,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 9,00 B
+            _d.fdt: 43,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 44,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 5,00 B
+            _a.tis: 297,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 77,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _e.prx: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 44,00 B
+            _e.frq: 5,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _f.prx: 5,00 B
+            _e.fnm: 69,00 B
+            _f.fdt: 45,00 B
+            _f.fnm: 69,00 B
+            _f.nrm: 9,00 B
+            _d.prx: 5,00 B
+          - Total: 3,63 kB
+          instanceHasParlament:
+            _1.fdx: 12,00 B
+            _2.frq: 4,00 B
+            _0.nrm: 8,00 B
+            _1.fnm: 51,00 B
+            segments_2: 686,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            _2.tis: 74,00 B
+            _1.tii: 35,00 B
+            _0.tis: 74,00 B
+            _0.frq: 4,00 B
+            _2.fdt: 43,00 B
+            _0.prx: 4,00 B
+            _1.prx: 4,00 B
+            _1.nrm: 8,00 B
+            _0.fnm: 51,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 74,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 8,00 B
+            _2.prx: 4,00 B
+            _1.frq: 4,00 B
+            _1.fdt: 43,00 B
+            _2.fnm: 51,00 B
+          - Total: 1,37 kB
+          issuesComment:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            segments_5: 942,00 B
+            _a.fdx: 84,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 82,00 B
+            _a.fdt: 449,00 B
+            _b.fdx: 12,00 B
+            _c.tis: 83,00 B
+            _a.frq: 50,00 B
+            _d.fdt: 50,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 49,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 364,00 B
+            _b.tii: 35,00 B
+            _d.tis: 82,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 48,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _d.prx: 5,00 B
+          - Total: 2,81 kB
+          hasProposal:
+            _d.fnm: 51,00 B
+            _c.fnm: 51,00 B
+            segments_5: 1,56 kB
+            _e.fdt: 34,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _g.prx: 4,00 B
+            _a.fnm: 51,00 B
+            _c.prx: 4,00 B
+            _c.tii: 35,00 B
+            _f.tis: 65,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 51,00 B
+            _b.tis: 64,00 B
+            _e.tis: 65,00 B
+            _a.fdt: 290,00 B
+            _g.tis: 65,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _g.fdt: 34,00 B
+            _c.tis: 65,00 B
+            _a.frq: 40,00 B
+            _g.fdx: 12,00 B
+            _e.nrm: 8,00 B
+            _d.fdt: 34,00 B
+            _a.prx: 40,00 B
+            _d.nrm: 8,00 B
+            _c.fdt: 34,00 B
+            _d.frq: 4,00 B
+            _d.tii: 35,00 B
+            _g.tii: 35,00 B
+            _g.frq: 4,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 4,00 B
+            _a.tis: 204,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 65,00 B
+            _b.prx: 4,00 B
+            _b.frq: 4,00 B
+            _e.prx: 4,00 B
+            _c.frq: 4,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 33,00 B
+            _g.fnm: 51,00 B
+            _e.frq: 4,00 B
+            _b.nrm: 8,00 B
+            _c.nrm: 8,00 B
+            _g.nrm: 8,00 B
+            _a.nrm: 44,00 B
+            _f.prx: 4,00 B
+            _e.fnm: 51,00 B
+            _f.fdt: 34,00 B
+            _f.fnm: 51,00 B
+            _f.nrm: 8,00 B
+            _d.prx: 4,00 B
+          - Total: 3,60 kB
+          votes:
+            _28.fnm: 65,00 B
+            _2f.fdx: 12,00 B
+            segments_6: 1,80 kB
+            _28.fdx: 484,00 B
+            _28.tis: 1,31 kB
+            _29.cfs: 371,00 B
+            _2b.cfs: 371,00 B
+            _2a.cfs: 371,00 B
+            segments.gen: 20,00 B
+            _2f.cfs: 371,00 B
+            _2e.cfs: 371,00 B
+            _28.fdt: 2,59 kB
+            _28.nrm: 364,00 B
+            _28.tii: 55,00 B
+            _28.prx: 387,00 B
+            _28.frq: 408,00 B
+            _2d.cfs: 371,00 B
+            _2f.fdt: 45,00 B
+            _2c.cfs: 373,00 B
+          - Total: 10,04 kB
+          issued:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            segments_5: 1,35 kB
+            _e.fdt: 43,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            _f.tis: 75,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 75,00 B
+            _e.tis: 77,00 B
+            _a.fdt: 373,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _c.tis: 74,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 9,00 B
+            _d.fdt: 43,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 43,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 5,00 B
+            _a.tis: 350,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 75,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _e.prx: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 42,00 B
+            _e.frq: 5,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _f.prx: 5,00 B
+            _e.fnm: 60,00 B
+            _f.fdt: 43,00 B
+            _f.fnm: 60,00 B
+            _f.nrm: 9,00 B
+            _d.prx: 5,00 B
+          - Total: 3,59 kB
+        - Total: 29,50 kB
+        node:
+          vertex:
+            segments.gen: 20,00 B
+            segments_1: 32,00 B
+          - Total: 52,00 B
+          instance:
+            _1.fdx: 12,00 B
+            _0.nrm: 9,00 B
+            _1.fnm: 57,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 46,00 B
+            _1.tii: 35,00 B
+            segments_1: 468,00 B
+            _0.tis: 80,00 B
+            _0.frq: 5,00 B
+            _0.prx: 5,00 B
+            _1.prx: 5,00 B
+            _1.nrm: 9,00 B
+            _0.fnm: 57,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 139,00 B
+            _1.frq: 5,00 B
+            _1.fdt: 105,00 B
+          - Total: 1,08 kB
+          parlament:
+            _1.fdx: 12,00 B
+            _2.frq: 5,00 B
+            _0.nrm: 9,00 B
+            _1.fnm: 57,00 B
+            segments_2: 904,00 B
+            _3.nrm: 9,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 146,00 B
+            _2.tis: 111,00 B
+            _1.tii: 35,00 B
+            _0.tis: 180,00 B
+            _0.frq: 5,00 B
+            _3.frq: 5,00 B
+            _2.fdt: 77,00 B
+            _0.prx: 5,00 B
+            _1.prx: 5,00 B
+            _1.nrm: 9,00 B
+            _3.tii: 35,00 B
+            _0.fnm: 57,00 B
+            _0.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 180,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 9,00 B
+            _3.fnm: 57,00 B
+            _3.tis: 129,00 B
+            _2.prx: 5,00 B
+            _1.frq: 5,00 B
+            _3.fdt: 95,00 B
+            _1.fdt: 146,00 B
+            _2.fnm: 57,00 B
+            _3.prx: 5,00 B
+          - Total: 2,42 kB
+          person:
+            _a.fdx: 84,00 B
+            _a.fnm: 85,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 85,00 B
+            _b.tis: 129,00 B
+            _a.fdt: 678,00 B
+            _b.fdx: 12,00 B
+            segments_4: 506,00 B
+            _a.frq: 76,00 B
+            _a.prx: 76,00 B
+            _a.tis: 534,00 B
+            _b.tii: 35,00 B
+            _b.prx: 8,00 B
+            _b.frq: 8,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 86,00 B
+            _b.nrm: 12,00 B
+            _a.nrm: 84,00 B
+          - Total: 2,49 kB
+          proposal:
+            segments_5: 958,00 B
+            _26.frq: 133,00 B
+            _2c.nrm: 13,00 B
+            _2f.fdx: 12,00 B
+            _2c.tis: 2,47 kB
+            _2c.frq: 9,00 B
+            segments.gen: 20,00 B
+            _26.tii: 35,00 B
+            _26.tis: 6,92 kB
+            _2f.cfs: 634,00 B
+            _26.nrm: 148,00 B
+            _26.fdx: 132,00 B
+            _26.fdt: 7,24 kB
+            _2c.fdt: 2,43 kB
+            _26.fnm: 91,00 B
+            _2c.tii: 35,00 B
+            _26_1.del: 32,00 B
+            _2c.prx: 9,00 B
+            _2d.cfs: 520,00 B
+            _2c.fnm: 91,00 B
+            _2f.fdt: 160,00 B
+            _2c.fdx: 12,00 B
+            _26.prx: 130,00 B
+          - Total: 22,15 kB
+          comment:
+            _14.tii: 35,00 B
+            _15.fdt: 92,00 B
+            _1d.tis: 152,00 B
+            segments_6: 958,00 B
+            _1d.fdx: 12,00 B
+            _14.tis: 1002,00 B
+            _1d.tii: 35,00 B
+            segments.gen: 20,00 B
+            _15.frq: 7,00 B
+            _1d.nrm: 11,00 B
+            _15.prx: 7,00 B
+            _14.fnm: 69,00 B
+            _16.nrm: 11,00 B
+            _14.fdx: 108,00 B
+            _14_1.del: 32,00 B
+            _1d.fdt: 112,00 B
+            _16.fdx: 12,00 B
+            _1d.prx: 7,00 B
+            _16.prx: 7,00 B
+            _14.frq: 89,00 B
+            _16.fnm: 69,00 B
+            _16.tis: 136,00 B
+            _14.nrm: 95,00 B
+            _15.cfs: 475,00 B
+            _16.tii: 35,00 B
+            _14.fdt: 1,07 kB
+            _14.prx: 89,00 B
+            _15.fnm: 69,00 B
+            _1d.fnm: 69,00 B
+            _15.fdx: 12,00 B
+            _15.nrm: 11,00 B
+            _16.fdt: 96,00 B
+            _15.tii: 35,00 B
+            _16.frq: 7,00 B
+            _1d.frq: 7,00 B
+            _15.tis: 132,00 B
+          - Total: 5,09 kB
+        - Total: 33,29 kB
+      - Total: 62,79 kB
+      lucene.log.v5: 168,08 kB
+      lucene.log.1: 16,00 B
+      lucene.log.v7: 16,00 B
+      lucene.log.v4: 10,18 kB
+      lucene.log.v3: 2,94 kB
+      lucene.log.v2: 40,23 kB
+      lucene-store.db: 40,00 B
+    - Total: 310,56 kB
+    neostore.relationshiptypestore.db.id: 9,00 B
+    neostore.propertystore.db.index.keys: 1,00 kB
+    neostore.propertystore.db.strings.id: 9,00 B
+    neostore.relationshipstore.db: 4,87 kB
+    nioneo_logical.log.v0: 14,78 kB
+    nioneo_logical.log.v5: 131,53 kB
+    lock: 0,00 B
+    nioneo_logical.log.active: 4,00 B
+    neostore.nodestore.db.id: 9,00 B
+    neostore.propertystore.db.id: 9,00 B
+    neostore.propertystore.db.strings: 11,63 kB
+    neostore.propertystore.db.index: 1,02 kB
+    neostore.relationshiptypestore.db: 45,00 B
+    nioneo_logical.log.v4: 13,19 kB
+2012-10-23 16:49:03.883+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-10-23 16:49:03.885+0000: Started - database is now available
+2012-10-23 16:49:03.887+0000: --- SERVER STARTUP START ---
+2012-10-23 16:49:03.887+0000: --- STARTUP diagnostics for org.neo4j.server.configuration.Configurator START ---
+2012-10-23 16:49:03.887+0000: GC Monitor started. 
+2012-10-23 16:49:03.898+0000: Server configuration:
+    org.neo4j.server.database.location = data/graph.db
+    org.neo4j.server.webserver.port = 7474
+    org.neo4j.server.webserver.https.enabled = true
+    org.neo4j.server.webserver.https.port = 7473
+    org.neo4j.server.webserver.https.cert.location = conf/ssl/snakeoil.cert
+    org.neo4j.server.webserver.https.key.location = conf/ssl/snakeoil.key
+    org.neo4j.server.webserver.https.keystore.location = data/keystore
+    org.neo4j.server.webadmin.rrdb.location = data/rrd
+    org.neo4j.server.db.tuning.properties = conf/neo4j.properties
+    org.neo4j.server.webadmin.management.uri = /db/manage/
+    org.neo4j.server.webadmin.data.uri = /db/data/
+2012-10-23 16:49:03.899+0000: --- STARTUP diagnostics for org.neo4j.server.configuration.Configurator END ---
+2012-10-23 16:49:04.009+0000: Mounted discovery module (org.neo4j.server.rest.discovery) at: /
+2012-10-23 16:49:04.081+0000: Loaded server plugin "CypherPlugin" (org.neo4j.server.plugin.cypher.CypherPlugin)
+2012-10-23 16:49:04.082+0000:   GraphDatabaseService.execute_query: execute a query
+2012-10-23 16:49:04.083+0000: Loaded server plugin "GremlinPlugin" (org.neo4j.server.plugin.gremlin.GremlinPlugin)
+2012-10-23 16:49:04.083+0000:   GraphDatabaseService.execute_script: execute a Gremlin script with 'g' set to the Neo4jGraph and 'results' containing the results. Only results of one object type is supported.
+2012-10-23 16:49:04.083+0000: Mounted REST API at: /db/data/
+2012-10-23 16:49:04.083+0000: Mounted management API at: /db/manage/
+2012-10-23 16:49:04.276+0000: Mounted webadmin at: /webadmin
+2012-10-23 16:49:05.831+0000: Server started on: http://localhost:7474/
+2012-10-23 16:49:05.831+0000: --- SERVER STARTUP END ---
+2012-10-23 17:12:16.479+0000: GC Monitor: Application threads blocked for an additional 971263ms [total block time: 971.263s]
+2012-10-23 19:43:06.518+0000: GC Monitor: Application threads blocked for an additional 4731565ms [total block time: 5702.828s]
+2012-10-23 19:48:53.477+0000: GC Monitor: Application threads blocked for an additional 25446ms [total block time: 5728.274s]
+2012-10-23 20:12:45.515+0000: GC Monitor: Application threads blocked for an additional 1409663ms [total block time: 7137.937s]
+2012-10-24 04:15:31.470+0000: GC Monitor: Application threads blocked for an additional 28723735ms [total block time: 35861.67s]
+2012-10-24 05:28:40.445+0000: GC Monitor: Application threads blocked for an additional 178629ms [total block time: 36040.3s]
+2012-10-24 05:50:03.464+0000: GC Monitor: Application threads blocked for an additional 324730ms [total block time: 36365.03s]
+2012-10-24 07:25:45.413+0000: GC Monitor: Application threads blocked for an additional 4898203ms [total block time: 41263.23s]
+2012-10-24 07:36:56.417+0000: GC Monitor: Application threads blocked for an additional 80604ms [total block time: 41343.84s]
+2012-10-24 07:40:16.463+0000: GC Monitor: Application threads blocked for an additional 112943ms [total block time: 41456.78s]
+2012-10-24 09:17:56.457+0000: GC Monitor: Application threads blocked for an additional 5164589ms [total block time: 46621.367s]
+2012-10-24 09:37:52.434+0000: GC Monitor: Application threads blocked for an additional 281844ms [total block time: 46903.215s]
+2012-10-24 10:45:30.465+0000: GC Monitor: Application threads blocked for an additional 84205ms [total block time: 46987.42s]
+2012-10-24 11:12:55.448+0000: GC Monitor: Application threads blocked for an additional 578112ms [total block time: 47565.53s]
+2012-10-24 12:08:53.435+0000: GC Monitor: Application threads blocked for an additional 1162904ms [total block time: 48728.438s]
+2012-10-24 13:01:17.451+0000: GC Monitor: Application threads blocked for an additional 702794ms [total block time: 49431.227s]
+2012-10-24 13:11:10.403+0000: GC Monitor: Application threads blocked for an additional 242772ms [total block time: 49674.0s]
+2012-10-24 13:48:00.436+0000: GC Monitor: Application threads blocked for an additional 425006ms [total block time: 50099.008s]
+2012-10-24 14:30:27.448+0000: GC Monitor: Application threads blocked for an additional 1174116ms [total block time: 51273.125s]
+2012-10-24 17:17:58.440+0000: GC Monitor: Application threads blocked for an additional 6495701ms [total block time: 57768.824s]
+2012-10-24 17:54:40.473+0000: GC Monitor: Application threads blocked for an additional 1943554ms [total block time: 59712.375s]
+2012-10-25 05:50:00.452+0000: GC Monitor: Application threads blocked for an additional 41464475ms [total block time: 101176.86s]
+2012-10-25 06:32:52.473+0000: GC Monitor: Application threads blocked for an additional 2254447ms [total block time: 103431.3s]
+2012-10-25 07:55:05.393+0000: GC Monitor: Application threads blocked for an additional 1981261ms [total block time: 105412.56s]
+2012-10-25 10:59:32.413+0000: GC Monitor: Application threads blocked for an additional 9955803ms [total block time: 115368.37s]
+2012-10-25 11:50:25.427+0000: GC Monitor: Application threads blocked for an additional 580215ms [total block time: 115948.58s]
+2012-10-25 12:38:05.427+0000: GC Monitor: Application threads blocked for an additional 1506215ms [total block time: 117454.79s]
+2012-10-25 16:00:24.479+0000: GC Monitor: Application threads blocked for an additional 9114243ms [total block time: 126569.04s]
+2012-10-25 16:30:08.107+0000: GC Monitor: Application threads blocked for an additional 948722ms [total block time: 127517.76s]
+2012-10-25 16:47:24.077+0000: GC Monitor: Application threads blocked for an additional 647ms [total block time: 127518.41s]
+2012-10-25 20:26:40.163+0000: GC Monitor: Application threads blocked for an additional 8968916ms [total block time: 136487.33s]
+2012-10-25 20:56:41.194+0000: GC Monitor: Application threads blocked for an additional 953063ms [total block time: 137440.39s]
+2012-10-25 20:57:00.299+0000: GC Monitor: Application threads blocked for an additional 582ms [total block time: 137440.95s]
+2012-10-25 21:39:02.134+0000: GC Monitor: Application threads blocked for an additional 2324986ms [total block time: 139765.95s]
+2012-10-25 22:15:24.170+0000: GC Monitor: Application threads blocked for an additional 267887ms [total block time: 140033.84s]
+2012-10-25 22:15:36.727+0000: GC Monitor: Application threads blocked for an additional 643ms [total block time: 140034.48s]
+2012-10-26 12:04:18.158+0000: GC Monitor: Application threads blocked for an additional 49611584ms [total block time: 189646.06s]
+2012-10-26 12:54:23.146+0000: GC Monitor: Application threads blocked for an additional 2582879ms [total block time: 192228.94s]
+2012-10-27 22:50:07.148+0000: GC Monitor: Application threads blocked for an additional 122045589ms [total block time: 314274.53s]
+2012-10-28 07:08:32.455+0000: GC Monitor: Application threads blocked for an additional 28861683ms [total block time: 343136.22s]
+2012-10-28 19:47:01.493+0000: GC Monitor: Application threads blocked for an additional 44624391ms [total block time: 387760.6s]
+2012-10-28 21:37:32.461+0000: GC Monitor: Application threads blocked for an additional 4388642ms [total block time: 392149.25s]
+2012-10-29 06:52:26.464+0000: GC Monitor: Application threads blocked for an additional 31559284ms [total block time: 423708.53s]
+2012-10-29 09:28:47.531+0000: GC Monitor: Application threads blocked for an additional 8802787ms [total block time: 432511.3s]
+2012-10-29 11:19:02.479+0000: GC Monitor: Application threads blocked for an additional 3407603ms [total block time: 435918.9s]
+2012-10-29 13:04:34.541+0000: GC Monitor: Application threads blocked for an additional 4973363ms [total block time: 440892.28s]
+2012-10-29 13:30:42.533+0000: GC Monitor: Application threads blocked for an additional 351401ms [total block time: 441243.7s]
+2012-10-29 14:16:10.515+0000: GC Monitor: Application threads blocked for an additional 1165787ms [total block time: 442409.47s]
+2012-10-29 16:58:31.527+0000: GC Monitor: Application threads blocked for an additional 5638595ms [total block time: 448048.06s]
+2012-10-29 20:53:26.493+0000: GC Monitor: Application threads blocked for an additional 13938942ms [total block time: 461987.0s]
+2012-10-30 05:13:17.495+0000: GC Monitor: Application threads blocked for an additional 27011276ms [total block time: 488998.3s]
+2012-10-30 06:29:59.495+0000: GC Monitor: Application threads blocked for an additional 279712ms [total block time: 489278.03s]
+2012-10-30 06:53:45.538+0000: GC Monitor: Application threads blocked for an additional 546959ms [total block time: 489824.97s]
+2012-10-30 08:09:42.526+0000: GC Monitor: Application threads blocked for an additional 3482892ms [total block time: 493307.84s]
+2012-10-30 08:34:14.523+0000: GC Monitor: Application threads blocked for an additional 129401ms [total block time: 493437.25s]
+2012-10-30 08:45:50.482+0000: GC Monitor: Application threads blocked for an additional 84933ms [total block time: 493522.2s]
+2012-10-30 10:20:45.490+0000: GC Monitor: Application threads blocked for an additional 197162ms [total block time: 493719.38s]
+2012-10-30 10:40:24.550+0000: GC Monitor: Application threads blocked for an additional 139210ms [total block time: 493858.56s]
+2012-10-30 11:02:07.541+0000: GC Monitor: Application threads blocked for an additional 40535ms [total block time: 493899.1s]
+2012-10-30 11:11:06.516+0000: GC Monitor: Application threads blocked for an additional 241852ms [total block time: 494140.97s]
+2012-10-30 14:47:47.541+0000: GC Monitor: Application threads blocked for an additional 733375ms [total block time: 494874.3s]
+2012-10-30 15:15:07.490+0000: GC Monitor: Application threads blocked for an additional 167389ms [total block time: 495041.7s]
+2012-10-30 15:27:45.504+0000: GC Monitor: Application threads blocked for an additional 697429ms [total block time: 495739.12s]
+2012-10-30 17:17:10.506+0000: GC Monitor: Application threads blocked for an additional 2909506ms [total block time: 498648.62s]
+2012-10-30 20:22:55.522+0000: GC Monitor: Application threads blocked for an additional 11036502ms [total block time: 509685.16s]
+2012-10-30 21:23:03.377+0000: GC Monitor: Application threads blocked for an additional 2622691ms [total block time: 512307.84s]
+2012-10-31 05:12:17.413+0000: GC Monitor: Application threads blocked for an additional 24118712ms [total block time: 536426.56s]
+2012-10-31 06:53:50.398+0000: GC Monitor: Application threads blocked for an additional 1453989ms [total block time: 537880.5s]
+2012-10-31 08:32:41.384+0000: GC Monitor: Application threads blocked for an additional 4836356ms [total block time: 542716.9s]
+2012-10-31 12:07:16.376+0000: GC Monitor: Application threads blocked for an additional 12326588ms [total block time: 555043.44s]
+2012-10-31 14:28:55.363+0000: GC Monitor: Application threads blocked for an additional 8317242ms [total block time: 563360.7s]
+2012-10-31 14:48:15.403+0000: GC Monitor: Application threads blocked for an additional 249465ms [total block time: 563610.2s]
+2012-10-31 16:14:00.393+0000: GC Monitor: Application threads blocked for an additional 2877614ms [total block time: 566487.8s]
+2012-10-31 21:55:23.371+0000: GC Monitor: Application threads blocked for an additional 16257822ms [total block time: 582745.6s]
+2012-10-31 22:06:24.405+0000: GC Monitor: Application threads blocked for an additional 617465ms [total block time: 583363.06s]
+2012-10-31 22:14:00.359+0000: GC Monitor: Application threads blocked for an additional 220517ms [total block time: 583583.6s]
+2012-11-01 16:57:13.305+0000: GC Monitor: Application threads blocked for an additional 65144717ms [total block time: 648728.3s]
+2012-11-01 19:52:19.278+0000: GC Monitor: Application threads blocked for an additional 7063703ms [total block time: 655792.0s]
+2012-11-01 20:52:18.354+0000: GC Monitor: Application threads blocked for an additional 602374ms [total block time: 656394.44s]
+2012-11-01 22:15:24.267+0000: GC Monitor: Application threads blocked for an additional 1120764ms [total block time: 657515.1s]
+2012-11-01 23:05:03.306+0000: GC Monitor: Application threads blocked for an additional 1403245ms [total block time: 658918.4s]
+2012-11-01 23:23:17.254+0000: GC Monitor: Application threads blocked for an additional 73213ms [total block time: 658991.6s]
+2012-11-02 22:37:26.276+0000: GC Monitor: Application threads blocked for an additional 83172802ms [total block time: 742164.44s]
+2012-11-03 09:33:15.320+0000: GC Monitor: Application threads blocked for an additional 37900701ms [total block time: 780065.1s]
+2012-11-03 21:30:17.307+0000: GC Monitor: Application threads blocked for an additional 41526648ms [total block time: 821591.75s]
+2012-11-03 22:24:19.252+0000: GC Monitor: Application threads blocked for an additional 2254626ms [total block time: 823846.4s]
+2012-11-03 22:44:27.956+0000: GC Monitor: Application threads blocked for an additional 127ms [total block time: 823846.5s]
+2012-11-03 22:44:28.400+0000: Stopping - database is now unavailable
+2012-11-03 22:44:28.455+0000: TM shutting down
+2012-11-03 22:44:28.473+0000: GC Monitor stopped. 
+2012-11-03 22:44:29.915+0000: Closed log /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/index/lucene.log
+2012-11-03 22:44:30.062+0000: Closed log /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log
+2012-11-03 22:44:30.596+0000: NeoStore closed
+2012-11-03 22:44:30.596+0000: --- SHUTDOWN diagnostics START ---
+2012-11-03 22:44:30.597+0000: --- SHUTDOWN diagnostics END ---
+2012-11-06 06:41:10.923+0000: Opened [/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log.1] clean empty log, version=9, lastTxId=355
+2012-11-06 06:41:11.127+0000: TM opening log: /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/tm_tx_log.1
+2012-11-06 06:41:11.216+0000: Opened [/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/index/lucene.log.1] clean empty log, version=9, lastTxId=340
+2012-11-06 06:41:11.270+0000: --- STARTUP diagnostics START ---
+2012-11-06 06:41:11.272+0000: Neo4j Kernel properties:
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log
+    node_auto_indexing=false
+    intercept_committing_transactions=false
+    remote_shell_name=shell
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=true
+    rebuild_idgenerators_fast=true
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.arrays.mapped_memory=305M
+    neostore.propertystore.db.strings.mapped_memory=269M
+    gcr_cache_min_log_interval=60s
+    relationship_grab_size=100
+    relationship_auto_indexing=false
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    node_cache_array_fraction=1.0
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    relationship_cache_array_fraction=1.0
+    store_dir=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db
+    remote_logging_host=127.0.0.1
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    array_block_size=120
+    load_kernel_extensions=true
+    neostore.relationshipstore.db.mapped_memory=388M
+    keep_logical_logs=true
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    neostore.nodestore.db.mapped_memory=88M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=true
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    ephemeral=false
+    neo_store=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=317M
+    string_block_size=120
+    grab_file_lock=true
+    remote_logging_enabled=false
+    neo4j.ext.udc.enabled=true
+    neo4j.ext.udc.source=server
+2012-11-06 06:41:11.276+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+    LINUX_SCHEDULERS
+2012-11-06 06:41:11.276+0000: System memory information:
+    Total Physical memory: 3,83 GB
+    Free Physical memory: 1,21 GB
+    Committed virtual memory: 1,18 GB
+    Total swap space: 3,89 GB
+    Free swap space: 3,89 GB
+2012-11-06 06:41:11.298+0000: JVM memory information:
+    Free  memory: 51,24 MB
+    Total memory: 58,75 MB
+    Max   memory: 871,13 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2,25 MB, used=458,00 kB, max=48,00 MB, threshold=0,00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=15,38 MB, used=5,86 MB, max=321,63 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2,50 MB, used=1,65 MB, max=2,50 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=40,88 MB, used=0,00 B, max=653,38 MB, threshold=0,00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=16,00 MB, used=8,69 MB, max=128,00 MB, threshold=0,00 B
+2012-11-06 06:41:11.328+0000: Operating system information:
+    Operating System: Linux; version: 3.2.0-32-generic-pae; arch: i386; cpus: 4
+    Max number of file descriptors: 4096
+    Number of open file descriptors: 101
+    Process id: 13456@tobias-ThinkPad-X220
+    Byte order: LITTLE_ENDIAN
+2012-11-06 06:41:11.345+0000: JVM information:
+    VM Name: OpenJDK Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 20.0-b12
+    JIT compiler: HotSpot Tiered Compilers
+    VM Arguments: [-XX:+DisableExplicitGC, -Dorg.neo4j.server.properties=conf/neo4j-server.properties, -Djava.util.logging.config.file=conf/logging.properties, -Dfile.encoding=UTF-8, -Dlog4j.configuration=file:conf/log4j.properties, -Dorg.neo4j.server.properties=/home/tobias/Downloads/neo4j-community-1.7/conf/neo4j-server.properties, -Djava.util.logging.config.file=/home/tobias/Downloads/neo4j-community-1.7/conf/logging.properties, -Dneo4j.home=/home/tobias/Downloads/neo4j-community-1.7, -Dneo4j.instance=/home/tobias/Downloads/neo4j-community-1.7]
+2012-11-06 06:41:11.346+0000: Java classpath:
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jsr311-api-1.1.1.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/localedata.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/servlet-api-2.5-20081211.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/modules/jdk.boot.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/sunjce_provider.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-cypher-plugin-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/plugin.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/pipes-1.0.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/classes
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-server-1.9.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/sunrsasign.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jettison-1.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-analysis-3.2.jar
+     [loader.1] file:/usr/share/java/java-atk-wrapper.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jansi-1.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/slf4j-api-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/log4j-over-slf4j-1.6.1.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-common/jre/lib/resources.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-io-1.4.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/blueprints-core-1.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/groovy-1.8.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-jmx-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-util-3.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jetty-util-6.1.25.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-lucene-index-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/stax-api-1.0.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/blueprints-neo4j-graph-1.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/antlr-2.7.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/gremlin-java-1.5.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/jce.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-core-asl-1.8.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-graph-algo-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/gremlin-groovy-1.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jcl-over-slf4j-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/rrd4j-2.0.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-shell-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/netx.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-server-1.7-static-web.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jetty-6.1.25.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-beanutils-core-1.8.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-beanutils-1.8.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-lang-2.4.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-mapper-asl-1.8.3.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/sunpkcs11.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/scala-library-2.9.0-1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/server-api-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/jsse.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-3.1.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/rt.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-commons-3.2.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/charsets.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-core-1.9.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-jaxrs-1.8.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-collections-3.2.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-udc-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/lucene-core-3.5.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-server-1.7.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/pulse-java.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/slf4j-jdk14-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/bcprov-jdk16-140.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-gremlin-plugin-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-multipart-1.9.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-tree-3.2.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/rhino.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-graph-matching-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-configuration-1.6.jar
+     [loader.1] file:/usr/lib/i386-linux-gnu/jni/libatk-wrapper.so.0.0.18
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-kernel-1.7.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/dnsns.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-digester-1.8.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-cypher-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-logging-1.1.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/mimepull-1.6.jar
+2012-11-06 06:41:11.350+0000: Library path:
+    /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/server
+    /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386
+    /usr/lib/jvm/java-6-openjdk-i386/lib/i386
+    /usr/java/packages/lib/i386
+    /usr/lib/i386-linux-gnu/jni
+    /lib/i386-linux-gnu
+    /usr/lib/i386-linux-gnu
+    /usr/lib/jni
+    /lib
+    /usr/lib
+2012-11-06 06:41:11.351+0000: System.properties:
+    sun.boot.library.path = /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386
+    org.neo4j.server.properties = /home/tobias/Downloads/neo4j-community-1.7/conf/neo4j-server.properties
+    path.separator = :
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = DE
+    sun.os.patch.level = unknown
+    user.dir = /home/tobias/Downloads/neo4j-community-1.7
+    log4j.configuration = file:conf/log4j.properties
+    sun.jnu.encoding = UTF-8
+    sun.management.compiler = HotSpot Tiered Compilers
+    user.home = /home/tobias
+    user.timezone = Europe/Berlin
+    file.encoding = UTF-8
+    user.name = tobias
+    sun.java.command = org.neo4j.server.Bootstrapper
+    sun.arch.data.model = 32
+    user.language = de
+    file.separator = /
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    neo4j.instance = /home/tobias/Downloads/neo4j-community-1.7
+    sun.desktop = gnome
+    neo4j.home = /home/tobias/Downloads/neo4j-community-1.7
+    sun.cpu.isalist = 
+2012-11-06 06:41:11.351+0000: Linux scheduler information:
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    noop deadline [cfq] 
+2012-11-06 06:41:11.354+0000: --- STARTUP diagnostics END ---
+2012-11-06 06:41:11.484+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-11-06 06:41:11.716+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-11-06 06:41:11.734+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-11-06 06:41:11.736+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-11-06 06:41:11.736+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1340016239115, id:-1475725026871967729, store version: 13561656364791302]
+2012-11-06 06:41:11.736+0000: Kernel version: Neo4j - Graph Database Kernel 1.7
+2012-11-06 06:41:11.736+0000: Neo4j component versions:
+2012-11-06 06:41:11.737+0000:   Neo4j - Graph Database Kernel 1.7
+2012-11-06 06:41:11.737+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-11-06 06:41:11.738+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-11-06 06:41:11.738+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-11-06 06:41:11.738+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-11-06 06:41:11.739+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-11-06 06:41:11.739+0000: Id usage:
+    Id usage:
+      NodeStore: used=50 high=49
+      RelationshipStore: used=153 high=152
+      RelationshipTypeStore: used=9 high=8
+      PropertyStore: used=259 high=258
+      PropertyIndexStore: used=15 high=14
+      StringPropertyStore: used=114 high=113
+      ArrayPropertyStore: used=1 high=0
+2012-11-06 06:41:11.739+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-11-06 06:41:11.739+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-11-06 06:41:11.740+0000: Storage files:
+    nioneo_logical.log.v8: 4,84 kB
+    nioneo_logical.log.v3: 4,24 kB
+    neostore.propertystore.db.arrays.id: 9,00 B
+    neostore.propertystore.db.index.id: 9,00 B
+    neostore.id: 9,00 B
+    neostore: 54,00 B
+    nioneo_logical.log.v7: 16,00 B
+    nioneo_logical.log.v1: 14,54 kB
+    nioneo_logical.log.v6: 246,00 B
+    active_tx_log: 11,00 B
+    neostore.nodestore.db: 450,00 B
+    tm_tx_log.1: 0,00 B
+    index.db: 2,21 kB
+    nioneo_logical.log.v2: 45,26 kB
+    nioneo_logical.log.1: 16,00 B
+    messages.log: 416,59 kB
+    neostore.propertystore.db.arrays: 128,00 B
+    neostore.relationshiptypestore.db.names: 380,00 B
+    neostore.relationshipstore.db.id: 9,00 B
+    neostore.propertystore.db.index.keys.id: 9,00 B
+    neostore.propertystore.db: 10,37 kB
+    neostore.relationshiptypestore.db.names.id: 9,00 B
+    index:
+      lucene.log.v1: 13,54 kB
+      lucene.log.v0: 12,71 kB
+      lucene.log.v6: 16,00 B
+      lucene.log.active: 4,00 B
+      lucene:
+        relationship:
+          hasComment:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            segments_5: 942,00 B
+            _a.fdx: 84,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 79,00 B
+            _a.fdt: 421,00 B
+            _b.fdx: 12,00 B
+            _c.tis: 79,00 B
+            _a.frq: 50,00 B
+            _d.fdt: 47,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 47,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 371,00 B
+            _b.tii: 35,00 B
+            _d.tis: 79,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 46,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _d.prx: 5,00 B
+          - Total: 2,78 kB
+          proposalHasParlament:
+            _a.fdx: 84,00 B
+            _a.fnm: 51,00 B
+            segments.gen: 20,00 B
+            _a.fdt: 402,00 B
+            segments_4: 291,00 B
+            _a.frq: 40,00 B
+            _a.prx: 40,00 B
+            _a.tis: 206,00 B
+            _a.tii: 35,00 B
+            _a.nrm: 44,00 B
+          - Total: 1,18 kB
+          issues:
+            _0.nrm: 9,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            segments_1: 253,00 B
+            _0.tis: 75,00 B
+            _0.frq: 5,00 B
+            _0.prx: 5,00 B
+            _0.fnm: 60,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+          - Total: 517,00 B
+          hasPeople:
+            _d.fnm: 69,00 B
+            _c.fnm: 69,00 B
+            _e.fdt: 45,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _a.fnm: 69,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            _f.tis: 79,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 69,00 B
+            _b.tis: 78,00 B
+            _e.tis: 78,00 B
+            _a.fdt: 397,00 B
+            _b.fdx: 12,00 B
+            segments_4: 1,35 kB
+            _e.tii: 35,00 B
+            _c.tis: 77,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 9,00 B
+            _d.fdt: 43,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 44,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 5,00 B
+            _a.tis: 297,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 77,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _e.prx: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 44,00 B
+            _e.frq: 5,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _f.prx: 5,00 B
+            _e.fnm: 69,00 B
+            _f.fdt: 45,00 B
+            _f.fnm: 69,00 B
+            _f.nrm: 9,00 B
+            _d.prx: 5,00 B
+          - Total: 3,63 kB
+          instanceHasParlament:
+            _1.fdx: 12,00 B
+            _2.frq: 4,00 B
+            _0.nrm: 8,00 B
+            segments_3: 907,00 B
+            _1.fnm: 51,00 B
+            _3.nrm: 8,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            _2.tis: 74,00 B
+            _1.tii: 35,00 B
+            _0.tis: 74,00 B
+            _0.frq: 4,00 B
+            _3.frq: 4,00 B
+            _2.fdt: 43,00 B
+            _0.prx: 4,00 B
+            _1.prx: 4,00 B
+            _1.nrm: 8,00 B
+            _3.tii: 35,00 B
+            _0.fnm: 51,00 B
+            _0.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 74,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 8,00 B
+            _3.fnm: 51,00 B
+            _3.tis: 74,00 B
+            _2.prx: 4,00 B
+            _1.frq: 4,00 B
+            _3.fdt: 43,00 B
+            _1.fdt: 43,00 B
+            _2.fnm: 51,00 B
+            _3.prx: 4,00 B
+          - Total: 1,81 kB
+          issuesComment:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            segments_5: 942,00 B
+            _a.fdx: 84,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 82,00 B
+            _a.fdt: 449,00 B
+            _b.fdx: 12,00 B
+            _c.tis: 83,00 B
+            _a.frq: 50,00 B
+            _d.fdt: 50,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 49,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 364,00 B
+            _b.tii: 35,00 B
+            _d.tis: 82,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 48,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _d.prx: 5,00 B
+          - Total: 2,81 kB
+          hasProposal:
+            _d.fnm: 51,00 B
+            _c.fnm: 51,00 B
+            segments_5: 1,56 kB
+            _e.fdt: 34,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _g.prx: 4,00 B
+            _a.fnm: 51,00 B
+            _c.prx: 4,00 B
+            _c.tii: 35,00 B
+            _f.tis: 65,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 51,00 B
+            _b.tis: 64,00 B
+            _e.tis: 65,00 B
+            _a.fdt: 290,00 B
+            _g.tis: 65,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _g.fdt: 34,00 B
+            _c.tis: 65,00 B
+            _a.frq: 40,00 B
+            _g.fdx: 12,00 B
+            _e.nrm: 8,00 B
+            _d.fdt: 34,00 B
+            _a.prx: 40,00 B
+            _d.nrm: 8,00 B
+            _c.fdt: 34,00 B
+            _d.frq: 4,00 B
+            _d.tii: 35,00 B
+            _g.tii: 35,00 B
+            _g.frq: 4,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 4,00 B
+            _a.tis: 204,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 65,00 B
+            _b.prx: 4,00 B
+            _b.frq: 4,00 B
+            _e.prx: 4,00 B
+            _c.frq: 4,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 33,00 B
+            _g.fnm: 51,00 B
+            _e.frq: 4,00 B
+            _b.nrm: 8,00 B
+            _c.nrm: 8,00 B
+            _g.nrm: 8,00 B
+            _a.nrm: 44,00 B
+            _f.prx: 4,00 B
+            _e.fnm: 51,00 B
+            _f.fdt: 34,00 B
+            _f.fnm: 51,00 B
+            _f.nrm: 8,00 B
+            _d.prx: 4,00 B
+          - Total: 3,60 kB
+          votes:
+            _28.fnm: 65,00 B
+            segments_7: 2,02 kB
+            _28.fdx: 484,00 B
+            _28.tis: 1,31 kB
+            _29.cfs: 371,00 B
+            _2b.cfs: 371,00 B
+            _2a.cfs: 371,00 B
+            segments.gen: 20,00 B
+            _2f.cfs: 371,00 B
+            _2e.cfs: 371,00 B
+            _28.fdt: 2,59 kB
+            _28.nrm: 364,00 B
+            _28.tii: 55,00 B
+            _28.prx: 387,00 B
+            _28.frq: 408,00 B
+            _2d.cfs: 371,00 B
+            _2c.cfs: 373,00 B
+            _2g.cfs: 369,00 B
+          - Total: 10,56 kB
+          issued:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            segments_5: 1,35 kB
+            _e.fdt: 43,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            _f.tis: 75,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 75,00 B
+            _e.tis: 77,00 B
+            _a.fdt: 373,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _c.tis: 74,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 9,00 B
+            _d.fdt: 43,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 43,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 5,00 B
+            _a.tis: 350,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 75,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _e.prx: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 42,00 B
+            _e.frq: 5,00 B
+            _b.nrm: 9,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _f.prx: 5,00 B
+            _e.fnm: 60,00 B
+            _f.fdt: 43,00 B
+            _f.fnm: 60,00 B
+            _f.nrm: 9,00 B
+            _d.prx: 5,00 B
+          - Total: 3,59 kB
+        - Total: 30,47 kB
+        node:
+          vertex:
+            segments.gen: 20,00 B
+            segments_1: 32,00 B
+          - Total: 52,00 B
+          instance:
+            _1.fdx: 12,00 B
+            _0.nrm: 9,00 B
+            _1.fnm: 57,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 46,00 B
+            _1.tii: 35,00 B
+            segments_1: 468,00 B
+            _0.tis: 80,00 B
+            _0.frq: 5,00 B
+            _0.prx: 5,00 B
+            _1.prx: 5,00 B
+            _1.nrm: 9,00 B
+            _0.fnm: 57,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 139,00 B
+            _1.frq: 5,00 B
+            _1.fdt: 105,00 B
+          - Total: 1,08 kB
+          parlament:
+            _1.fdx: 12,00 B
+            _2.frq: 5,00 B
+            _4.tis: 122,00 B
+            _4.frq: 5,00 B
+            _0.nrm: 9,00 B
+            segments_3: 1,10 kB
+            _1.fnm: 57,00 B
+            _3.nrm: 9,00 B
+            _2.tii: 35,00 B
+            _4.fdt: 88,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 146,00 B
+            _4.prx: 5,00 B
+            _4.fnm: 57,00 B
+            _2.tis: 111,00 B
+            _1.tii: 35,00 B
+            _0.tis: 180,00 B
+            _0.frq: 5,00 B
+            _3.frq: 5,00 B
+            _4.tii: 35,00 B
+            _2.fdt: 77,00 B
+            _0.prx: 5,00 B
+            _1.prx: 5,00 B
+            _1.nrm: 9,00 B
+            _3.tii: 35,00 B
+            _0.fnm: 57,00 B
+            _0.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 180,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 9,00 B
+            _3.fnm: 57,00 B
+            _3.tis: 129,00 B
+            _2.prx: 5,00 B
+            _4.nrm: 9,00 B
+            _1.frq: 5,00 B
+            _4.fdx: 12,00 B
+            _3.fdt: 95,00 B
+            _1.fdt: 146,00 B
+            _2.fnm: 57,00 B
+            _3.prx: 5,00 B
+          - Total: 2,96 kB
+          person:
+            _a.fdx: 84,00 B
+            _a.fnm: 85,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 85,00 B
+            _b.tis: 129,00 B
+            _a.fdt: 678,00 B
+            _b.fdx: 12,00 B
+            segments_4: 506,00 B
+            _a.frq: 76,00 B
+            _a.prx: 76,00 B
+            _a.tis: 534,00 B
+            _b.tii: 35,00 B
+            _b.prx: 8,00 B
+            _b.frq: 8,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 86,00 B
+            _b.nrm: 12,00 B
+            _a.nrm: 84,00 B
+          - Total: 2,49 kB
+          proposal:
+            _26.frq: 133,00 B
+            segments_6: 958,00 B
+            _2g.nrm: 13,00 B
+            segments.gen: 20,00 B
+            _26.tii: 35,00 B
+            _26.tis: 6,92 kB
+            _2f.cfs: 634,00 B
+            _2g.fnm: 91,00 B
+            _2g.prx: 9,00 B
+            _26.nrm: 148,00 B
+            _2g.tis: 2,47 kB
+            _26.fdx: 132,00 B
+            _2g.fdx: 12,00 B
+            _26.fdt: 7,24 kB
+            _26.fnm: 91,00 B
+            _2g.tii: 35,00 B
+            _2g.frq: 9,00 B
+            _26_1.del: 32,00 B
+            _2d.cfs: 520,00 B
+            _2g.fdt: 2,43 kB
+            _26.prx: 130,00 B
+          - Total: 21,98 kB
+          comment:
+            _14.tii: 35,00 B
+            _15.fdt: 92,00 B
+            _1d.tis: 152,00 B
+            segments_6: 958,00 B
+            _1d.fdx: 12,00 B
+            _14.tis: 1002,00 B
+            _1d.tii: 35,00 B
+            segments.gen: 20,00 B
+            _15.frq: 7,00 B
+            _1d.nrm: 11,00 B
+            _15.prx: 7,00 B
+            _14.fnm: 69,00 B
+            _16.nrm: 11,00 B
+            _14.fdx: 108,00 B
+            _14_1.del: 32,00 B
+            _1d.fdt: 112,00 B
+            _16.fdx: 12,00 B
+            _1d.prx: 7,00 B
+            _16.prx: 7,00 B
+            _14.frq: 89,00 B
+            _16.fnm: 69,00 B
+            _16.tis: 136,00 B
+            _14.nrm: 95,00 B
+            _15.cfs: 475,00 B
+            _16.tii: 35,00 B
+            _14.fdt: 1,07 kB
+            _14.prx: 89,00 B
+            _15.fnm: 69,00 B
+            _1d.fnm: 69,00 B
+            _15.fdx: 12,00 B
+            _15.nrm: 11,00 B
+            _16.fdt: 96,00 B
+            _15.tii: 35,00 B
+            _16.frq: 7,00 B
+            _1d.frq: 7,00 B
+            _15.tis: 132,00 B
+          - Total: 5,09 kB
+        - Total: 33,66 kB
+      - Total: 64,13 kB
+      lucene.log.v5: 168,08 kB
+      lucene.log.1: 16,00 B
+      lucene.log.v7: 16,00 B
+      lucene.log.v4: 10,18 kB
+      lucene.log.v8: 6,33 kB
+      lucene.log.v3: 2,94 kB
+      lucene.log.v2: 40,23 kB
+      lucene-store.db: 40,00 B
+    - Total: 318,23 kB
+    neostore.relationshiptypestore.db.id: 9,00 B
+    neostore.propertystore.db.index.keys: 1,00 kB
+    neostore.propertystore.db.strings.id: 177,00 B
+    neostore.relationshipstore.db: 4,93 kB
+    nioneo_logical.log.v0: 14,78 kB
+    nioneo_logical.log.v5: 131,53 kB
+    lock: 0,00 B
+    nioneo_logical.log.active: 4,00 B
+    neostore.nodestore.db.id: 9,00 B
+    neostore.propertystore.db.id: 41,00 B
+    neostore.propertystore.db.strings: 14,25 kB
+    neostore.propertystore.db.index: 1,02 kB
+    neostore.relationshiptypestore.db: 45,00 B
+    nioneo_logical.log.v4: 13,19 kB
+2012-11-06 06:41:11.791+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-11-06 06:41:11.792+0000: Started - database is now available
+2012-11-06 06:41:11.792+0000: GC Monitor started. 
+2012-11-06 06:41:11.793+0000: --- SERVER STARTUP START ---
+2012-11-06 06:41:11.793+0000: --- STARTUP diagnostics for org.neo4j.server.configuration.Configurator START ---
+2012-11-06 06:41:11.801+0000: Server configuration:
+    org.neo4j.server.database.location = data/graph.db
+    org.neo4j.server.webserver.port = 7474
+    org.neo4j.server.webserver.https.enabled = true
+    org.neo4j.server.webserver.https.port = 7473
+    org.neo4j.server.webserver.https.cert.location = conf/ssl/snakeoil.cert
+    org.neo4j.server.webserver.https.key.location = conf/ssl/snakeoil.key
+    org.neo4j.server.webserver.https.keystore.location = data/keystore
+    org.neo4j.server.webadmin.rrdb.location = data/rrd
+    org.neo4j.server.db.tuning.properties = conf/neo4j.properties
+    org.neo4j.server.webadmin.management.uri = /db/manage/
+    org.neo4j.server.webadmin.data.uri = /db/data/
+2012-11-06 06:41:11.801+0000: --- STARTUP diagnostics for org.neo4j.server.configuration.Configurator END ---
+2012-11-06 06:41:11.877+0000: Mounted discovery module (org.neo4j.server.rest.discovery) at: /
+2012-11-06 06:41:11.951+0000: Loaded server plugin "CypherPlugin" (org.neo4j.server.plugin.cypher.CypherPlugin)
+2012-11-06 06:41:11.953+0000:   GraphDatabaseService.execute_query: execute a query
+2012-11-06 06:41:11.954+0000: Loaded server plugin "GremlinPlugin" (org.neo4j.server.plugin.gremlin.GremlinPlugin)
+2012-11-06 06:41:11.954+0000:   GraphDatabaseService.execute_script: execute a Gremlin script with 'g' set to the Neo4jGraph and 'results' containing the results. Only results of one object type is supported.
+2012-11-06 06:41:11.954+0000: Mounted REST API at: /db/data/
+2012-11-06 06:41:11.955+0000: Mounted management API at: /db/manage/
+2012-11-06 06:41:12.108+0000: Mounted webadmin at: /webadmin
+2012-11-06 06:41:13.582+0000: Server started on: http://localhost:7474/
+2012-11-06 06:41:13.582+0000: --- SERVER STARTUP END ---
+2012-11-06 06:52:43.255+0000: GC Monitor: Application threads blocked for an additional 469626ms [total block time: 469.626s]
+2012-11-06 07:17:14.239+0000: GC Monitor: Application threads blocked for an additional 717596ms [total block time: 1187.222s]
+2012-11-06 08:47:41.204+0000: GC Monitor: Application threads blocked for an additional 170358ms [total block time: 1357.58s]
+2012-11-06 10:16:28.205+0000: GC Monitor: Application threads blocked for an additional 117066ms [total block time: 1474.646s]
+2012-11-06 10:51:36.252+0000: GC Monitor: Application threads blocked for an additional 1142771ms [total block time: 2617.417s]
+2012-11-06 11:30:35.253+0000: GC Monitor: Application threads blocked for an additional 1246581ms [total block time: 3863.998s]
+2012-11-06 12:15:03.225+0000: GC Monitor: Application threads blocked for an additional 47839ms [total block time: 3911.837s]
+2012-11-06 12:17:37.224+0000: GC Monitor: Application threads blocked for an additional 111543ms [total block time: 4023.38s]
+2012-11-06 12:54:33.235+0000: GC Monitor: Application threads blocked for an additional 1284612ms [total block time: 5307.992s]
+2012-11-07 05:11:05.226+0000: GC Monitor: Application threads blocked for an additional 27363549ms [total block time: 32671.54s]
+2012-11-07 06:34:38.213+0000: GC Monitor: Application threads blocked for an additional 399603ms [total block time: 33071.145s]
+2012-11-07 06:54:18.252+0000: GC Monitor: Application threads blocked for an additional 566477ms [total block time: 33637.62s]
+2012-11-07 08:15:37.208+0000: GC Monitor: Application threads blocked for an additional 3835026ms [total block time: 37472.65s]
+2012-11-07 08:35:51.204+0000: GC Monitor: Application threads blocked for an additional 110749ms [total block time: 37583.395s]
+2012-11-07 09:07:10.204+0000: GC Monitor: Application threads blocked for an additional 884077ms [total block time: 38467.473s]
+2012-11-07 10:16:00.223+0000: GC Monitor: Application threads blocked for an additional 2893608ms [total block time: 41361.08s]
+2012-11-07 10:21:18.263+0000: GC Monitor: Application threads blocked for an additional 301319ms [total block time: 41662.4s]
+2012-11-07 10:41:24.280+0000: GC Monitor: Application threads blocked for an additional 117927ms [total block time: 41780.33s]
+2012-11-07 13:17:01.253+0000: GC Monitor: Application threads blocked for an additional 5282977ms [total block time: 47063.305s]
+2012-11-07 15:16:29.208+0000: GC Monitor: Application threads blocked for an additional 238976ms [total block time: 47302.28s]
+2012-11-07 15:31:59.221+0000: GC Monitor: Application threads blocked for an additional 391055ms [total block time: 47693.336s]
+2012-11-07 16:17:39.215+0000: GC Monitor: Application threads blocked for an additional 1174816ms [total block time: 48868.152s]
+2012-11-07 18:04:21.203+0000: GC Monitor: Application threads blocked for an additional 2391993ms [total block time: 51260.145s]
+2012-11-07 21:51:39.183+0000: GC Monitor: Application threads blocked for an additional 10424668ms [total block time: 61684.812s]
+2012-11-07 22:37:12.221+0000: GC Monitor: Application threads blocked for an additional 2693587ms [total block time: 64378.4s]
+2012-11-08 06:37:00.193+0000: GC Monitor: Application threads blocked for an additional 26669106ms [total block time: 91047.51s]
+2012-11-08 07:28:42.186+0000: GC Monitor: Application threads blocked for an additional 2948094ms [total block time: 93995.6s]
+2012-11-08 09:05:29.223+0000: GC Monitor: Application threads blocked for an additional 2597211ms [total block time: 96592.805s]
+2012-11-08 10:38:57.177+0000: GC Monitor: Application threads blocked for an additional 5330670ms [total block time: 101923.48s]
+2012-11-08 14:49:16.212+0000: GC Monitor: Application threads blocked for an additional 614763ms [total block time: 102538.24s]
+2012-11-08 16:24:14.173+0000: GC Monitor: Application threads blocked for an additional 4455892ms [total block time: 106994.13s]
+2012-11-08 17:35:23.193+0000: GC Monitor: Application threads blocked for an additional 4214242ms [total block time: 111208.375s]
+2012-11-09 05:12:41.202+0000: GC Monitor: Application threads blocked for an additional 38505628ms [total block time: 149714.0s]
+2012-11-09 06:30:59.173+0000: GC Monitor: Application threads blocked for an additional 286919ms [total block time: 150000.92s]
+2012-11-09 06:53:25.179+0000: GC Monitor: Application threads blocked for an additional 630967ms [total block time: 150631.89s]
+2012-11-09 07:08:06.183+0000: GC Monitor: Application threads blocked for an additional 30507ms [total block time: 150662.4s]
+2012-11-09 07:08:47.752+0000: Stopping - database is now unavailable
+2012-11-09 07:08:47.787+0000: TM shutting down
+2012-11-09 07:08:47.841+0000: GC Monitor stopped. 
+2012-11-09 07:08:51.999+0000: Closed log /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/index/lucene.log
+2012-11-09 07:08:52.086+0000: Closed log /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log
+2012-11-09 07:08:52.591+0000: NeoStore closed
+2012-11-09 07:08:52.592+0000: --- SHUTDOWN diagnostics START ---
+2012-11-09 07:08:52.592+0000: --- SHUTDOWN diagnostics END ---
+2012-11-09 07:09:02.626+0000: Opened [/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log.1] clean empty log, version=10, lastTxId=476
+2012-11-09 07:09:02.730+0000: TM opening log: /home/tobias/Downloads/neo4j-community-1.7/data/graph.db/tm_tx_log.1
+2012-11-09 07:09:02.817+0000: Opened [/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/index/lucene.log.1] clean empty log, version=10, lastTxId=449
+2012-11-09 07:09:02.827+0000: --- STARTUP diagnostics START ---
+2012-11-09 07:09:02.827+0000: Neo4j Kernel properties:
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/nioneo_logical.log
+    node_auto_indexing=false
+    intercept_committing_transactions=false
+    remote_shell_name=shell
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=true
+    rebuild_idgenerators_fast=true
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.arrays.mapped_memory=305M
+    neostore.propertystore.db.strings.mapped_memory=269M
+    gcr_cache_min_log_interval=60s
+    relationship_grab_size=100
+    relationship_auto_indexing=false
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    node_cache_array_fraction=1.0
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    relationship_cache_array_fraction=1.0
+    store_dir=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db
+    remote_logging_host=127.0.0.1
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    array_block_size=120
+    load_kernel_extensions=true
+    neostore.relationshipstore.db.mapped_memory=388M
+    keep_logical_logs=true
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    neostore.nodestore.db.mapped_memory=88M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=true
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    ephemeral=false
+    neo_store=/home/tobias/Downloads/neo4j-community-1.7/data/graph.db/neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=317M
+    string_block_size=120
+    grab_file_lock=true
+    remote_logging_enabled=false
+    neo4j.ext.udc.enabled=true
+    neo4j.ext.udc.source=server
+2012-11-09 07:09:02.829+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+    LINUX_SCHEDULERS
+2012-11-09 07:09:02.830+0000: System memory information:
+    Total Physical memory: 3,83 GB
+    Free Physical memory: 541,21 MB
+    Committed virtual memory: 1,18 GB
+    Total swap space: 3,89 GB
+    Free swap space: 3,64 GB
+2012-11-09 07:09:02.844+0000: JVM memory information:
+    Free  memory: 50,92 MB
+    Total memory: 58,75 MB
+    Max   memory: 871,13 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2,25 MB, used=461,50 kB, max=48,00 MB, threshold=0,00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=15,38 MB, used=6,17 MB, max=321,63 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2,50 MB, used=1,65 MB, max=2,50 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=40,88 MB, used=0,00 B, max=653,38 MB, threshold=0,00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=16,00 MB, used=8,69 MB, max=128,00 MB, threshold=0,00 B
+2012-11-09 07:09:02.873+0000: Operating system information:
+    Operating System: Linux; version: 3.2.0-32-generic-pae; arch: i386; cpus: 4
+    Max number of file descriptors: 4096
+    Number of open file descriptors: 101
+    Process id: 4760@tobias-ThinkPad-X220
+    Byte order: LITTLE_ENDIAN
+2012-11-09 07:09:02.891+0000: JVM information:
+    VM Name: OpenJDK Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 20.0-b12
+    JIT compiler: HotSpot Tiered Compilers
+    VM Arguments: [-XX:+DisableExplicitGC, -Dorg.neo4j.server.properties=conf/neo4j-server.properties, -Djava.util.logging.config.file=conf/logging.properties, -Dfile.encoding=UTF-8, -Dlog4j.configuration=file:conf/log4j.properties, -Dorg.neo4j.server.properties=/home/tobias/Downloads/neo4j-community-1.7/conf/neo4j-server.properties, -Djava.util.logging.config.file=/home/tobias/Downloads/neo4j-community-1.7/conf/logging.properties, -Dneo4j.home=/home/tobias/Downloads/neo4j-community-1.7, -Dneo4j.instance=/home/tobias/Downloads/neo4j-community-1.7]
+2012-11-09 07:09:02.891+0000: Java classpath:
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jsr311-api-1.1.1.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/localedata.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/servlet-api-2.5-20081211.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/modules/jdk.boot.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/sunjce_provider.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-cypher-plugin-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/plugin.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/pipes-1.0.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/classes
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-server-1.9.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/sunrsasign.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jettison-1.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-analysis-3.2.jar
+     [loader.1] file:/usr/share/java/java-atk-wrapper.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jansi-1.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/slf4j-api-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/log4j-over-slf4j-1.6.1.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-common/jre/lib/resources.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-io-1.4.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/blueprints-core-1.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/groovy-1.8.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-jmx-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-util-3.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jetty-util-6.1.25.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-lucene-index-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/stax-api-1.0.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/blueprints-neo4j-graph-1.2.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/antlr-2.7.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/gremlin-java-1.5.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/jce.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-core-asl-1.8.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-graph-algo-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/gremlin-groovy-1.5.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jcl-over-slf4j-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/rrd4j-2.0.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-shell-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/netx.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-server-1.7-static-web.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jetty-6.1.25.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-beanutils-core-1.8.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-beanutils-1.8.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-lang-2.4.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-mapper-asl-1.8.3.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/sunpkcs11.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/scala-library-2.9.0-1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/server-api-1.7.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/jsse.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-3.1.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/rt.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-commons-3.2.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/charsets.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-core-1.9.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jackson-jaxrs-1.8.3.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-collections-3.2.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-udc-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/lucene-core-3.5.0.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-server-1.7.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/pulse-java.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/slf4j-jdk14-1.6.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/bcprov-jdk16-140.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/neo4j-gremlin-plugin-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/jersey-multipart-1.9.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/asm-tree-3.2.jar
+     [bootstrap] /usr/lib/jvm/java-6-openjdk-i386/jre/lib/rhino.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-graph-matching-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-configuration-1.6.jar
+     [loader.1] file:/usr/lib/i386-linux-gnu/jni/libatk-wrapper.so.0.0.18
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-kernel-1.7.jar
+     [loader.1] file:/usr/lib/jvm/java-6-openjdk-common/jre/lib/ext/dnsns.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-digester-1.8.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/lib/neo4j-cypher-1.7.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/commons-logging-1.1.1.jar
+     [classpath + loader.0] file:/home/tobias/Downloads/neo4j-community-1.7/system/lib/mimepull-1.6.jar
+2012-11-09 07:09:02.896+0000: Library path:
+    /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386/server
+    /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386
+    /usr/lib/jvm/java-6-openjdk-i386/lib/i386
+    /usr/java/packages/lib/i386
+    /usr/lib/i386-linux-gnu/jni
+    /lib/i386-linux-gnu
+    /usr/lib/i386-linux-gnu
+    /usr/lib/jni
+    /lib
+    /usr/lib
+2012-11-09 07:09:02.897+0000: System.properties:
+    sun.boot.library.path = /usr/lib/jvm/java-6-openjdk-i386/jre/lib/i386
+    org.neo4j.server.properties = /home/tobias/Downloads/neo4j-community-1.7/conf/neo4j-server.properties
+    path.separator = :
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = DE
+    sun.os.patch.level = unknown
+    user.dir = /home/tobias/Downloads/neo4j-community-1.7
+    log4j.configuration = file:conf/log4j.properties
+    sun.jnu.encoding = UTF-8
+    sun.management.compiler = HotSpot Tiered Compilers
+    user.home = /home/tobias
+    user.timezone = Europe/Berlin
+    file.encoding = UTF-8
+    user.name = tobias
+    sun.java.command = org.neo4j.server.Bootstrapper
+    sun.arch.data.model = 32
+    user.language = de
+    file.separator = /
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    neo4j.instance = /home/tobias/Downloads/neo4j-community-1.7
+    sun.desktop = gnome
+    neo4j.home = /home/tobias/Downloads/neo4j-community-1.7
+    sun.cpu.isalist = 
+2012-11-09 07:09:02.897+0000: Linux scheduler information:
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    none
+    noop deadline [cfq] 
+2012-11-09 07:09:02.900+0000: --- STARTUP diagnostics END ---
+2012-11-09 07:09:03.064+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-11-09 07:09:03.346+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-11-09 07:09:03.365+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-11-09 07:09:03.367+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-11-09 07:09:03.367+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1340016239115, id:-1475725026871967729, store version: 13561656364791302]
+2012-11-09 07:09:03.367+0000: Kernel version: Neo4j - Graph Database Kernel 1.7
+2012-11-09 07:09:03.367+0000: Neo4j component versions:
+2012-11-09 07:09:03.368+0000:   Neo4j - Graph Database Kernel 1.7
+2012-11-09 07:09:03.368+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-11-09 07:09:03.369+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-11-09 07:09:03.369+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-11-09 07:09:03.369+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-11-09 07:09:03.370+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-11-09 07:09:03.370+0000: Id usage:
+    Id usage:
+      NodeStore: used=59 high=58
+      RelationshipStore: used=175 high=174
+      RelationshipTypeStore: used=12 high=11
+      PropertyStore: used=272 high=271
+      PropertyIndexStore: used=18 high=17
+      StringPropertyStore: used=114 high=113
+      ArrayPropertyStore: used=1 high=0
+2012-11-09 07:09:03.371+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-11-09 07:09:03.371+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-11-09 07:09:03.371+0000: Storage files:
+    nioneo_logical.log.v8: 4,84 kB
+    nioneo_logical.log.v3: 4,24 kB
+    neostore.propertystore.db.arrays.id: 9,00 B
+    neostore.propertystore.db.index.id: 9,00 B
+    neostore.id: 9,00 B
+    neostore: 54,00 B
+    nioneo_logical.log.v7: 16,00 B
+    nioneo_logical.log.v1: 14,54 kB
+    nioneo_logical.log.v6: 246,00 B
+    active_tx_log: 11,00 B
+    neostore.nodestore.db: 531,00 B
+    tm_tx_log.1: 0,00 B
+    index.db: 3,43 kB
+    nioneo_logical.log.v2: 45,26 kB
+    nioneo_logical.log.1: 16,00 B
+    messages.log: 454,07 kB
+    neostore.propertystore.db.arrays: 128,00 B
+    neostore.relationshiptypestore.db.names: 494,00 B
+    neostore.relationshipstore.db.id: 81,00 B
+    neostore.propertystore.db.index.keys.id: 9,00 B
+    neostore.propertystore.db: 10,89 kB
+    nioneo_logical.log.v9: 39,89 kB
+    neostore.relationshiptypestore.db.names.id: 9,00 B
+    index:
+      lucene.log.v1: 13,54 kB
+      lucene.log.v0: 12,71 kB
+      lucene.log.v6: 16,00 B
+      lucene.log.active: 4,00 B
+      lucene:
+        relationship:
+          hasComment:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            _e.fdt: 27,00 B
+            _a.fdx: 84,00 B
+            segments_6: 945,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _e.tis: 54,00 B
+            _a.fdt: 421,00 B
+            _e.tii: 35,00 B
+            _c.tis: 79,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 10,00 B
+            _d.fdt: 47,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 47,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 371,00 B
+            _e.fdx: 12,00 B
+            _d.tis: 79,00 B
+            _e.prx: 3,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _e.frq: 3,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _e.fnm: 71,00 B
+            _d.prx: 5,00 B
+          - Total: 2,74 kB
+          proposalHasParlament:
+            _c.fnm: 51,00 B
+            segments_5: 733,00 B
+            _a.fdx: 84,00 B
+            _a.fnm: 51,00 B
+            _c.prx: 4,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 51,00 B
+            _b.tis: 75,00 B
+            _a.fdt: 402,00 B
+            _b.fdx: 12,00 B
+            _c.tis: 75,00 B
+            _a.frq: 40,00 B
+            _a.prx: 40,00 B
+            _c.fdt: 44,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 206,00 B
+            _b.tii: 35,00 B
+            _b.prx: 4,00 B
+            _b.frq: 4,00 B
+            _c.frq: 4,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 44,00 B
+            _b.nrm: 8,00 B
+            _c.nrm: 8,00 B
+            _a.nrm: 44,00 B
+          - Total: 2,07 kB
+          issues:
+            _0.nrm: 9,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            segments_1: 253,00 B
+            _0.tis: 75,00 B
+            _0.frq: 5,00 B
+            _0.prx: 5,00 B
+            _0.fnm: 60,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+          - Total: 517,00 B
+          hasPeople:
+            _d.fnm: 69,00 B
+            _c.fnm: 69,00 B
+            segments_5: 1,56 kB
+            _e.fdt: 45,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _a.fnm: 69,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            _f.tis: 79,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 69,00 B
+            _b.tis: 78,00 B
+            _e.tis: 78,00 B
+            _a.fdt: 397,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _c.tis: 77,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 9,00 B
+            _d.fdt: 43,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 44,00 B
+            _g.cfs: 332,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 5,00 B
+            _a.tis: 297,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 77,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _e.prx: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 44,00 B
+            _e.frq: 5,00 B
+            _b.nrm: 9,00 B
+            _a_1.del: 32,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _f.prx: 5,00 B
+            _e.fnm: 69,00 B
+            _f.fdt: 45,00 B
+            _f.fnm: 69,00 B
+            _f.nrm: 9,00 B
+            _d.prx: 5,00 B
+          - Total: 4,20 kB
+          delegationParlament:
+            _1.fdx: 12,00 B
+            _2.frq: 4,00 B
+            _0.nrm: 8,00 B
+            _1.fnm: 51,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            _2.tis: 74,00 B
+            _1.tii: 35,00 B
+            segments_1: 695,00 B
+            _0.tis: 74,00 B
+            _0.frq: 4,00 B
+            _2.fdt: 43,00 B
+            _0.prx: 4,00 B
+            _1.prx: 4,00 B
+            _1.nrm: 8,00 B
+            _0.fnm: 51,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 74,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 8,00 B
+            _2.prx: 4,00 B
+            _1.frq: 4,00 B
+            _1.fdt: 43,00 B
+            _2.fnm: 51,00 B
+          - Total: 1,38 kB
+          personDelegation:
+            _1.fdx: 12,00 B
+            _2.frq: 4,00 B
+            _0.nrm: 8,00 B
+            _1.fnm: 51,00 B
+            _3.nrm: 8,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 40,00 B
+            _2.tis: 70,00 B
+            _1.tii: 35,00 B
+            segments_1: 916,00 B
+            _0.tis: 70,00 B
+            _0.frq: 4,00 B
+            _3.frq: 4,00 B
+            _2.fdt: 40,00 B
+            _0.prx: 4,00 B
+            _1.prx: 4,00 B
+            _1.nrm: 8,00 B
+            _3.tii: 35,00 B
+            _0.fnm: 51,00 B
+            _0.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 70,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 8,00 B
+            _3.fnm: 51,00 B
+            _3.tis: 69,00 B
+            _2.prx: 4,00 B
+            _1.frq: 4,00 B
+            _3.fdt: 40,00 B
+            _1.fdt: 40,00 B
+            _2.fnm: 51,00 B
+            _3.prx: 4,00 B
+          - Total: 1,79 kB
+          instanceHasParlament:
+            _1.fdx: 12,00 B
+            _2.frq: 4,00 B
+            _0.nrm: 8,00 B
+            segments_3: 907,00 B
+            _1.fnm: 51,00 B
+            _3.nrm: 8,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 43,00 B
+            _2.tis: 74,00 B
+            _1.tii: 35,00 B
+            _0.tis: 74,00 B
+            _0.frq: 4,00 B
+            _3.frq: 4,00 B
+            _2.fdt: 43,00 B
+            _0.prx: 4,00 B
+            _1.prx: 4,00 B
+            _1.nrm: 8,00 B
+            _3.tii: 35,00 B
+            _0.fnm: 51,00 B
+            _0.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 74,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 8,00 B
+            _3.fnm: 51,00 B
+            _3.tis: 74,00 B
+            _2.prx: 4,00 B
+            _1.frq: 4,00 B
+            _3.fdt: 43,00 B
+            _1.fdt: 43,00 B
+            _2.fnm: 51,00 B
+            _3.prx: 4,00 B
+          - Total: 1,81 kB
+          issuesComment:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            _e.fdt: 27,00 B
+            _a.fdx: 84,00 B
+            segments_6: 945,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            segments.gen: 20,00 B
+            _e.tis: 53,00 B
+            _a.fdt: 449,00 B
+            _e.tii: 35,00 B
+            _c.tis: 83,00 B
+            _a.frq: 50,00 B
+            _e.nrm: 10,00 B
+            _d.fdt: 50,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 49,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _a.tis: 364,00 B
+            _e.fdx: 12,00 B
+            _d.tis: 82,00 B
+            _e.prx: 3,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _e.frq: 3,00 B
+            _c.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _e.fnm: 71,00 B
+            _d.prx: 5,00 B
+          - Total: 2,77 kB
+          hasProposal:
+            segments_6: 291,00 B
+            _k.nrm: 94,00 B
+            segments.gen: 20,00 B
+            _k.fdt: 510,00 B
+            _k.fnm: 62,00 B
+            _k.tis: 323,00 B
+            _k.frq: 73,00 B
+            _k.fdx: 148,00 B
+            _k.prx: 70,00 B
+            _k.tii: 35,00 B
+          - Total: 1,59 kB
+          delegationPerson:
+            _1.fdx: 12,00 B
+            _2.frq: 4,00 B
+            _0.nrm: 8,00 B
+            _1.fnm: 51,00 B
+            _2.tii: 35,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 40,00 B
+            _2.tis: 70,00 B
+            _1.tii: 35,00 B
+            segments_1: 695,00 B
+            _0.tis: 71,00 B
+            _0.frq: 4,00 B
+            _2.fdt: 40,00 B
+            _0.prx: 4,00 B
+            _1.prx: 4,00 B
+            _1.nrm: 8,00 B
+            _0.fnm: 51,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 71,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 8,00 B
+            _2.prx: 4,00 B
+            _1.frq: 4,00 B
+            _1.fdt: 40,00 B
+            _2.fnm: 51,00 B
+          - Total: 1,36 kB
+          votes:
+            segments.gen: 20,00 B
+            _48_1.del: 38,00 B
+            _4e.cfs: 343,00 B
+            _48.tii: 55,00 B
+            _48.fnm: 76,00 B
+            _4c.cfs: 344,00 B
+            _4d.cfs: 343,00 B
+            _48.frq: 310,00 B
+            _48.tis: 1,22 kB
+            _4b.cfs: 344,00 B
+            segments_8: 1,80 kB
+            _48.fdt: 1,97 kB
+            _4a.cfs: 341,00 B
+            _4f.cfs: 342,00 B
+            _49.cfs: 345,00 B
+            _48.fdx: 500,00 B
+            _48.prx: 292,00 B
+            _48.nrm: 438,00 B
+          - Total: 9,03 kB
+          issued:
+            _d.fnm: 60,00 B
+            _c.fnm: 60,00 B
+            _e.fdt: 43,00 B
+            _a.fdx: 84,00 B
+            segments_6: 2,00 kB
+            _f.fdx: 12,00 B
+            _g.prx: 5,00 B
+            _a.fnm: 60,00 B
+            _c.prx: 5,00 B
+            _c.tii: 35,00 B
+            _f.tis: 75,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 60,00 B
+            _b.tis: 75,00 B
+            _e.tis: 77,00 B
+            _a.fdt: 373,00 B
+            _g.tis: 75,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _g.fdt: 43,00 B
+            _c.tis: 74,00 B
+            _a.frq: 50,00 B
+            _g.fdx: 12,00 B
+            _e.nrm: 9,00 B
+            _d.fdt: 43,00 B
+            _a.prx: 50,00 B
+            _d.nrm: 9,00 B
+            _c.fdt: 43,00 B
+            _d.frq: 5,00 B
+            _d.tii: 35,00 B
+            _g.tii: 35,00 B
+            _g.frq: 5,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 5,00 B
+            _a.tis: 350,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 75,00 B
+            _h.cfs: 356,00 B
+            _b.prx: 5,00 B
+            _b.frq: 5,00 B
+            _e.prx: 5,00 B
+            _c.frq: 5,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 42,00 B
+            _g.fnm: 60,00 B
+            _e.frq: 5,00 B
+            _b.nrm: 9,00 B
+            _a_1.del: 32,00 B
+            _c.nrm: 9,00 B
+            _i.cfs: 323,00 B
+            _g.nrm: 9,00 B
+            _a.nrm: 54,00 B
+            _f.prx: 5,00 B
+            _e.fnm: 60,00 B
+            _f.fdt: 43,00 B
+            _f.fnm: 60,00 B
+            _f.nrm: 9,00 B
+            _d.prx: 5,00 B
+          - Total: 5,17 kB
+        - Total: 34,41 kB
+        node:
+          vertex:
+            segments.gen: 20,00 B
+            segments_1: 32,00 B
+          - Total: 52,00 B
+          instance:
+            _1.fdx: 12,00 B
+            _0.nrm: 9,00 B
+            _1.fnm: 57,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 46,00 B
+            _1.tii: 35,00 B
+            segments_1: 468,00 B
+            _0.tis: 80,00 B
+            _0.frq: 5,00 B
+            _0.prx: 5,00 B
+            _1.prx: 5,00 B
+            _1.nrm: 9,00 B
+            _0.fnm: 57,00 B
+            _0.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 139,00 B
+            _1.frq: 5,00 B
+            _1.fdt: 105,00 B
+          - Total: 1,08 kB
+          parlament:
+            _1.fdx: 12,00 B
+            _2.frq: 5,00 B
+            _4.tis: 122,00 B
+            _4.frq: 5,00 B
+            _0.nrm: 9,00 B
+            segments_3: 1,10 kB
+            _1.fnm: 57,00 B
+            _3.nrm: 9,00 B
+            _2.tii: 35,00 B
+            _4.fdt: 88,00 B
+            segments.gen: 20,00 B
+            _0.fdt: 146,00 B
+            _4.prx: 5,00 B
+            _4.fnm: 57,00 B
+            _2.tis: 111,00 B
+            _1.tii: 35,00 B
+            _0.tis: 180,00 B
+            _0.frq: 5,00 B
+            _3.frq: 5,00 B
+            _4.tii: 35,00 B
+            _2.fdt: 77,00 B
+            _0.prx: 5,00 B
+            _1.prx: 5,00 B
+            _1.nrm: 9,00 B
+            _3.tii: 35,00 B
+            _0.fnm: 57,00 B
+            _0.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _0.tii: 35,00 B
+            _1.tis: 180,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 9,00 B
+            _3.fnm: 57,00 B
+            _3.tis: 129,00 B
+            _2.prx: 5,00 B
+            _4.nrm: 9,00 B
+            _1.frq: 5,00 B
+            _4.fdx: 12,00 B
+            _3.fdt: 95,00 B
+            _1.fdt: 146,00 B
+            _2.fnm: 57,00 B
+            _3.prx: 5,00 B
+          - Total: 2,96 kB
+          person:
+            _d.fnm: 85,00 B
+            _c.fnm: 85,00 B
+            segments_5: 1,57 kB
+            _e.fdt: 72,00 B
+            _a.fdx: 84,00 B
+            _f.fdx: 12,00 B
+            _g.prx: 8,00 B
+            _a.fnm: 85,00 B
+            _c.prx: 8,00 B
+            _c.tii: 35,00 B
+            _f.tis: 114,00 B
+            segments.gen: 20,00 B
+            _b.fnm: 85,00 B
+            _b.tis: 129,00 B
+            _e.tis: 114,00 B
+            _a.fdt: 678,00 B
+            _g.tis: 114,00 B
+            _b.fdx: 12,00 B
+            _e.tii: 35,00 B
+            _g.fdt: 71,00 B
+            _c.tis: 116,00 B
+            _a.frq: 76,00 B
+            _g.fdx: 12,00 B
+            _e.nrm: 12,00 B
+            _d.fdt: 75,00 B
+            _a.prx: 76,00 B
+            _d.nrm: 12,00 B
+            _c.fdt: 74,00 B
+            _d.frq: 8,00 B
+            _d.tii: 35,00 B
+            _g.tii: 35,00 B
+            _g.frq: 8,00 B
+            _f.tii: 35,00 B
+            _c.fdx: 12,00 B
+            _f.frq: 8,00 B
+            _a.tis: 534,00 B
+            _e.fdx: 12,00 B
+            _b.tii: 35,00 B
+            _d.tis: 116,00 B
+            _b.prx: 8,00 B
+            _b.frq: 8,00 B
+            _e.prx: 8,00 B
+            _c.frq: 8,00 B
+            _d.fdx: 12,00 B
+            _a.tii: 35,00 B
+            _b.fdt: 86,00 B
+            _g.fnm: 85,00 B
+            _e.frq: 8,00 B
+            _b.nrm: 12,00 B
+            _a_1.del: 32,00 B
+            _c.nrm: 12,00 B
+            _g.nrm: 12,00 B
+            _a.nrm: 84,00 B
+            _f.prx: 8,00 B
+            _e.fnm: 85,00 B
+            _f.fdt: 72,00 B
+            _f.fnm: 85,00 B
+            _f.nrm: 12,00 B
+            _d.prx: 8,00 B
+          - Total: 5,30 kB
+          proposal:
+            segments_7: 1,80 kB
+            _26.frq: 133,00 B
+            _2g.nrm: 13,00 B
+            segments.gen: 20,00 B
+            _26.tii: 35,00 B
+            _26.tis: 6,92 kB
+            _2g.fnm: 91,00 B
+            _2g.prx: 9,00 B
+            _26.nrm: 148,00 B
+            _2g.tis: 2,47 kB
+            _26.fdx: 132,00 B
+            _2g.fdx: 12,00 B
+            _26.fdt: 7,24 kB
+            _26.fnm: 91,00 B
+            _2g.tii: 35,00 B
+            _2g.frq: 9,00 B
+            _2d.cfs: 520,00 B
+            _2g.fdt: 2,43 kB
+            _26_2.del: 32,00 B
+            _2m.cfs: 748,00 B
+            _2i.cfs: 635,00 B
+            _2t.cfs: 541,00 B
+            _2s.cfs: 534,00 B
+            _26.prx: 130,00 B
+            _2n.cfs: 476,00 B
+          - Total: 25,10 kB
+          delegation:
+            _2.frq: 3,00 B
+            _4.tis: 71,00 B
+            _4.frq: 4,00 B
+            _3.nrm: 8,00 B
+            _2.tii: 35,00 B
+            _5.fnm: 50,00 B
+            _4.fdt: 40,00 B
+            segments.gen: 20,00 B
+            _4.prx: 4,00 B
+            _5.frq: 4,00 B
+            _4.fnm: 50,00 B
+            _2.tis: 64,00 B
+            _5.nrm: 8,00 B
+            _5.prx: 4,00 B
+            segments_1: 916,00 B
+            _3.frq: 4,00 B
+            _5.tis: 71,00 B
+            _5.fdt: 40,00 B
+            _4.tii: 35,00 B
+            _2.fdt: 36,00 B
+            _3.tii: 35,00 B
+            _5.fdx: 12,00 B
+            _3.fdx: 12,00 B
+            _5.tii: 35,00 B
+            _2.fdx: 12,00 B
+            _2.nrm: 7,00 B
+            _3.fnm: 50,00 B
+            _3.tis: 71,00 B
+            _2.prx: 3,00 B
+            _4.nrm: 8,00 B
+            _4.fdx: 12,00 B
+            _3.fdt: 40,00 B
+            _2.fnm: 44,00 B
+            _3.prx: 4,00 B
+          - Total: 1,77 kB
+          comment:
+            _14.tii: 35,00 B
+            _15.fdt: 92,00 B
+            _1d.tis: 152,00 B
+            segments_6: 958,00 B
+            _1d.fdx: 12,00 B
+            _14.tis: 1002,00 B
+            _1d.tii: 35,00 B
+            segments.gen: 20,00 B
+            _15.frq: 7,00 B
+            _1d.nrm: 11,00 B
+            _15.prx: 7,00 B
+            _14.fnm: 69,00 B
+            _16.nrm: 11,00 B
+            _14.fdx: 108,00 B
+            _14_1.del: 32,00 B
+            _1d.fdt: 112,00 B
+            _16.fdx: 12,00 B
+            _1d.prx: 7,00 B
+            _16.prx: 7,00 B
+            _14.frq: 89,00 B
+            _16.fnm: 69,00 B
+            _16.tis: 136,00 B
+            _14.nrm: 95,00 B
+            _15.cfs: 475,00 B
+            _16.tii: 35,00 B
+            _14.fdt: 1,07 kB
+            _14.prx: 89,00 B
+            _15.fnm: 69,00 B
+            _1d.fnm: 69,00 B
+            _15.fdx: 12,00 B
+            _15.nrm: 11,00 B
+            _16.fdt: 96,00 B
+            _15.tii: 35,00 B
+            _16.frq: 7,00 B
+            _1d.frq: 7,00 B
+            _15.tis: 132,00 B
+          - Total: 5,09 kB
+        - Total: 41,35 kB
+      - Total: 75,76 kB
+      lucene.log.v5: 168,08 kB
+      lucene.log.1: 16,00 B
+      lucene.log.v7: 16,00 B
+      lucene.log.v4: 10,18 kB
+      lucene.log.v8: 6,33 kB
+      lucene.log.v3: 2,94 kB
+      lucene.log.v2: 40,23 kB
+      lucene.log.v9: 40,95 kB
+      lucene-store.db: 40,00 B
+    - Total: 370,82 kB
+    neostore.relationshiptypestore.db.id: 9,00 B
+    neostore.propertystore.db.index.keys: 1,00 kB
+    neostore.propertystore.db.strings.id: 161,00 B
+    neostore.relationshipstore.db: 5,64 kB
+    nioneo_logical.log.v0: 14,78 kB
+    nioneo_logical.log.v5: 131,53 kB
+    lock: 0,00 B
+    nioneo_logical.log.active: 4,00 B
+    neostore.nodestore.db.id: 41,00 B
+    neostore.propertystore.db.id: 17,00 B
+    neostore.propertystore.db.strings: 14,25 kB
+    neostore.propertystore.db.index: 1,02 kB
+    neostore.relationshiptypestore.db: 60,00 B
+    nioneo_logical.log.v4: 13,19 kB
+2012-11-09 07:09:03.451+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-11-09 07:09:03.452+0000: Started - database is now available
+2012-11-09 07:09:03.454+0000: --- SERVER STARTUP START ---
+2012-11-09 07:09:03.454+0000: --- STARTUP diagnostics for org.neo4j.server.configuration.Configurator START ---
+2012-11-09 07:09:03.457+0000: GC Monitor started. 
+2012-11-09 07:09:03.471+0000: Server configuration:
+    org.neo4j.server.database.location = data/graph.db
+    org.neo4j.server.webserver.port = 7474
+    org.neo4j.server.webserver.https.enabled = true
+    org.neo4j.server.webserver.https.port = 7473
+    org.neo4j.server.webserver.https.cert.location = conf/ssl/snakeoil.cert
+    org.neo4j.server.webserver.https.key.location = conf/ssl/snakeoil.key
+    org.neo4j.server.webserver.https.keystore.location = data/keystore
+    org.neo4j.server.webadmin.rrdb.location = data/rrd
+    org.neo4j.server.db.tuning.properties = conf/neo4j.properties
+    org.neo4j.server.webadmin.management.uri = /db/manage/
+    org.neo4j.server.webadmin.data.uri = /db/data/
+2012-11-09 07:09:03.472+0000: --- STARTUP diagnostics for org.neo4j.server.configuration.Configurator END ---
+2012-11-09 07:09:03.531+0000: Mounted discovery module (org.neo4j.server.rest.discovery) at: /
+2012-11-09 07:09:03.612+0000: Loaded server plugin "CypherPlugin" (org.neo4j.server.plugin.cypher.CypherPlugin)
+2012-11-09 07:09:03.614+0000:   GraphDatabaseService.execute_query: execute a query
+2012-11-09 07:09:03.614+0000: Loaded server plugin "GremlinPlugin" (org.neo4j.server.plugin.gremlin.GremlinPlugin)
+2012-11-09 07:09:03.614+0000:   GraphDatabaseService.execute_script: execute a Gremlin script with 'g' set to the Neo4jGraph and 'results' containing the results. Only results of one object type is supported.
+2012-11-09 07:09:03.615+0000: Mounted REST API at: /db/data/
+2012-11-09 07:09:03.615+0000: Mounted management API at: /db/manage/
+2012-11-09 07:09:03.694+0000: Mounted webadmin at: /webadmin
+2012-11-09 07:09:05.173+0000: Server started on: http://localhost:7474/
+2012-11-09 07:09:05.173+0000: --- SERVER STARTUP END ---
+2012-11-09 07:20:32.189+0000: GC Monitor: Application threads blocked for an additional 581381ms [total block time: 581.381s]
+2012-11-09 12:07:53.238+0000: GC Monitor: Application threads blocked for an additional 15275943ms [total block time: 15857.324s]
+2012-11-09 13:32:19.179+0000: GC Monitor: Application threads blocked for an additional 4999151ms [total block time: 20856.477s]
+2012-11-09 15:38:42.189+0000: GC Monitor: Application threads blocked for an additional 6952619ms [total block time: 27809.094s]
+2012-11-09 16:15:27.175+0000: GC Monitor: Application threads blocked for an additional 1137657ms [total block time: 28946.752s]
+2012-11-10 08:35:44.186+0000: GC Monitor: Application threads blocked for an additional 54502471ms [total block time: 83449.23s]
+2012-11-10 22:23:45.479+0000: GC Monitor: Application threads blocked for an additional 47772743ms [total block time: 131221.97s]
+2012-11-11 23:07:07.143+0000: GC Monitor: Application threads blocked for an additional 86369715ms [total block time: 217591.69s]

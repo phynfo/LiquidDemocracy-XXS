@@ -260,3 +260,53 @@
 22.10.12 11:40:00 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/data
 22.10.12 11:40:00 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /
 22.10.12 11:40:00 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Server started on [http://localhost:7474/]
+23.10.12 10:01:04 org.neo4j.server.NeoServerBootstrapper INFO: Neo4j Server shutdown initiated by kill signal
+23.10.12 10:01:04 org.neo4j.server.statistic.StatisticStartupListener INFO: stopping filter
+23.10.12 18:49:01 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Starting Neo Server on port [7474] with [40] threads available
+23.10.12 18:49:01 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Enabling HTTPS on port [7473]
+23.10.12 18:49:02 org.neo4j.server.database.Database INFO: Using database at /home/tobias/Downloads/neo4j-community-1.7/data/graph.db
+23.10.12 18:49:04 org.neo4j.server.modules.DiscoveryModule INFO: Mounted discovery module at [/]
+23.10.12 18:49:04 org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "CypherPlugin"
+23.10.12 18:49:04 org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "GremlinPlugin"
+23.10.12 18:49:04 org.neo4j.server.modules.RESTApiModule INFO: Mounted REST API at [/db/data/]
+23.10.12 18:49:04 org.neo4j.server.modules.ManagementApiModule INFO: Mounted management API at [/db/manage/]
+23.10.12 18:49:04 org.neo4j.server.modules.WebAdminModule INFO: Mounted webadmin at [/webadmin]
+23.10.12 18:49:04 org.neo4j.server.web.Jetty6WebServer INFO: Mounting static content at [/webadmin] from [webadmin-html]
+23.10.12 18:49:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /webadmin
+23.10.12 18:49:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/manage
+23.10.12 18:49:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/data
+23.10.12 18:49:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /
+23.10.12 18:49:05 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Server started on [http://localhost:7474/]
+03.11.12 23:44:27 org.neo4j.server.NeoServerBootstrapper INFO: Neo4j Server shutdown initiated by kill signal
+06.11.12 07:41:09 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Starting Neo Server on port [7474] with [40] threads available
+06.11.12 07:41:09 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Enabling HTTPS on port [7473]
+06.11.12 07:41:10 org.neo4j.server.database.Database INFO: Using database at /home/tobias/Downloads/neo4j-community-1.7/data/graph.db
+06.11.12 07:41:11 org.neo4j.server.modules.DiscoveryModule INFO: Mounted discovery module at [/]
+06.11.12 07:41:11 org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "CypherPlugin"
+06.11.12 07:41:11 org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "GremlinPlugin"
+06.11.12 07:41:11 org.neo4j.server.modules.RESTApiModule INFO: Mounted REST API at [/db/data/]
+06.11.12 07:41:11 org.neo4j.server.modules.ManagementApiModule INFO: Mounted management API at [/db/manage/]
+06.11.12 07:41:12 org.neo4j.server.modules.WebAdminModule INFO: Mounted webadmin at [/webadmin]
+06.11.12 07:41:12 org.neo4j.server.web.Jetty6WebServer INFO: Mounting static content at [/webadmin] from [webadmin-html]
+06.11.12 07:41:13 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /webadmin
+06.11.12 07:41:13 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/manage
+06.11.12 07:41:13 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/data
+06.11.12 07:41:13 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /
+06.11.12 07:41:13 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Server started on [http://localhost:7474/]
+09.11.12 08:08:47 org.neo4j.server.NeoServerBootstrapper INFO: Neo4j Server shutdown initiated by kill signal
+09.11.12 08:08:47 org.neo4j.server.statistic.StatisticStartupListener INFO: stopping filter
+09.11.12 08:09:00 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Starting Neo Server on port [7474] with [40] threads available
+09.11.12 08:09:01 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Enabling HTTPS on port [7473]
+09.11.12 08:09:02 org.neo4j.server.database.Database INFO: Using database at /home/tobias/Downloads/neo4j-community-1.7/data/graph.db
+09.11.12 08:09:03 org.neo4j.server.modules.DiscoveryModule INFO: Mounted discovery module at [/]
+09.11.12 08:09:03 org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "CypherPlugin"
+09.11.12 08:09:03 org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "GremlinPlugin"
+09.11.12 08:09:03 org.neo4j.server.modules.RESTApiModule INFO: Mounted REST API at [/db/data/]
+09.11.12 08:09:03 org.neo4j.server.modules.ManagementApiModule INFO: Mounted management API at [/db/manage/]
+09.11.12 08:09:03 org.neo4j.server.modules.WebAdminModule INFO: Mounted webadmin at [/webadmin]
+09.11.12 08:09:03 org.neo4j.server.web.Jetty6WebServer INFO: Mounting static content at [/webadmin] from [webadmin-html]
+09.11.12 08:09:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /webadmin
+09.11.12 08:09:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/manage
+09.11.12 08:09:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /db/data
+09.11.12 08:09:05 org.neo4j.server.statistic.StatisticStartupListener INFO: adding statistic-filter to /
+09.11.12 08:09:05 org.neo4j.server.NeoServerWithEmbeddedWebServer INFO: Server started on [http://localhost:7474/]
