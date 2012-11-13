@@ -182,7 +182,7 @@ def countVotes(propId):
 def countVotesDown(eid):
   ''' Calculates the votes "down" '''
   v = db.vertices.get(eid)
-  return sum([ -1 for voteRel in v.inE('votes') if voteRel.pro==0])
+  return sum([ -1 for voteRel in v.inE('votes') if voteRel.pro==-1])
 
 def countVotesUp(eid):
   ''' Calculates the votes "up" '''
@@ -219,7 +219,7 @@ def v2Dict(eid, loggedUserEid=None):
     votes = [voteEdge for voteEdge in loggedUser.outE('votes') if voteEdge.inV() == v]
     if votes:
       d['upvoted']   = (votes[0].pro == 1)
-      d['downvoted'] = (votes[0].pro == 0)
+      d['downvoted'] = (votes[0].pro == -1)
   return d
 
 def i2Dict(i_eid, loggedUserEid=None): 
@@ -338,29 +338,35 @@ def add_comment(prop_id):
 
 @app.route('/<int:i_eid>/vote/<int:pro>/<int:eid>')
 def vote(pro, eid):
-  ''' Voting a proposoal or comment with Id eid. Upvote means pro==1, Downvote means pro==0'''
+  if pro==0: pro=-1
   if not session.get('logged_in'):
     abort(401)
   loggedUser = db.people.get(session['userId'])
   c_p = db.vertices.get(eid)             # c_p is a comment or a proposal
   voteRels = [rel for rel in loggedUser.outE('votes') if rel.inV() == c_p]
-  if voteRels and voteRels[0].pro!=pro:  # i.e.: user undoes vote => delete Edge
-    if pro==1:  
-      c_p.downs-= 1 ; c_p.save() 
-    else: 
-      c_p.ups-= 1 ; c_p.save() 
-    db.votes.delete(voteRels[0].eid)
-    flash('Stimme rueckgaengig gemacht')
-  if voteRels and voteRels[0].pro==pro:  # i.e.: Voting up/down a second time is not allowed.
-    abort(401)
-  if not voteRels:                       # i.e.: No "votes"-edge exists => create new "votes"-Edge
-    db.votes.create(loggedUser,c_p, pro=pro)
-    if pro: 
-      flash('Erfolgreich dafuer gestimmt') 
-      c_p.ups += 1 ; c_p.save() 
-    else:   
-      flash('Erfolgreich dagegen gestimmt')
-      c_p.downs += 1 ; c_p.save() 
+  if voteRels and voteRels[0].pro != 0 and voteRels[0].pro!=pro:  # i.e.: user undoes vote => delete Vote
+      if pro==1:  
+        c_p.downs-= 1 ; c_p.save() 
+      else: 
+        c_p.ups-= 1 ; c_p.save() 
+      voteRels[0].pro = 0 ; voteRels[0].save()
+      # db.votes.delete(voteRels[0].eid) # Alternative: einfach die Kante loeschen.
+      flash('Stimme rueckgaengig gemacht')
+  elif not voteRels or voteRels[0].pro==0:       # No "votes"-edge exists => create new "votes"-Edge
+      if not voteRels: 
+        db.votes.create(loggedUser,c_p, pro=pro)
+      else: 
+        voteRels[0].pro=pro
+        voteRels[0].save()
+      if pro==1: 
+        flash('Erfolgreich dafuer gestimmt') 
+        c_p.ups += 1 ; c_p.save() 
+      elif pro==-1:   
+        flash('Erfolgreich dagegen gestimmt')
+        c_p.downs += 1 ; c_p.save() 
+  else: # if voteRels and voteRels[0].pro==pro:  , i.e.: Voting up/down a second time is not allowed.
+      abort(401)
+ 
   if c_p.element_type == 'comment':
     proposal = c_p.inV('hasComment').next()
     return redirect(url_for('show_single_proposal', prop_id=proposal.eid))
