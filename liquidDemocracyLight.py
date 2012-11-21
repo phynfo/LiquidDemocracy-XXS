@@ -28,7 +28,7 @@ def getParlaments(eid):
     ps = [p for p in v.outV('instanceHasParlament')]
   elif v.element_type == 'proposal':
     ps = [p for p in v.outV('proposalHasParlament')]
-  #TODO eid in die dicts mit einfuegen! 
+  #insert eid in dicts 
   ds = []
   for p in ps: 
     d = p.data() 
@@ -530,6 +530,8 @@ def add_parlament():
   return redirect(url_for('show_parlaments'))
 
 
+## ------------- Delegations -----------------------------------------------------------
+
 @app.route('/<int:i_eid>/delegate_parlament/<int:parl_eid>')
 def delegateParlament(parl_eid): 
   parlament = db.parlaments.get(parl_eid)
@@ -567,14 +569,12 @@ def delegate():
   delegation = db.delegations.create(time=time)
   personDelegationEdge = db.personDelegation.create(db.people.get(session['userId']), delegation)
   delegationPersonEdge = db.delegationPerson.create(delegation, db.people.get(person))
-  if span=='parlament': # make edge from delegation object to parlament
+  if span=='parlament': # create edge from delegation object to parlament
     delegationParlamentEdge = db.delegationParlament.create(delegation, db.parlaments.get(parlament))
-  elif span=='proposal': # make edge from delegaton object to proposal
+  elif span=='proposal': # create edge from delegaton object to proposal
     delegationProposalEdge = db.delegationProposal.create(delegation, db.proposals.get(proposal))
-  # else:   # here span=='all' should hold
-  #    pass # no additonal edges!
+  # else: pass  # here span=='all' should hold: no additonal edges!
  
-
   # Generate feedback
   personStr = db.people.get(person).username if person else ''
   proposalStr = db.proposals.get(proposal).title if proposal and span=='proposal' else ''
@@ -583,6 +583,103 @@ def delegate():
                proposalStr+parlamentStr + '" fuer ' + request.form['time']
   flash(flashstr)
   return redirect(url_for('show_proposals')) 
+
+
+## ------------------ Generate "Delegation-Triples" ------------------------------------------------
+# There are (at least) two possiblities to handle multiple delegations p-->d1, p-->d2, p-->d3, ...  
+#                                                              (ordered descending by creation time)
+#
+# (A) Don't allow the creation of multiple overlapping delegations.
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ... won't be implemented ...
+#
+# (B) Implement a delegation-"stack"
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#   Basic idea: map a person's delegation to a dict containing all affected proposals
+#
+#   For a concrete Person p, create a delegation-Dict for all delegations of person p_eid, grouped by proposal:
+#     {prop1_eid: [(utc1, p1_eid), ...]), ...}
+#     The dict's value-lists are ascendingly sorted by creation time utc1
+#
+#   * Deleting a delegation results in filtering / deleting these Lists.
+#
+#   * The following invariant has to hold: 
+#       p0-[v0:votes]->pr has an additional "i" in v0.delegates, if there is a Person p with eid p_eid and 
+#       d = delegationDicts(p_eid) and pr_eid in d and d[pr_eid][-1] = (time, p0_eid)
+#       and there is p-[v1:votes]->pr with v1.delegates==i
+#   
+#   * When Person p adds a delegation p-->d, the delegationDicts(p_eid) before and after are
+#     compared; increment v.delegates for the delta-triples.
+#
+#   * Same with deletion; the triple-List before and after is compared and the v.delegates in the delta are
+#     decremented.
+
+def personDelegations(p_eid): 
+  ''' Returns a list of all delegations invoked by person p_eid; the information is returned in the following 
+      format: 
+           [ (Timestamp, dict{type : eid}) ] '''
+  query = ''' START p=node({p_eid})
+              MATCH p-[:personDelegation]->d-[r]->x
+              RETURN d.datetime_created, collect(x.element_type), collect(ID(x)) ORDER BY d.datetime_created DESC''' 
+#             RETURN d.datetime_created, collect(type(r)), collect(ID(x)) ''' 
+  t = db.cypher.table(query, dict(p_eid=p_eid))[1]
+  # returns [TimeStamp, dict{type : eid}]
+  return map(lambda x: (x[0],dict(map(lambda a,b: (a,b), x[1],x[2]))), t) 
+
+def parlamentProposals(p_eid, parl_eid, i_eid): 
+  ''' All proposals of parlement parl_eid for which person p_eid voted; all in instance i_eid'''
+  query = ''' START p=node({p_eid}), parl=node({parl_eid}), i=node({i_eid})
+              MATCH p-[v:votes]->pr-[:proposalHasParlament]->parl
+              WHERE (i-[:hasProposal]->pr) and not(v.pro = 0)
+              RETURN ID(pr)'''
+#              RETURN ID(v), ID(pr)'''
+  return db.cypher.table(query,dict(p_eid=p_eid, parl_eid=parl_eid, i_eid=i_eid))[1] # Fetch the proposals
+
+def personProposals(p_eid, i_eid): 
+  ''' All proposals for which person p_eid voted; all in instance i_eid '''
+  query = ''' START p=node({p_eid}), i=node({i_eid})
+              MATCH p-[v:votes]->pr
+              WHERE (i-[:hasProposal]->pr) and not(v.pro = 0)
+              RETURN ID(pr) '''
+#             RETURN ID(v), ID(pr) '''
+  return db.cypher.table(query,dict(p_eid=p_eid, i_eid=i_eid))[1] # Fetch the proposals
+
+
+def singleDelegationTuples(p_eid, d): 
+  ''' returns the list of all proposals (tupled with the delegated person) for a specific delegation
+      d is a dict-object with: 
+      d{u'person': eid, u'proposal': eid, u'parlament': eid} of person p_eid'''
+  p = db.people.get(p_eid)
+  i_eid = p.inV('hasPeople').next().eid # the corresponding instance
+  p1 = d['person']
+  if 'parlament' in d: 
+    return [(p1, p) for pp in parlamentProposals(p1, d['parlament'], i_eid) for p in pp] 
+  elif 'proposal' in d: 
+    return [(p1,d['proposal'])]
+  else: #all!
+    return [(p1,p) for pp in personProposals(p1,i_eid) for p in pp]    
+
+
+# Perhaps, Should all this be stored in directly in the graph-db???
+#   Pro: ... then, all this hasnt to be calculated all over again.
+#   Con: Would insert lots of redundant information in the graph db
+def delegationDicts(p_eid): 
+  ''' returns a dict which associates each prop_eid to a list of delegations [(time, pers_eid)] sorted, i.e.
+      it has the followig format: 
+        {prop1_eid : [(time1, pers1_eid), ...], prop2_eid: [...]}
+      ascending by creation time.'''
+  triples = sorted([(prop,timestamp,p1)
+                   for (timestamp, d) in personDelegations(p_eid) 
+                   for (p1,prop) in singleDelegationTuples(p_eid, d)]) 
+  groupedTriples = [(k, list(v)) for k,v in groupby(triples, lambda x: x[0])]
+  d={}
+  for prop,dels in delegationTriples(17): 
+    d[prop]=[]
+    for _,time,pers in dels: 
+      d[prop].append((time,pers))
+  return d
+         
+## -----------------------------------------------------------------------------------------
 
 @app.route('/_add_numbers')
 def add_numbers():
