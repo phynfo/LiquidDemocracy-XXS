@@ -2,6 +2,7 @@ from flask import Flask, session, render_template, request, redirect, url_for, e
 from model import Graph
 from datetime import datetime
 from utils import date_diff
+from itertools import groupby
 import re
 
 # configuration
@@ -20,6 +21,19 @@ db = Graph()
 @app.template_filter('parlamentTitle')
 def parlamentTitle(eid): 
   return db.parlaments.get(eid).title
+
+@app.template_filter('p_cTitle')
+def p_cTitle(eid): 
+  return db.vertices.get(eid).title
+
+
+@app.template_filter('utc2str')
+def utc2str(utc): 
+  return date_diff(datetime.utcfromtimestamp(utc),datetime.today())
+
+@app.template_filter('personUsername')
+def personUsername(eid): 
+  return db.people.get(eid).username
 
 @app.template_filter('getParlaments')
 def getParlaments(eid): 
@@ -143,6 +157,17 @@ def compact(s):
   s2 = filter(lambda c: c!='\n', s)
   m = re.match(r".*\s", s2) 
   return s2 if not m else s2[:m.end()] + ' ... '
+
+@app.template_filter('iconizePlus')
+def verycompact(s): 
+  ''' return the first few words of the text s in order to produce 
+      a short description of an entry's or comment's text '''
+  if len(s)<=200:  return s
+  s=s[:50]
+  s2 = filter(lambda c: c!='\n', s)
+  m = re.match(r".*\s", s2) 
+  return s2 if not m else s2[:m.end()] + ' ... '
+
 
 @app.template_filter('i_eid2title')
 def eid2title(i_eid):
@@ -530,7 +555,24 @@ def add_parlament():
   return redirect(url_for('show_parlaments'))
 
 
-## ------------- Delegations -----------------------------------------------------------
+## ------------- Delegations ----------------------------------------------------------
+
+@app.route('/<int:i_eid>/delete_delegation/<int:d_eid>')
+def delete_delegation(d_eid):
+  ''' Deletes delegation-objekct d_eid together with all edges connected with it'''
+  query = '''START d=node({d_eid})
+             MATCH d-[r]-()
+             DELETE d,r 
+          '''
+  t = db.cypher.execute(query, dict(d_eid=d_eid))
+  flash('Delegation '+str(d_eid)+' geloescht.')
+  return redirect(url_for('show_delegations', pers_eid=session['userId']))
+
+@app.route('/<int:i_eid>/show_delegations/<int:pers_eid>')
+def show_delegations(pers_eid):
+  dels = personDelegations(pers_eid)
+  # format: dels :: [ (Timestamp, dict{type : eid}) ]  
+  return render_template('show_delegations.html', pers_eid=pers_eid, dels=dels)
 
 @app.route('/<int:i_eid>/delegate_parlament/<int:parl_eid>')
 def delegateParlament(parl_eid): 
@@ -553,6 +595,7 @@ def delegate():
       2. Delegation of a person for all proposals of a specific parlament
       3. Delegation of a person for a single proposal
   '''
+  personWhoDelegates = db.people.get(session['userId'])
   person = request.form['person'] if 'person' in request.form else None
   proposal = request.form['proposal'] if 'proposal' in request.form else None
   parlament = request.form['parlament'] if 'parlament' in request.form else None
@@ -565,24 +608,69 @@ def delegate():
     elif proposal: return render_template('delegate.html', proposal = proposal)
     else: return render_teplate('delegate.html')
 
+  propDictOld = delegationDicts(session['userId'])
+
   # Create edges: 
   delegation = db.delegations.create(time=time)
-  personDelegationEdge = db.personDelegation.create(db.people.get(session['userId']), delegation)
+  personDelegationEdge = db.personDelegation.create(personWhoDelegates, delegation)
   delegationPersonEdge = db.delegationPerson.create(delegation, db.people.get(person))
   if span=='parlament': # create edge from delegation object to parlament
     delegationParlamentEdge = db.delegationParlament.create(delegation, db.parlaments.get(parlament))
   elif span=='proposal': # create edge from delegaton object to proposal
     delegationProposalEdge = db.delegationProposal.create(delegation, db.proposals.get(proposal))
   # else: pass  # here span=='all' should hold: no additonal edges!
- 
-  # Generate feedback
+
+  propDictNew = delegationDicts(session['userId'])
+  
+  adaptVoteCounts(propDictOld, propDictNew)
+
+  # Create feedback
   personStr = db.people.get(person).username if person else ''
   proposalStr = db.proposals.get(proposal).title if proposal and span=='proposal' else ''
   parlamentStr = db.parlaments.get(parlament).title if parlament and span=='parlament' else ''
-  flashstr = 'Delegation erfolgreich cerstellt: Delegiere "' + personStr + '" fuer ' + span + ' "' +\
+  flashstr = 'Delegation erfolgreich erstellt: Delegiere "' + personStr + '" fuer ' + span + ' "' +\
                proposalStr+parlamentStr + '" fuer ' + request.form['time']
   flash(flashstr)
   return redirect(url_for('show_proposals')) 
+
+def adaptVoteCounts(old, new): 
+  ''' adapts v.delegates and pr.ups and pr.downs of all proposals pr and all votes in the old-new-delta'''
+  delegater = db.people.get(session['userId']) # person who delegates
+  for pr in new: 
+    proposal      = db.proposals.get(pr)
+    voteDelegater = fetchVoteObject(delegater, proposal) # fetch v.delegates of Delegater
+    delegat       = db.people.get(new[pr][-1][1]) # delegated person
+    voteDelegat   = fetchVoteObject(delegat, proposal) # fetch v.delegates of Delegat 
+
+    if pr not in old: # there are no older delegations affecting pr 
+                      # --> increment .delegates-attribute of the delegat by the .delegates-attribute 
+                      #     of the delegater.
+       delegatesDelta = voteDelegater.delegates 
+    elif new[pr][-1] != old[pr][-1]: # the delegation stack changed
+       delegatOld = db.people.get(old[pr][-1][1]) # delegated person
+       voteDelegatOld = fetchVoteObject(delegatOld, proposal)
+       delegatesDelta = voteDelegater.delegates - voteDelegatOld.delegates 
+                        # the delegater's vote-weight - the old delegat's vote weight
+    else: # delegation stack unchanged -> v.delegates unchanged
+       delegatesDelta = 0
+
+    voteDelegat.delegates += delegatesDelta
+    voteDelegat.save()
+    if voteDelegat.pro==1: 
+      proposal.ups += delegatesDelta
+    elif voteDelegat.pro==-1: 
+      proposals.downs += delegatesDelta
+    else:  # delegat did not vote for delegated proposal => nothing to do.
+      pass
+
+def fetchVoteObject(persObj, propObj): 
+  ''' Either returns existing vote of persObj for propObj or (if such a vote does not yet exist) 
+      creates a new vote-object v with v.pro == 0 '''
+  voteSingle = [v for v in persObj.outE('votes') if v.inV() == propObj]
+  if voteSingle: return voteSingle[0]
+  else: # create a voting v with v.prop = 0
+     return db.votes.create(persObj,propObj, pro=0)
+
 
 
 ## ------------------ Generate "Delegation-Triples" ------------------------------------------------
@@ -620,11 +708,11 @@ def personDelegations(p_eid):
            [ (Timestamp, dict{type : eid}) ] '''
   query = ''' START p=node({p_eid})
               MATCH p-[:personDelegation]->d-[r]->x
-              RETURN d.datetime_created, collect(x.element_type), collect(ID(x)) ORDER BY d.datetime_created DESC''' 
+              RETURN d.datetime_created, ID(d), collect(x.element_type), collect(ID(x)) ORDER BY d.datetime_created DESC''' 
 #             RETURN d.datetime_created, collect(type(r)), collect(ID(x)) ''' 
   t = db.cypher.table(query, dict(p_eid=p_eid))[1]
   # returns [TimeStamp, dict{type : eid}]
-  return map(lambda x: (x[0],dict(map(lambda a,b: (a,b), x[1],x[2]))), t) 
+  return map(lambda x: (x[0],x[1], dict(map(lambda a,b: (a,b), x[2],x[3]))), t) 
 
 def parlamentProposals(p_eid, parl_eid, i_eid): 
   ''' All proposals of parlement parl_eid for which person p_eid voted; all in instance i_eid'''
@@ -660,20 +748,19 @@ def singleDelegationTuples(p_eid, d):
     return [(p1,p) for pp in personProposals(p1,i_eid) for p in pp]    
 
 
-# Perhaps, Should all this be stored in directly in the graph-db???
-#   Pro: ... then, all this hasnt to be calculated all over again.
-#   Con: Would insert lots of redundant information in the graph db
+# Perhaps, all this should be stored in directly in the graph-db???
+#     Pro: ... then, all this hasnt to be calculated all over again.
+#     Con: Would insert lots of redundant information in the graph db
 def delegationDicts(p_eid): 
-  ''' returns a dict which associates each prop_eid to a list of delegations [(time, pers_eid)] sorted, i.e.
-      it has the followig format: 
-        {prop1_eid : [(time1, pers1_eid), ...], prop2_eid: [...]}
-      ascending by creation time.'''
+  ''' returns a dict which associates each prop_eid to a delegation stack [(time, pers_eid)] (with the
+      newstest delegation in the tail, i.e. the dict has the following format: 
+        {prop1_eid : [(time1, pers1_eid), ...], prop2_eid: [...]} '''
   triples = sorted([(prop,timestamp,p1)
-                   for (timestamp, d) in personDelegations(p_eid) 
-                   for (p1,prop) in singleDelegationTuples(p_eid, d)]) 
-  groupedTriples = [(k, list(v)) for k,v in groupby(triples, lambda x: x[0])]
-  d={}
-  for prop,dels in delegationTriples(17): 
+                   for (timestamp, _, d) in personDelegations(p_eid)  # d -- Info about a single delegation of p_eid
+                   for (p1,prop) in singleDelegationTuples(p_eid, d)]) # all proposals affected by d
+  groupedTriples = [(k, list(v)) for k,v in groupby(triples, lambda x: x[0])] # grouped by proposal-eid
+  d={}  # generate dict 
+  for prop,dels in groupedTriples: 
     d[prop]=[]
     for _,time,pers in dels: 
       d[prop].append((time,pers))

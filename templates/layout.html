@@ -53,6 +53,11 @@
                       style="margin-left:3em; margin-right:2em;"><b>Benutzer</b></a>  
                    <a href="{{ url_for('show_parlaments') }}"
                       style="margin-left:3em; margin-right:2em;"><b>Parlamente</b></a>
+                   {% if session.logged_in %}
+                   <a href="{{ url_for('show_delegations', pers_eid=session.userId) }}"
+                      style="margin-left:3em; margin-right:2em;"><b>Delegs</b></a>
+                   {% endif %}
+
                {% endif %}
              </td>
            </tr>  

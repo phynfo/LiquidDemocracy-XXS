@@ -146,6 +146,7 @@ class Graph(Neo4jGraph):
                         self.build_proxy(ProposalHasParlament) # Edge: (Proposal -> Parlament)
     self.instanceHasParlament = \
                         self.build_proxy(InstanceHasParlament) # Edge: (Instance -> Parlament)
+    #self.delegates = self.build_proxy(Delegates)              
     self.personDelegation = self.build_proxy(PersonDelegation) # Edge: (Person -> Delegation)
                                                                #       (Person -> Person)
     self.delegationParlament = \
