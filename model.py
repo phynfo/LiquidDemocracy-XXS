@@ -18,8 +18,9 @@ class Issued(Relationship):
 
 class Votes(Relationship):
   label = 'votes'
-  pro = Integer(nullable=False) # 0: against ; 1: pro
-  delegates = Integer(default=1, nullable=False)
+  pro = Integer(nullable=False)                  # -1: against , 1: pro , 0 : not voted
+  cv = Integer(default=1, nullable=False)        # votecount
+  delegated = Integer(default=0, nullable=False) # 0: not delegated , 1: delegated
   created = DateTime(default=current_datetime, nullable=False)
 
 class Proposal(Node):
@@ -74,7 +75,7 @@ class InstanceHasParlament(Relationship):
   label = 'instanceHasParlament'
 
 # ----------------------------------------------------------------------------
-# -- Modeling the 3 basic cases of delegation: 
+# -- Modeling the 3 basic cases of delegation; they model the users's view.
 # -- 1. Delegation of a Person for everything        (DelegationPerson)
 # -- 2. Delegation of a Person for a Parlament       (DelegationParlament with Delegation Hyperedge)
 # -- 3. Delegation of a Person for a single Proposal (DelegationProposal with Delegation Hyperedge)
@@ -98,9 +99,21 @@ class InstanceHasParlament(Relationship):
 #      |------|                   |----------|                   |------|
 #                                      |
 #                                      |    DelegationProposal   |---------|
-#                                      |------------------------>|Parlament|
+#                                      |------------------------>|Proposal |
 #                                                                |---------|
+# --------------------------
+# Each of the 3 Basic Cases is projected to one or more proposal-specific delegation objects DelProp.
+#
+#      |------| PersonDelegationProp  |----------|  DelegationPropPerson |------|
+#      |Person|---------------------->|  DelProp |---------------------->|Person|
+#      |------|                       |----------|                       |------|
+#                                          |
+#                                          |    DelegationPropProposal   |---------|
+#                                          |---------------------------->|Proposal |
+#                                                                        |---------|
+#   
 
+#-- Users View
 class Delegation(Node):
   element_type = "delegation"
   time = Integer() # 0: including past; 
@@ -119,6 +132,25 @@ class DelegationProposal(Relationship): # (Delegation -> Proposal)
 class DelegationPerson(Relationship):   # (Delegation -> Person)
   label = "delegationPerson"
 
+#-- Proposal-Specific
+
+class DelProp(Node): 
+  element_type = "delProp"
+  datetime_created=DateTime(default=current_datetime, nullable=False)
+ 
+class OlderDel(Relationship):   # (DelProp -> DelProp)
+  label = "olderDel"
+ 
+class PersonDelegationProp(Relationship):   # (Person -> DelProp)
+  label = "personDelegationProp"
+
+class DelegationPropProposal(Relationship): # (DelProp -> Proposal)
+  label = "delegationPropProposal"
+
+class DelegationPropPerson(Relationship):   # (DelProp -> Person)
+  label = "delegationPropPerson"
+
+
 #-------------------------------------------------------------------------------------------------
 
 class Graph(Neo4jGraph):
@@ -132,8 +164,8 @@ class Graph(Neo4jGraph):
     self.parlaments  = self.build_proxy(Parlament)
     self.instances   = self.build_proxy(Instance) 
     self.delegations = self.build_proxy(Delegation) # Hyperedge: Delegation
-                                                    #   needed for delegations relativ to a parlament 
-                                                    #   or a proposal
+                                                    #   needed for delegations relativ to a parlament / proposal
+    self.delProp = self.build_proxy(DelProp)        # Hyperedge: Proposal-specific Delegation
 
     # --------------- Edge-Proxies  --------------------------------------------------------------
     self.issued = self.build_proxy(Issued)                     # Edge: (Person -> Proposal)
@@ -154,6 +186,10 @@ class Graph(Neo4jGraph):
     self.delegationProposal =  \
                        self.build_proxy(DelegationProposal)    # Edge: (Delegation -> Proposal)
     self.delegationPerson = self.build_proxy(DelegationPerson) # Edge: (Delegation -> Person)
-
+    # -------------
+    self.personDelegationProp = self.build_proxy(PersonDelegationProp)     # Edge: (Person -> DelProp)
+    self.delegationPropProposal = self.build_proxy(DelegationPropProposal) # Edge: (DelProp -> Proposal)
+    self.delegationPropPerson = self.build_proxy(DelegationPropPerson)     # Edge: (DelProp -> Person)   
+    self.olderDel = self.build_proxy(OlderDel)                             # Edge: (Delprop -> DelProp)
 
 

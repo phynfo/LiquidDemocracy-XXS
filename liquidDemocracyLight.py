@@ -5,6 +5,7 @@ from utils import date_diff
 from itertools import groupby
 import re
 
+
 # configuration
 DATABASE = 'graphdatabase'
 DEBUG = True
@@ -595,6 +596,7 @@ def delegate():
       2. Delegation of a person for all proposals of a specific parlament
       3. Delegation of a person for a single proposal
   '''
+  personWhoDelegatesEid = session['userId']
   personWhoDelegates = db.people.get(session['userId'])
   person = request.form['person'] if 'person' in request.form else None
   proposal = request.form['proposal'] if 'proposal' in request.form else None
@@ -608,21 +610,22 @@ def delegate():
     elif proposal: return render_template('delegate.html', proposal = proposal)
     else: return render_teplate('delegate.html')
 
-  propDictOld = delegationDicts(session['userId'])
 
   # Create edges: 
   delegation = db.delegations.create(time=time)
   personDelegationEdge = db.personDelegation.create(personWhoDelegates, delegation)
   delegationPersonEdge = db.delegationPerson.create(delegation, db.people.get(person))
+  delDict = {}
   if span=='parlament': # create edge from delegation object to parlament
     delegationParlamentEdge = db.delegationParlament.create(delegation, db.parlaments.get(parlament))
+    delDict['parlament'] = parlament
   elif span=='proposal': # create edge from delegaton object to proposal
     delegationProposalEdge = db.delegationProposal.create(delegation, db.proposals.get(proposal))
+    delDict['proposal'] = proposal
   # else: pass  # here span=='all' should hold: no additonal edges!
 
-  propDictNew = delegationDicts(session['userId'])
-  
-  adaptVoteCounts(propDictOld, propDictNew)
+  propDels = getPropDelTriples(personWhoDelegatesEid, delegationDict)
+  createPropDels(propDels)
 
   # Create feedback
   personStr = db.people.get(person).username if person else ''
@@ -633,35 +636,210 @@ def delegate():
   flash(flashstr)
   return redirect(url_for('show_proposals')) 
 
-def adaptVoteCounts(old, new): 
-  ''' adapts v.delegates and pr.ups and pr.downs of all proposals pr and all votes in the old-new-delta'''
-  delegater = db.people.get(session['userId']) # person who delegates
-  for pr in new: 
-    proposal      = db.proposals.get(pr)
-    voteDelegater = fetchVoteObject(delegater, proposal) # fetch v.delegates of Delegater
-    delegat       = db.people.get(new[pr][-1][1]) # delegated person
-    voteDelegat   = fetchVoteObject(delegat, proposal) # fetch v.delegates of Delegat 
 
-    if pr not in old: # there are no older delegations affecting pr 
-                      # --> increment .delegates-attribute of the delegat by the .delegates-attribute 
-                      #     of the delegater.
-       delegatesDelta = voteDelegater.delegates 
-    elif new[pr][-1] != old[pr][-1]: # the delegation stack changed
-       delegatOld = db.people.get(old[pr][-1][1]) # delegated person
-       voteDelegatOld = fetchVoteObject(delegatOld, proposal)
-       delegatesDelta = voteDelegater.delegates - voteDelegatOld.delegates 
-                        # the delegater's vote-weight - the old delegat's vote weight
-    else: # delegation stack unchanged -> v.delegates unchanged
-       delegatesDelta = 0
+def getPropDelTriples(pers_eid, delDict): 
+  ''' Projects a Delegation-Object (in the form of a dict) to a list of triples of the form
+      [(personFrom, personTo, proposal), ...]. Each triple describes one specific proposal-specific
+      delegation
+  '''
+  if 'proposal' in delDict:  
+        props = [delDict['proposal']]
+  elif 'parlament' in delDict:  # fetch all proposals of parlament
+        query = ''' START parl=node({parl_eid})
+                    MATCH parl<-[:proposalHasParlament]-prop
+                    RETURN COLLECT(ID(prop))'''
+        props = db.cypher.table(query, dict(parl_eid=delDict['parlament']))[1][0][0]
+  else: # all -- fetch all proposals of current instance
+        query = ''' START p=node({pers_eid})
+                    MATCH p<-[:hasPeople]-i-[:hasProposal]->prop
+                    RETURN COLLECT(ID(prop))  '''
+        props = db.cypher.table(query, dict(pers_eid=pers_eid))[1][0][0]
+  return [(pers_eid, delDict['person'], pr) for pr in props]
 
-    voteDelegat.delegates += delegatesDelta
-    voteDelegat.save()
-    if voteDelegat.pro==1: 
-      proposal.ups += delegatesDelta
-    elif voteDelegat.pro==-1: 
-      proposals.downs += delegatesDelta
-    else:  # delegat did not vote for delegated proposal => nothing to do.
-      pass
+
+def deletePropDels(propDelTriples): 
+  ''' deletes PropDels; there are two cases: 
+      1. if the specified delegation is an active delegation, then it's deleted (1.3), all transitively
+         affected votes are adapted (1.2) and the next older delegation -- if existing -- is restored 
+         (via the 'olderDel'-Edge) (1.1), and all transitively affected votes are adapted (1.4.).
+      2. if the specified delegation is not active, then -- not implemented yet -- '''
+  for pFrom, pTo, pr in propDelTriples: 
+        pFromObj   = db.people.get(pFrom)
+        pToObj     = db.people.get(pTo)
+        proposal   = db.proposals.get(pr) # the delegated proposal...
+        vote       = fetchVoteObject(pFromObj, proposal) # the original vote of the delegater
+        vote.delegated = 0 ; vote.save() # set delegated-Flag to False
+        
+        # get the corresponding delProp and all transitively affected delPops: 
+        delProps = transitiveDelProps(pFrom, pr) 
+
+        if delProps and delProps[0][0].eid==pTo: # 1. The specifiied delegation (pFrom delegates pTo for pr) is active.
+                delProp = delProps[0][2] 
+                if DEBUG: 
+                        print "D0: delProp.eid = %d, delProp = %s" % (delProp.eid, str(delProp))
+                
+                # 1.1. fetch older delProps, if there are any.
+                #      ... if there are no older delProps, then olderDelProps == []
+                olderDelEdges = list(delProp.outE('olderDel'))
+                olderDelProps = list(delProp.outV('olderDel')) 
+                if DEBUG: 
+                  print "D1: olderDelEdges: %s, olderDelProps: %s" % (str(olderDelEdges), str(olderDelProps))
+                if len(olderDelProps)>1: 
+                  print "D: ERROR! -- olderDel > 1"
+                  return
+
+                # 1.2. transitively adapt all vote.vc-values ...
+                for p2Obj, voteT, dp in delProps: 
+                        voteT.cv = voteT.cv - vote.cv
+                        if DEBUG: 
+                                print "D2. delProp = (%d, %d, %d), voteT.cv = voteT.cv - %d" % (p2Obj.eid, voteT.eid, dp.eid , vote.cv)
+                                print "    voteT.eid = %d, voteT.cv = %d,  vote.eid = %d" % (voteT.eid, voteT.cv, vote.eid)
+                        voteT.save()
+
+                # 1.3. ... and delete the DelProp and all affected edges.
+                db.delProp.delete(delProp.eid) 
+
+                if olderDelProps: # 1.4 Restore older delProp-Object
+                        olderDelProp = olderDelProps[0] ; olderDelEdge = olderDelEdges[0]
+                        if DEBUG: 
+                                print "D3: olderDelProp = %s, olderDelPropEdge = %s" % (str(olderDelProp), str(olderDelEdge))
+                        pdp = db.personDelegationProp.create(pFromObj, olderDelProp)   # Person -> DelProp
+                        dpp = db.delegationPropProposal.create(olderDelProp, proposal) # DelProp -> Proposal
+                                                                                       # DelProp -> Person exists...
+                        # delete the olderDel-Edge... 
+                        # db.olderDel.delete(olderDelEdge.eid) --> has it already been deleted in 3. ?
+                        for p2Obj, voteT, delPropObj in transitiveDelProps(pFrom, pr): 
+                                voteT.cv = voteT.cv + vote.cv
+                                if DEBUG: 
+                                        print "D4. delProp = (%d, %d, %d), voteT.cv = voteT.cv + %d" % (p2Obj.eid, voteT.eid, delPropObj.eid , vote.cv)
+                                        print "    voteT.eid = %d, voteT.cv = %d,  vote.eid = %d" % (voteT.eid, voteT.cv, vote.eid)
+                                voteT.save()
+        elif delProps:  # the delegation to be deleted is not active 
+                        # -> check, if there is an older delegation with this specification.
+                        # If yes, delete the older Delegation
+                delProp = delProps[0][2]
+                olderDels = transitiveOlderDels(delProp.eid)
+                from itertools import dropwhile
+                # search for a delegaton to pTo
+                olderDelIdx = [i for i in range(len(olderDels)) if olderDels[i][1].eid == pTo]
+                # ... if there exists such a delegation: 
+                if olderDelIdx: 
+                        i = olderDelIdx[0]
+                        if DEBUG: print 'olderDel, with idx %d and eid %s' % (i, olderDels[i][0].eid) 
+                        dpObj = olderDels[i][0] ; pObj = olderDels[i][1]
+                        delPropFrom = olderDels[i-1][0] if i>0 else delProp
+                        delPropTo   = olderDels[i+1][0] if i<len(olderDels)-1 else None
+                        # loesche delProp
+                        db.delProp.delete(olderDels[i][0].eid)
+                        # reconnect: 
+                        if delPropTo: db.olderDel.create(delPropFrom, delPropTo)
+                        #TODO: Better DEBUG-Messeges and better testing-functions!  
+                        #      Maybe it already works correctly....
+ 
+def transitiveOlderDels(delProp): 
+  ''' yields a (possibly empty) list of older Delegations (i.e. the delegation-stack) in the form of a list of
+      tuples [(delPropObj, persObj)] '''
+  queryNextDelProp = '''START dp=node({dp})
+                        MATCH dp-[:olderDel]->dp2-[:delegationPropPerson]->p2
+                        RETURN ID(dp2), ID(p2)'''
+  props = db.cypher.table(queryNextDelProp, dict(dp=delProp))[1]
+  erg = []
+  while props: 
+        dp = props[0][0] ; p2 = props[0][1]
+        dpObj = db.delProp.get(dp) ; p2Obj = db.people.get(p2)
+        erg.append((dpObj, p2Obj))
+        props = db.cypher.table(queryNextDelProp, dict(dp=dp))[1]
+  return erg
+        
+  
+
+
+def createPropDels(propDelTriples):
+  '''propDelTriples :: [(personFrom, personTo, proposal)] 
+     Every tripel in the propDelTriples-List represents one proposal-specific delegation.
+     
+     The function creates new propDel-Objects and transitively adapts vote.cv-values; 
+     The queryNextDelProp(person, proposal) yields the next DelProp on walk through 
+     the transitive delegations. 
+  '''
+  for pFrom, pTo, pr in propDelTriples: 
+        # 17, 7, 20
+        pFromObj   = db.people.get(pFrom)
+        pToObj     = db.people.get(pTo)
+        proposal   = db.proposals.get(pr) # the delegated proposal...
+        vote       = fetchVoteObject(pFromObj, proposal) # the original vote of the delegater
+        vote.delegated = 1 ; vote.save() # set delegated-Flag to True
+        # create new Delegation vertice
+        delegation = db.delProp.create()
+        if DEBUG: print "created delProp with eid: ", delegation.eid
+        
+        # is there an older delProp for proposal pr?
+        delProps = transitiveDelProps(pFrom, pr) 
+        if DEBUG: print "1. delProps = ", delProps
+         
+        if delProps: # if there is an older delegation on this proposal, then ...
+                
+                # ... persistently link the new one to the older one...
+                olderDelegation = delProps[0][2]
+                db.olderDel.create(delegation, olderDelegation) 
+                for p2Obj, voteT, delPropObj in delProps: # ... Transitively adapt all votes.vc-values ...
+                        voteT.cv = voteT.cv - vote.cv
+                        if DEBUG: 
+                                print "2. delProp = (%d, %d, %d), voteT.cv = voteT.cv - %d" % (p2Obj.eid, voteT.eid, delPropObj.eid , vote.cv)
+                                print "   voteT.eid = %d, voteT.cv = %d,  vote.eid = %d" % (voteT.eid, voteT.cv, vote.eid)
+                        voteT.save()
+                
+                # ... at the end: delete both edges from the olderDelegation...
+                edge1 = olderDelegation.outE('delegationPropProposal').next().eid 
+                db.delegationPropProposal.delete(edge1)
+                if DEBUG: print 'deleted: delegationPropProposal with eid %d' % edge1
+
+        # create new delegation edges  ...
+        pdp = db.personDelegationProp.create(pFromObj, delegation)    # Person  -> DelProp
+        dpp0 = db.delegationPropProposal.create(delegation, proposal) # DelProp -> Proposal
+        dpp1 = db.delegationPropPerson.create(delegation, pToObj)     # DelProp -> Person
+        if DEBUG: print 'created "personDelegationProp" with eid %d and "delegationPropProposal" with eid %d and "delegationPropPerson" with eid %d' % (pdp.eid, dpp0.eid, dpp1.eid)
+
+        # ... and adapt all transitively delegated votes
+        for p2Obj, voteT, _ in transitiveDelProps(pFrom, pr): 
+                voteT.cv = voteT.cv + vote.cv
+                if DEBUG: 
+                        print "4. delProp = (p2Obj: %d, voteT: %d), voteT.cv = voteT.cv + %d" % (p2Obj.eid, voteT.eid, vote.cv)
+                        print "   voteT.eid = %d, voteT.cv = %d,  vote.eid = %d" % (voteT.eid, voteT.cv, vote.eid)
+                voteT.save()
+  return None
+
+def transitiveDelProps(pers_eid, prop_eid): 
+  ''' walks through transitive delegation relationships and returns [(persObj, voteObj, delPropObj)]'''
+  queryNextDelProp = '''
+           START p = node({pFrom}), prop = node({pr})
+           MATCH p-[:personDelegationProp]->d-[:delegationPropProposal]->prop, d-[:delegationPropPerson]->p2
+           RETURN id(d), id(p2)'''
+  delProp = db.cypher.table(queryNextDelProp, dict(pFrom=pers_eid, pr=prop_eid))[1]
+  proposal = db.proposals.get(prop_eid)
+  erg = []
+  while delProp: 
+        p2 = delProp[0][1] ; dp = delProp[0][0] ; p2Obj = db.people.get(p2) 
+        dpObj = db.delProp.get(dp)
+        voteT = fetchVoteObject(p2Obj, proposal)
+        erg.append((p2Obj,voteT, dpObj))
+        delProp = db.cypher.table(queryNextDelProp, dict(pFrom=p2, pr=prop_eid))[1]
+  return erg
+
+
+
+def del2Dict(d_eid): 
+  ''' transforms a delegation-node to the dictionary-representation '''
+  delegation = db.vertices.get(d_eid)
+  d = {}
+  parl = [v for v in delegation.outV('delegationParlament')] 
+  if parl: d['parlament'] = parl[0].eid
+  prop = [v for v in delegation.outV('delegationProposal')] 
+  if prop: d['proposal'] = prop[0].eid
+  pers =  [v for v in delegation.outV('delegationPerson')] 
+  if pers: d['person'] = pers[0].eid
+  return d 
+
 
 def fetchVoteObject(persObj, propObj): 
   ''' Either returns existing vote of persObj for propObj or (if such a vote does not yet exist) 
@@ -671,6 +849,17 @@ def fetchVoteObject(persObj, propObj):
   else: # create a voting v with v.prop = 0
      return db.votes.create(persObj,propObj, pro=0)
 
+## ----------------- Implementaiton of Delegations -------------------------------------------------
+#
+# 1. Person p1 Creates Delegation-Object d via the web-Interface. 
+#
+# 2. let d = {'person': p2_eid, 'parlament': parl_eid, 'proposal': prop_eid}
+#
+# 3. Adapt all vote-Relationsships v from p1 to all props of delegation d, i.e. set v.delegated=1
+#    if not Vote-Relationsship exists yet, create a new one with v.delegated=1.
+#
+# 4. For each proposal p of delegation d: 
+#    * Generate a propDel-Object
 
 
 ## ------------------ Generate "Delegation-Triples" ------------------------------------------------
@@ -714,6 +903,7 @@ def personDelegations(p_eid):
   # returns [TimeStamp, dict{type : eid}]
   return map(lambda x: (x[0],x[1], dict(map(lambda a,b: (a,b), x[2],x[3]))), t) 
 
+
 def parlamentProposals(p_eid, parl_eid, i_eid): 
   ''' All proposals of parlement parl_eid for which person p_eid voted; all in instance i_eid'''
   query = ''' START p=node({p_eid}), parl=node({parl_eid}), i=node({i_eid})
@@ -734,11 +924,11 @@ def personProposals(p_eid, i_eid):
 
 
 def singleDelegationTuples(p_eid, d): 
-  ''' returns the list of all proposals (tupled with the delegated person) for a specific delegation
-      d is a dict-object with: 
+  ''' returns the list of all proposals (tupled with the delegated person) for a specific delegation d.
+      d has to be provided as a dict-object: 
       d{u'person': eid, u'proposal': eid, u'parlament': eid} of person p_eid'''
   p = db.people.get(p_eid)
-  i_eid = p.inV('hasPeople').next().eid # the corresponding instance
+  i_eid = p.inV('hasPeople').next().eid # fetch corresponding instance
   p1 = d['person']
   if 'parlament' in d: 
     return [(p1, p) for pp in parlamentProposals(p1, d['parlament'], i_eid) for p in pp] 

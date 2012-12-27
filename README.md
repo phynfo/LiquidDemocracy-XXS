@@ -43,6 +43,8 @@ It is "light" with respect to:
   ```bash
   $ virtualenv venv
   ```
+  (note: there may arise problems with the newest bulbs-version; some functions which returned generators now
+  may return NONE iff the generator contains no values; hopefully, this design decision will not last....)
 
 * activate the environment
   ```bash
