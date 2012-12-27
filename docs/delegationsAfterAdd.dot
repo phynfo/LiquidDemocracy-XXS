@@ -1,0 +1,23 @@
+digraph G {
+  node [shape=box, style=filled, color=lightgrey];
+  person1; person2; person3; person4; person5; person6;
+  prop1;   
+  del0; del1; del2; del3; del4;
+  node [shape=ellipse, style=filled, color=white];
+  person1 -> del0 -> person6 [penwidth=5.0];
+  del0 -> del1 [label="olderDel"];
+  del0 -> prop1;
+  person2 -> del3 -> person4 [penwidth=5.0];
+  person1 -> prop1  [label="votes\nvc=5"];
+  person3 -> prop1  [label="votes\nvc=3"];
+  person2 -> prop1  [label="votes\nvc=1+3"];
+  person5 -> prop1  [label="votes\nvc=1"];
+  person6 -> prop1  [label="votes\nvc=1+5"];
+  del1 -> del4      [label="olderDel"];
+  del4 -> person5; 
+  del1 -> person2;
+  del3 -> prop1;
+  person3 -> del2 -> person2  [penwidth=5.0];
+  del2 -> prop1; 
+  person4 -> prop1  [label="votes\nvc=4+1"];
+}
